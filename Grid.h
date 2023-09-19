@@ -11,6 +11,7 @@
 #include <unordered_set>
 
 #include "Cell.h"
+#include "PriorityQueue.h"
 
 class Grid {
 public:
@@ -21,6 +22,11 @@ private:
     int width, height;
 
     std::vector<std::vector<Cell>> map; //main data structure
+
+    void makeRandomMap(int width, int height);
+    void setRandomStart();
+    void setRandomGoal();
+    Cell* findFreeCell();
 
 };
 

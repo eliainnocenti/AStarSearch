@@ -18,31 +18,25 @@ public:
     //bool operator < (const Cell& other) const; //TODO
 
     inline bool isTheStart() const { return start; }
-
     inline bool isTheGoal() const { return goal; }
-
     inline bool isAnObstacle() const { return obstacle; }
 
     inline void setTheStart() { start = true; }
-
     inline void setTheGoal() { goal = true; }
-
     inline void setAsObstacle() { obstacle = true; }
 
     inline int getX() const { return x; }
-
     inline int getY() const { return y; }
 
     inline void setX(int x) { this->x = x; }
-
     inline void setY(int y) { this->y = y; }
 
 private:
     int x, y;
 
-    bool start{false};
-    bool goal{false};
-    bool obstacle{false};
+    bool start {false};
+    bool goal {false};
+    bool obstacle {false};
 
 };
 
