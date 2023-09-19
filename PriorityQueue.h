@@ -1,0 +1,8 @@
+//
+// Created by Elia Innocenti on 19/09/23.
+//
+
+#ifndef ASTARSEARCH_PRIORITYQUEUE_H
+#define ASTARSEARCH_PRIORITYQUEUE_H
+
+#endif //ASTARSEARCH_PRIORITYQUEUE_H
