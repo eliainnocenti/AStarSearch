@@ -3,3 +3,6 @@
 //
 
 #include "Grid.h"
+
+Grid::Grid(int width, int height, bool random) : width(width), height(height) {
+}
