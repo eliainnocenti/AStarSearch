@@ -10,30 +10,38 @@
 
 class Cell {
 public:
+    //constructor
     Cell(int x, int y);
 
+    //overloaded operators
     bool operator==(const Cell &other) const;
-
     bool operator!=(const Cell &other) const;
     //bool operator < (const Cell& other) const; //TODO
 
+    //getter
     inline bool isTheStart() const { return start; }
     inline bool isTheGoal() const { return goal; }
     inline bool isAnObstacle() const { return obstacle; }
 
+    //setter
     inline void setTheStart() { start = true; }
     inline void setTheGoal() { goal = true; }
     inline void setAsObstacle() { obstacle = true; }
+    inline void resetTheStart() { start = false; }
+    inline void resetTheGoal() { goal = false; }
 
+    //getter
     inline int getX() const { return x; }
     inline int getY() const { return y; }
 
+    //setter
     inline void setX(int x) { this->x = x; }
     inline void setY(int y) { this->y = y; }
 
 private:
-    int x, y;
+    int x, y; //position
 
+    //attributes
     bool start {false};
     bool goal {false};
     bool obstacle {false};
