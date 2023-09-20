@@ -9,59 +9,69 @@
 #include <array>
 #include <unordered_map>
 #include <unordered_set>
+#include <iostream>
 
 #include "Cell.h"
 #include "PriorityQueue.h"
 
 class Grid {
 public:
-    //constructor
-    Grid(int width, int height, bool random = true);
+    // constructor
+    explicit Grid(int width, int height, bool random = true);
 
-    //directions
+    // directions
     static std::array<Cell, 4> DIRS;
 
-    //A*Search
-    void findPath(); //TODO
+    // A*Search
+    void findPath(const Cell& start, const Cell& goal); // TODO check
 
+    // set the start
+    void setTheStart(int x, int y);
+    void setTheStart(const Cell& cell);
+
+    // set the goal
+    void setTheGoal(int x, int y);
+    void setTheGoal(const Cell& cell);
+
+    // set an obstacle
+    void setAnObstacle(int x, int y);
+    void setAnObstacle(const Cell& cell);
+
+    // getter
+    inline int getWidth() const { return width; }
+    inline int getHeight() const { return height; }
 
 private:
-    int width, height; //size
+    int width, height; // size
 
-    std::vector<std::vector<Cell>> map; //main data structure
+    std::vector<std::vector<Cell>> map; // main data structure
 
-    //data structure for the algorithm
-    std::unordered_map<Cell*, Cell*> came_from;
-    std::unordered_map<Cell*, double> cost_so_far;
+    // data structures for the algorithm
+    std::unordered_map<Cell, Cell> came_from;
+    std::unordered_map<Cell, double> cost_so_far;
 
-    //mapmaker
+    // mapmaker
     void makeRandomMap(int width, int height);
-    void setRandomStart();
-    void setRandomGoal();
-    Cell* findFreeCell();
+    void setRandomStart(); // TODO
+    void setRandomGoal(); // TODO
+    Cell* findFreeCell(); // TODO
 
-    //search
-    bool in_bounds() const; //TODO
-    bool passable() const; //TODO
-    std::vector<Cell> neighbors() const; //TODO
-    double heuristic() const; //TODO
-    double cost() const; //TODO
-    void a_star_search(); //TODO
+    // search
+    bool in_bounds(const Cell& cell) const; // TODO check
+    bool passable(const Cell& cell) const; // TODO check
+    std::vector<Cell> neighbors(const Cell& cell) const; // TODO check
+    double heuristic(const Cell& from_node, const Cell& to_node) const; // TODO check
+    double cost(const Cell& from_node, const Cell& to_node) const; // TODO check
+    void a_star_search(const Cell& start, const Cell& goal); // TODO check
 
-    //reconstruct
-    std::vector<Cell> reconstruct_path(); //TODO
+    // reconstruct
+    std::vector<Cell> reconstruct_path(const Cell& start, const Cell& goal); // TODO check
+    void printPath(const std::vector<Cell>& path, const Cell &start, const Cell &goal) const;
+    void printInfo(const Cell& cell) const;
 
-    //reset
-    void reset(); //TODO
-
+    // reset
+    void reset(); // TODO
 
 };
-
-std::array<Cell, 4> Grid::DIRS = {
-        // East, West, North, South
-        Cell{1, 0}, Cell{-1, 0},
-        Cell{0, -1}, Cell{0, 1}
-};
-
 
 #endif //ASTARSEARCH_GRID_H
