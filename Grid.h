@@ -17,10 +17,7 @@
 class Grid {
 public:
     // constructor
-    explicit Grid(int width, int height, bool random = true);
-
-    // directions
-    static std::array<Cell, 4> DIRS;
+    explicit Grid(int width, int height, bool diagonal = false, bool random = true);
 
     // A*Search
     void findPath(const Cell& start, const Cell& goal); // TODO check
@@ -44,6 +41,10 @@ public:
 private:
     int width, height; // size
 
+    // directions
+    bool diagonalMovements;
+    std::unordered_set<Cell> directions;
+
     std::vector<std::vector<Cell>> map; // main data structure
 
     // data structures for the algorithm
@@ -62,10 +63,10 @@ private:
     std::vector<Cell> neighbors(const Cell& cell) const; // TODO check
     double heuristic(const Cell& from_node, const Cell& to_node) const; // TODO check
     double cost(const Cell& from_node, const Cell& to_node) const; // TODO check
-    void a_star_search(const Cell& start, const Cell& goal); // TODO check
+    void aStarSearch(const Cell& start, const Cell& goal); // TODO check
 
     // reconstruct
-    std::vector<Cell> reconstruct_path(const Cell& start, const Cell& goal); // TODO check
+    std::vector<Cell> reconstructPath(const Cell& start, const Cell& goal); // TODO check
     void printPath(const std::vector<Cell>& path, const Cell &start, const Cell &goal) const;
     void printInfo(const Cell& cell) const;
 

@@ -4,7 +4,14 @@
 
 #include "Grid.h"
 
-Grid::Grid(int width, int height, bool random) : width(width), height(height) {
+Grid::Grid(int width, int height, bool diagonal, bool random) : width(width), height(height), diagonalMovements(diagonal) {
+    if (diagonal)
+        // Nord, Nord-Est, Est, Sud-Est, Sud, Sud-Ovest, Ovest, Nord-Ovest
+        directions = std::unordered_set<Cell> { Cell{0,1}, Cell{1,1}, Cell{1,0}, Cell{1,-1}, Cell{0,-1}, Cell{-1,-1}, Cell{-1,0}, Cell{-1,1} };
+    else
+        // Nord, Est, Sud, Ovest
+        directions = std::unordered_set<Cell> { Cell{0,1}, Cell{1,0}, Cell{0,-1}, Cell{-1,0}};
+
     // a random map is generated
     if (random)
         makeRandomMap(width, height);
@@ -12,16 +19,16 @@ Grid::Grid(int width, int height, bool random) : width(width), height(height) {
 
 void Grid::findPath(const Cell &start, const Cell &goal) {
     // A*Search
-    a_star_search(start, goal);
+    aStarSearch(start, goal);
 
     //
-    std::vector<Cell> path = reconstruct_path(start, goal);
+    std::vector<Cell> path = reconstructPath(start, goal);
 
     //
     printPath(path, start, goal);
 }
 
-void Grid::a_star_search(const Cell &start, const Cell &goal) {
+void Grid::aStarSearch(const Cell &start, const Cell &goal) {
 
     PriorityQueue<Cell, double> frontier;
     frontier.put(start, 0);
@@ -50,23 +57,21 @@ void Grid::a_star_search(const Cell &start, const Cell &goal) {
             }
         }
     }
-
 }
 
 std::vector<Cell> Grid::neighbors(const Cell &cell) const {
 
     std::vector<Cell> results;
 
-    for (Cell dir : DIRS) {
+    for (Cell dir : directions) {
         Cell next{cell.getX() + dir.getX(), cell.getY() + dir.getY()};
         if (in_bounds(next) && passable(next)) {
             results.push_back(next);
         }
     }
 
-    //TODO
+    // TODO
     if ((cell.getX() + cell.getY()) % 2 == 0) {
-        // see "Ugly paths" section for an explanation:
         std::reverse(results.begin(), results.end());
     }
 
@@ -91,7 +96,7 @@ double Grid::heuristic(const Cell &from_node, const Cell &to_node) const {
     return std::abs(from_node.getX() - to_node.getX()) + std::abs(from_node.getY() - to_node.getY());
 }
 
-std::vector<Cell> Grid::reconstruct_path(const Cell &start, const Cell &goal) {
+std::vector<Cell> Grid::reconstructPath(const Cell &start, const Cell &goal) {
     std::vector<Cell> path;
     Cell current = goal;
     if (came_from.find(goal) == came_from.end()) {
@@ -120,7 +125,7 @@ void Grid::printInfo(const Cell &cell) const {
 
 void Grid::makeRandomMap(int width, int height) {
 
-    //TODO -> some cell has to be obstacles (randomly)
+    // TODO -> some cell has to be obstacles (randomly)
     for (int i = 0; i < height; i ++) {
         map.emplace_back();
         for (int j = 0; j < width; j++) {
@@ -134,15 +139,15 @@ void Grid::makeRandomMap(int width, int height) {
 }
 
 void Grid::setRandomStart() {
-    //TODO
+    // TODO
 }
 
 void Grid::setRandomGoal() {
-    //TODO
+    // TODO
 }
 
 Cell *Grid::findFreeCell() {
-    //TODO
+    // TODO
     return nullptr;
 }
 

@@ -1,9 +1,9 @@
 cmake_minimum_required(VERSION 3.26)
 
-#project name
+# project name
 project(AStarSearch)
 
-#c++ version
+# c++ version
 set(CMAKE_CXX_STANDARD 17)
 
 set(HEADER_FILES PriorityQueue.h Grid.h Cell.h)

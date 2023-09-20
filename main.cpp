@@ -3,15 +3,9 @@
 #include "Grid.h"
 #include "Cell.h"
 
-std::array<Cell, 4> Grid::DIRS = {
-        // East, West, North, South
-        Cell{1, 0}, Cell{-1, 0},
-        Cell{0, -1}, Cell{0, 1}
-};
-
 int main() {
 
-    Grid grid(10,10);
+    Grid grid(10,10, true);
 
     grid.setTheStart(1,2);
     grid.setTheGoal(6,7);
