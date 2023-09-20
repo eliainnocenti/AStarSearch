@@ -16,7 +16,9 @@ int main() {
     grid.setAnObstacle(1,6);
     grid.setAnObstacle(3,4);
 
-    grid.findPath(start, goal);
+    grid.printAllTheObstacles();
+
+    //grid.findPath(start, goal);
 
     return 0;
 }

@@ -174,3 +174,22 @@ void Grid::setAnObstacle(int x, int y) {
 void Grid::setAnObstacle(const Cell &cell) {
     map[cell.getX()][cell.getY()].setAsObstacle();
 }
+
+void Grid::printAllTheObstacles() const {
+    std::vector<Cell> obstacles = findAllTheObstacles();
+    std::cout << "The obstacles are in positions: " << std::endl;
+    for (int i = 0; i < obstacles.size(); i++)
+        printInfo(obstacles[i]);
+    std::cout << std::endl;
+}
+
+std::vector<Cell> Grid::findAllTheObstacles() const {
+    std::vector<Cell> obstacles;
+    for (int i = 0; i < height; i ++) {
+        for (int j = 0; j < width; j++) {
+            if (map[i][j].isAnObstacle())
+                obstacles.push_back(map[i][j]);
+        }
+    }
+    return obstacles;
+}

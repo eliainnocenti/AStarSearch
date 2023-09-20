@@ -38,6 +38,9 @@ public:
     inline int getWidth() const { return width; }
     inline int getHeight() const { return height; }
 
+    // extra
+    void printAllTheObstacles() const;
+
 private:
     int width, height; // size
 
@@ -69,6 +72,9 @@ private:
     std::vector<Cell> reconstructPath(const Cell& start, const Cell& goal); // TODO check
     void printPath(const std::vector<Cell>& path, const Cell &start, const Cell &goal) const;
     void printInfo(const Cell& cell) const;
+
+    // extra
+    std::vector<Cell> findAllTheObstacles() const;
 
     // reset
     void reset(); // TODO
