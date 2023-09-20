@@ -70,7 +70,7 @@ std::vector<Cell> Grid::neighbors(const Cell &cell) const {
         }
     }
 
-    // TODO
+    // TODO check
     if ((cell.getX() + cell.getY()) % 2 == 0) {
         std::reverse(results.begin(), results.end());
     }

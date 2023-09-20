@@ -13,7 +13,8 @@ int main() {
     Cell start(1,2);
     Cell goal(6,7);
 
-    //grid.setAnObstacle(1,6);
+    grid.setAnObstacle(1,6);
+    grid.setAnObstacle(3,4);
 
     grid.findPath(start, goal);
 

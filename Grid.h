@@ -20,7 +20,7 @@ public:
     explicit Grid(int width, int height, bool diagonal = false, bool random = true);
 
     // A*Search
-    void findPath(const Cell& start, const Cell& goal); // TODO check
+    void findPath(const Cell& start, const Cell& goal); // FIXME - obstacles
 
     // set the start
     void setTheStart(int x, int y);
@@ -60,10 +60,10 @@ private:
     // search
     bool in_bounds(const Cell& cell) const; // TODO check
     bool passable(const Cell& cell) const; // TODO check
-    std::vector<Cell> neighbors(const Cell& cell) const; // TODO check
+    std::vector<Cell> neighbors(const Cell& cell) const; // FIXME
     double heuristic(const Cell& from_node, const Cell& to_node) const; // TODO check
     double cost(const Cell& from_node, const Cell& to_node) const; // TODO check
-    void aStarSearch(const Cell& start, const Cell& goal); // TODO check
+    void aStarSearch(const Cell& start, const Cell& goal); // FIXME
 
     // reconstruct
     std::vector<Cell> reconstructPath(const Cell& start, const Cell& goal); // TODO check
