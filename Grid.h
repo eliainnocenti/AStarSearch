@@ -20,7 +20,7 @@ public:
     explicit Grid(int width, int height, bool diagonal = false, bool random = true);
 
     // A*Search
-    void findPath(const Cell& start, const Cell& goal); // FIXME - obstacles
+    void findPath(const Cell& start, const Cell& goal);
 
     // set the start
     void setTheStart(int x, int y);
@@ -44,11 +44,11 @@ public:
 private:
     int width, height; // size
 
+    std::vector<std::vector<Cell>> map; // main data structure
+
     // directions
     bool diagonalMovements;
     std::unordered_set<Cell> directions;
-
-    std::vector<std::vector<Cell>> map; // main data structure
 
     // data structures for the algorithm
     std::unordered_map<Cell, Cell> came_from;
@@ -61,15 +61,15 @@ private:
     Cell* findFreeCell(); // TODO
 
     // search
-    bool in_bounds(const Cell& cell) const; // TODO check
-    bool passable(const Cell& cell) const; // TODO check
-    std::vector<Cell> neighbors(const Cell& cell) const; // FIXME
-    double heuristic(const Cell& from_node, const Cell& to_node) const; // TODO check
-    double cost(const Cell& from_node, const Cell& to_node) const; // TODO check
-    void aStarSearch(const Cell& start, const Cell& goal); // FIXME
+    bool in_bounds(const Cell& cell) const;
+    bool passable(const Cell& cell) const;
+    std::vector<Cell> neighbors(const Cell& cell) const;
+    double heuristic(const Cell& from_node, const Cell& to_node) const;
+    double cost(const Cell& from_node, const Cell& to_node) const; // TODO - possible GridWithWeights implementation
+    void aStarSearch(const Cell& start, const Cell& goal);
 
     // reconstruct
-    std::vector<Cell> reconstructPath(const Cell& start, const Cell& goal); // TODO check
+    std::vector<Cell> reconstructPath(const Cell& start, const Cell& goal); // TODO check ugly path
     void printPath(const std::vector<Cell>& path, const Cell &start, const Cell &goal) const;
     void printInfo(const Cell& cell) const;
 

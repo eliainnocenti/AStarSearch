@@ -83,9 +83,10 @@ bool Grid::in_bounds(const Cell &cell) const {
 }
 
 bool Grid::passable(const Cell &cell) const {
-    if (!cell.isAnObstacle())
+    if (!map[cell.getX()][cell.getY()].isAnObstacle())
         return true;
-    return false;
+    else
+        return false;
 }
 
 double Grid::cost(const Cell &from_node, const Cell &to_node) const {
