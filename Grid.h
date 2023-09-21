@@ -21,6 +21,7 @@ public:
 
     // A*Search
     void findPath(const Cell& start, const Cell& goal);
+    void findRandomPath();
 
     // set the start
     void setTheStart(int x, int y);
@@ -50,15 +51,10 @@ private:
     bool diagonalMovements;
     std::unordered_set<Cell> directions;
 
-    // data structures for the algorithm
-    std::unordered_map<Cell, Cell> came_from;
-    std::unordered_map<Cell, double> cost_so_far;
-
     // mapmaker
-    void makeRandomMap(int width, int height);
-    void setRandomStart(); // TODO
-    void setRandomGoal(); // TODO
-    Cell* findFreeCell(); // TODO
+    void makeRandomMap(int width, int height); // TODO
+    Cell* setRandomStart();
+    Cell* setRandomGoal();
 
     // search
     bool in_bounds(const Cell& cell) const;
@@ -66,10 +62,10 @@ private:
     std::vector<Cell> neighbors(const Cell& cell) const;
     double heuristic(const Cell& from_node, const Cell& to_node) const;
     double cost(const Cell& from_node, const Cell& to_node) const; // TODO - possible GridWithWeights implementation
-    void aStarSearch(const Cell& start, const Cell& goal);
+    void aStarSearch(const Cell& start, const Cell& goal, std::unordered_map<Cell, Cell>& came_from, std::unordered_map<Cell, double>& cost_so_far);
 
     // reconstruct
-    std::vector<Cell> reconstructPath(const Cell& start, const Cell& goal); // TODO check ugly path
+    std::vector<Cell> reconstructPath(const Cell& start, const Cell& goal, std::unordered_map<Cell, Cell>& came_from, std::unordered_map<Cell, double>& cost_so_far); // TODO check ugly path
     void printPath(const std::vector<Cell>& path, const Cell &start, const Cell &goal) const;
     void printInfo(const Cell& cell) const;
 

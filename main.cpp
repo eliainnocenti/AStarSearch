@@ -5,23 +5,24 @@
 
 int main() {
 
-    Grid grid(10,10, true);
+    srand(static_cast<unsigned>(time(nullptr)));
 
-    grid.setTheStart(1,2);
-    grid.setTheGoal(6,7);
+    Grid grid(10,10, true);
 
     Cell start(1,2);
     Cell goal(6,7);
 
-    Cell obstacle1(2,3);
-
-    grid.setAnObstacle(1,6);
+    grid.setAnObstacle(3,1);
+    grid.setAnObstacle(3,2);
+    grid.setAnObstacle(3,3);
     grid.setAnObstacle(3,4);
-    grid.setAnObstacle(obstacle1);
+    grid.setAnObstacle(3,5);
 
-    //grid.printAllTheObstacles();
+    //grid.printAllTheObstacles(); // for debugging
 
-    grid.findPath(start, goal);
+    //grid.findPath(start, goal);
+
+    grid.findRandomPath();
 
     return 0;
 }

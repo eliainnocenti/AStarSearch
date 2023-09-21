@@ -18,17 +18,45 @@ Grid::Grid(int width, int height, bool diagonal, bool random) : width(width), he
 }
 
 void Grid::findPath(const Cell &start, const Cell &goal) {
+
+    // data structures for the algorithm
+    std::unordered_map<Cell, Cell> came_from;
+    std::unordered_map<Cell, double> cost_so_far;
+
     // A*Search
-    aStarSearch(start, goal);
+    aStarSearch(start, goal, came_from, cost_so_far);
 
     // Reconstruct the path
-    std::vector<Cell> path = reconstructPath(start, goal);
+    std::vector<Cell> path = reconstructPath(start, goal, came_from, cost_so_far);
 
     // Print the path
     printPath(path, start, goal);
 }
 
-void Grid::aStarSearch(const Cell &start, const Cell &goal) {
+void Grid::findRandomPath() {
+
+    // data structures for the algorithm
+    std::unordered_map<Cell, Cell> came_from;
+    std::unordered_map<Cell, double> cost_so_far;
+
+    // local variables
+    Cell* start = setRandomStart();
+    Cell* goal = setRandomGoal();
+
+    // A*Search
+    aStarSearch(*start, *goal, came_from, cost_so_far);
+
+    // Reconstruct the path
+    std::vector<Cell> path = reconstructPath(*start, *goal, came_from, cost_so_far);
+
+    // Print the path
+    printPath(path, *start, *goal);
+
+    delete start;
+    delete goal;
+}
+
+void Grid::aStarSearch(const Cell &start, const Cell &goal, std::unordered_map<Cell, Cell>& came_from, std::unordered_map<Cell, double>& cost_so_far) {
 
     PriorityQueue<Cell, double> frontier;
     frontier.put(start, 0);
@@ -98,14 +126,16 @@ double Grid::cost(const Cell &from_node, const Cell &to_node) const {
 
 double Grid::heuristic(const Cell &from_node, const Cell &to_node) const {
     if (diagonalMovements) {
+        // euclidean distance
         double dx = from_node.getX() - to_node.getX();
         double dy = from_node.getY() - to_node.getY();
         return std::sqrt(dx * dx + dy * dy);
     } else
+        // manhattan distance
         return std::abs(from_node.getX() - to_node.getX()) + std::abs(from_node.getY() - to_node.getY());
 }
 
-std::vector<Cell> Grid::reconstructPath(const Cell &start, const Cell &goal) {
+std::vector<Cell> Grid::reconstructPath(const Cell &start, const Cell &goal, std::unordered_map<Cell, Cell>& came_from, std::unordered_map<Cell, double>& cost_so_far) {
     std::vector<Cell> path;
     Cell current = goal;
     if (came_from.find(goal) == came_from.end()) {
@@ -133,7 +163,6 @@ void Grid::printInfo(const Cell &cell) const {
 }
 
 void Grid::makeRandomMap(int width, int height) {
-
     // TODO -> some cell has to be obstacles (randomly)
     for (int i = 0; i < height; i ++) {
         map.emplace_back();
@@ -142,22 +171,38 @@ void Grid::makeRandomMap(int width, int height) {
             map[i].push_back(cell);
         }
     }
-
-    setRandomStart();
-    setRandomGoal();
 }
 
-void Grid::setRandomStart() {
-    // TODO
+Cell *Grid::setRandomStart() {
+    int randX = -1;
+    int randY = -1;
+
+    do {
+        randX = rand() % height;
+        randY = rand() % width;
+    } while (map[randX][randY].isAnObstacle() || map[randX][randY].isTheGoal());
+
+    map[randX][randY].setTheStart();
+
+    Cell* randStart = new Cell(randX, randY);
+
+    return randStart;
 }
 
-void Grid::setRandomGoal() {
-    // TODO
-}
+Cell *Grid::setRandomGoal() {
+    int randX = -1;
+    int randY = -1;
 
-Cell *Grid::findFreeCell() {
-    // TODO
-    return nullptr;
+    do {
+        randX = rand() % height;
+        randY = rand() % width;
+    } while (map[randX][randY].isAnObstacle() || map[randX][randY].isTheStart());
+
+    map[randX][randY].setTheGoal();
+
+    Cell* randGoal = new Cell(randX, randY);
+
+    return randGoal;
 }
 
 void Grid::setTheStart(int x, int y) {
