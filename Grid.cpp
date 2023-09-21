@@ -21,10 +21,10 @@ void Grid::findPath(const Cell &start, const Cell &goal) {
     // A*Search
     aStarSearch(start, goal);
 
-    //
+    // Reconstruct the path
     std::vector<Cell> path = reconstructPath(start, goal);
 
-    //
+    // Print the path
     printPath(path, start, goal);
 }
 
@@ -79,10 +79,12 @@ std::vector<Cell> Grid::neighbors(const Cell &cell) const {
 }
 
 bool Grid::in_bounds(const Cell &cell) const {
+    // returns true if the cell is inside the map, false otherwise
     return 0 <= cell.getX() && cell.getX() < width && 0 <= cell.getY() && cell.getY() < height;
 }
 
 bool Grid::passable(const Cell &cell) const {
+    // return true if the cell is not an obstacle, false otherwise
     if (!map[cell.getX()][cell.getY()].isAnObstacle())
         return true;
     else
@@ -90,11 +92,17 @@ bool Grid::passable(const Cell &cell) const {
 }
 
 double Grid::cost(const Cell &from_node, const Cell &to_node) const {
+    // let's assume the cost is 1
     return 1;
 }
 
 double Grid::heuristic(const Cell &from_node, const Cell &to_node) const {
-    return std::abs(from_node.getX() - to_node.getX()) + std::abs(from_node.getY() - to_node.getY());
+    if (diagonalMovements) {
+        double dx = from_node.getX() - to_node.getX();
+        double dy = from_node.getY() - to_node.getY();
+        return std::sqrt(dx * dx + dy * dy);
+    } else
+        return std::abs(from_node.getX() - to_node.getX()) + std::abs(from_node.getY() - to_node.getY());
 }
 
 std::vector<Cell> Grid::reconstructPath(const Cell &start, const Cell &goal) {
