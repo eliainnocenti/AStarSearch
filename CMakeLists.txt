@@ -13,6 +13,6 @@ add_executable(AStarSearch ${HEADER_FILES} ${SOURCE_FILES})
 
 include_directories(/usr/local/include)
 
-find_package(SFML 2.6 COMPONENTS system window graphics network audio REQUIRED)
+find_package(SFML 2.5 COMPONENTS system window graphics network audio REQUIRED) # do i need SFML 2.6?
 include_directories(${SFML_INCLUDE_DIRS})
 target_link_libraries(AStarSearch sfml-system sfml-window sfml-graphics sfml-network sfml-audio)

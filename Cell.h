@@ -8,15 +8,18 @@
 #include <cstdlib>
 #include <memory>
 
+// graphics
+#include <SFML/Graphics.hpp>
+
 class Cell {
 public:
     // constructors
     Cell(int x, int y);
-    Cell(); // TODO check
+    Cell(); // the default constructor is needed for came_from (std::unordered_set<Cell, Cell>) // TODO check
 
     // overloaded operators
-    bool operator==(const Cell &other) const;
-    bool operator!=(const Cell &other) const;
+    bool operator == (const Cell& other) const;
+    bool operator != (const Cell& other) const;
     bool operator < (const Cell& other) const;
 
     // getter

@@ -14,6 +14,9 @@
 #include "Cell.h"
 #include "PriorityQueue.h"
 
+// graphics
+#include <SFML/Graphics.hpp>
+
 class Grid {
 public:
     // constructor

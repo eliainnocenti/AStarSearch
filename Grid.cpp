@@ -10,7 +10,7 @@ Grid::Grid(int width, int height, bool diagonal, bool random) : width(width), he
         directions = std::unordered_set<Cell> { Cell{-1,0}, Cell{-1,1}, Cell{0,1}, Cell{1,1}, Cell{1,0}, Cell{1,-1}, Cell{0,-1}, Cell{-1,-1} };
     else
         // Nord, Est, Sud, Ovest
-        directions = std::unordered_set<Cell> { Cell{0,1}, Cell{1,0}, Cell{0,-1}, Cell{-1,0}};
+        directions = std::unordered_set<Cell> { Cell{0,1}, Cell{1,0}, Cell{0,-1}, Cell{-1,0} };
 
     // a random map is generated
     if (random)
@@ -57,7 +57,7 @@ void Grid::findRandomPath() {
 }
 
 void Grid::aStarSearch(const Cell &start, const Cell &goal, std::unordered_map<Cell, Cell>& came_from, std::unordered_map<Cell, double>& cost_so_far) {
-
+    // TODO - put some comments
     PriorityQueue<Cell, double> frontier;
     frontier.put(start, 0);
 
@@ -152,6 +152,7 @@ std::vector<Cell> Grid::reconstructPath(const Cell &start, const Cell &goal, std
 }
 
 void Grid::printPath(const std::vector<Cell> &path, const Cell &start, const Cell &goal) const {
+    // TODO - put some comments, reorganize the code
     std::cout << "The path from: " << "{ x: " << start.getX() << ", y: " << start.getY() << " } " <<
               "to: " << "{ x: " << goal.getX() << ", y: " << goal.getY() << " } " << "is: " << std::endl;
     for (auto it : path)
@@ -159,6 +160,7 @@ void Grid::printPath(const std::vector<Cell> &path, const Cell &start, const Cel
 }
 
 void Grid::printInfo(const Cell &cell) const {
+    // TODO - put some comments, reorganize the code
     std::cout << "{ x: " << cell.getX() << ", y: " << cell.getY() << " }" << std::endl;
 }
 
@@ -230,6 +232,7 @@ void Grid::setAnObstacle(const Cell &cell) {
 }
 
 void Grid::printAllTheObstacles() const {
+    // TODO - put some comments, reorganize the code
     std::vector<Cell> obstacles = findAllTheObstacles();
     std::cout << "The obstacles are in positions: " << std::endl;
     for (int i = 0; i < obstacles.size(); i++)
@@ -238,6 +241,7 @@ void Grid::printAllTheObstacles() const {
 }
 
 std::vector<Cell> Grid::findAllTheObstacles() const {
+    // TODO - put some comments, reorganize the code
     std::vector<Cell> obstacles;
     for (int i = 0; i < height; i ++) {
         for (int j = 0; j < width; j++) {
