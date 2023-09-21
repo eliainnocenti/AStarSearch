@@ -7,7 +7,7 @@ int main() {
 
     srand(static_cast<unsigned>(time(nullptr)));
 
-    Grid grid(10,10, true);
+    Grid grid(30,30, true);
 
     Cell start(1,2);
     Cell goal(6,7);

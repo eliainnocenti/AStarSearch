@@ -7,7 +7,7 @@
 Grid::Grid(int width, int height, bool diagonal, bool random) : width(width), height(height), diagonalMovements(diagonal) {
     if (diagonal)
         // Nord, Nord-Est, Est, Sud-Est, Sud, Sud-Ovest, Ovest, Nord-Ovest
-        directions = std::unordered_set<Cell> { Cell{0,1}, Cell{1,1}, Cell{1,0}, Cell{1,-1}, Cell{0,-1}, Cell{-1,-1}, Cell{-1,0}, Cell{-1,1} };
+        directions = std::unordered_set<Cell> { Cell{-1,0}, Cell{-1,1}, Cell{0,1}, Cell{1,1}, Cell{1,0}, Cell{1,-1}, Cell{0,-1}, Cell{-1,-1} };
     else
         // Nord, Est, Sud, Ovest
         directions = std::unordered_set<Cell> { Cell{0,1}, Cell{1,0}, Cell{0,-1}, Cell{-1,0}};

@@ -6,7 +6,7 @@ project(AStarSearch)
 # c++ version
 set(CMAKE_CXX_STANDARD 17)
 
-set(HEADER_FILES PriorityQueue.h Grid.h Cell.h)
+set(HEADER_FILES PriorityQueue.h Grid.h Cell.h FrameOfReference.h)
 set(SOURCE_FILES main.cpp Grid.cpp Cell.cpp)
 
 add_executable(AStarSearch ${HEADER_FILES} ${SOURCE_FILES})
