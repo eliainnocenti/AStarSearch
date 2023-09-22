@@ -23,7 +23,7 @@ int main() {
     //
     sf::RenderWindow window(sf::VideoMode(windowWidth, windowHeight), "AStarSearch", sf::Style::Default);
 
-    window.setFramerateLimit(60);
+    //window.setFramerateLimit(60);
 
     while (window.isOpen()) {
         while (window.pollEvent(event)) {

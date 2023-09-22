@@ -9,8 +9,7 @@ GraphicInterface::GraphicInterface(Grid &grid) {
 }
 
 void GraphicInterface::handleEvent(sf::RenderWindow &window) {
-    // FIXME
-    grid->findPath();
+    // FIXME - to be optimized
     int x = grid->getWidth();
     int y = grid->getHeight();
     Cell* cell;
@@ -19,13 +18,13 @@ void GraphicInterface::handleEvent(sf::RenderWindow &window) {
             cell = grid->getCell(i,j);
             if (cell->getShape().getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window)))){
                 if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+                    grid->resetPathDrawn();
                     grid->updateCell(i, j);
                     grid->findPath();
                 }
             }
         }
     }
-    // FIXME - the cells of the old path has to be restored as free cell
 }
 
 void GraphicInterface::draw(sf::RenderWindow &window) {

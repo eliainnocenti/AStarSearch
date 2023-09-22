@@ -10,10 +10,14 @@ Grid::Grid(int width, int height, bool diagonal, bool random) : width(width), he
 
     if (diagonal)
         // Nord, Nord-Est, Est, Sud-Est, Sud, Sud-Ovest, Ovest, Nord-Ovest
-        directions = std::unordered_set<Cell> { Cell{-1,0, cellSide}, Cell{-1,1, cellSide}, Cell{0,1, cellSide}, Cell{1,1, cellSide}, Cell{1,0, cellSide}, Cell{1,-1, cellSide}, Cell{0,-1, cellSide}, Cell{-1,-1, cellSide} };
+        directions = std::unordered_set<Cell> { Cell{-1,0, cellSide}, Cell{-1,1, cellSide},
+                                                Cell{0,1, cellSide}, Cell{1,1, cellSide},
+                                                Cell{1,0, cellSide}, Cell{1,-1, cellSide},
+                                                Cell{0,-1, cellSide}, Cell{-1,-1, cellSide} };
     else
         // Nord, Est, Sud, Ovest
-        directions = std::unordered_set<Cell> { Cell{0,1, cellSide}, Cell{1,0, cellSide}, Cell{0,-1, cellSide}, Cell{-1,0, cellSide} };
+        directions = std::unordered_set<Cell> { Cell{0,1, cellSide}, Cell{1,0, cellSide},
+                                                Cell{0,-1, cellSide}, Cell{-1,0, cellSide} };
 
     // a random map is generated
     if (random) {
@@ -174,11 +178,11 @@ void Grid::printPath(const std::vector<Cell> &path, const Cell &start, const Cel
     std::cout << "The path from: " << "{ x: " << start.getX() << ", y: " << start.getY() << " } " <<
               "to: " << "{ x: " << goal.getX() << ", y: " << goal.getY() << " } " << "is: " << std::endl;
     for (auto it : path)
-        printPosInfo(it);
+        printPosition(it);
 }
 
-void Grid::printPosInfo(const Cell &cell) const {
-    // TODO - put some comments, reorganize the code
+void Grid::printPosition(const Cell &cell) const {
+    // TODO - put some comments
     std::cout << "{ x: " << cell.getX() << ", y: " << cell.getY() << " }" << std::endl;
 }
 
@@ -195,6 +199,7 @@ void Grid::printInfo(const Cell &cell) const {
 }
 
 void Grid::makeMap(int width, int height, unsigned int cellSide) {
+    // TODO - put some comments
     for (int i = 0; i < height; i ++) {
         map.emplace_back();
         for (int j = 0; j < width; j++) {
@@ -205,7 +210,8 @@ void Grid::makeMap(int width, int height, unsigned int cellSide) {
 }
 
 void Grid::makeRandomMap(int width, int height, unsigned int cellSide) {
-    // TODO -> some cell has to be obstacles (randomly)
+    // TODO - put some comments
+    // FIXME -> some cell has to be obstacles (randomly)
     for (int i = 0; i < height; i ++) {
         map.emplace_back();
         for (int j = 0; j < width; j++) {
@@ -219,6 +225,7 @@ void Grid::makeRandomMap(int width, int height, unsigned int cellSide) {
 }
 
 Cell *Grid::setRandomStart() {
+    // TODO - put some comments
     int randX = -1;
     int randY = -1;
 
@@ -235,6 +242,7 @@ Cell *Grid::setRandomStart() {
 }
 
 Cell *Grid::setRandomGoal() {
+    // TODO - put some comments
     int randX = -1;
     int randY = -1;
 
@@ -283,12 +291,12 @@ void Grid::printAllTheObstacles() const {
     std::vector<Cell> obstacles = findAllTheObstacles();
     std::cout << "The obstacles are in positions: " << std::endl;
     for (int i = 0; i < obstacles.size(); i++)
-        printPosInfo(obstacles[i]);
+        printPosition(obstacles[i]);
     std::cout << std::endl;
 }
 
 std::vector<Cell> Grid::findAllTheObstacles() const {
-    // TODO - put some comments, reorganize the code
+    // TODO - put some comments
     std::vector<Cell> obstacles;
     for (int i = 0; i < height; i ++) {
         for (int j = 0; j < width; j++) {
@@ -300,6 +308,7 @@ std::vector<Cell> Grid::findAllTheObstacles() const {
 }
 
 void Grid::printAllTheGrid() const {
+    // TODO - put some comments
     for (int i = 0; i < height; i ++) {
         for (int j = 0; j < width; j++) {
             printInfo(map[i][j]);
@@ -322,4 +331,11 @@ void Grid::updateCell(int x, int y) {
         map[x][y].resetAsFree();
     else if (!map[x][y].isTheStart() && !map[x][y].isTheGoal())
         map[x][y].setAsObstacle();
+}
+
+void Grid::resetPathDrawn() {
+    // TODO - put some comments
+    for (int i = 0; i < height; i++)
+        for (int j = 0; j < width; j++)
+            map[i][j].clean();
 }

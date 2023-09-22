@@ -14,13 +14,14 @@
 class GraphicInterface {
 public:
 
+    // constructor
     GraphicInterface(Grid& grid); // FIXME ?
 
-    void handleEvent(sf::RenderWindow &window); // TODO
+    void handleEvent(sf::RenderWindow &window); // FIXME
     void draw(sf::RenderWindow &window);
 
 private:
-    Grid* grid; // FIXME ?
+    Grid* grid; // FIXME ? - do i need a shared_ptr/unique_ptr
 };
 
 

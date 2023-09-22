@@ -52,6 +52,7 @@ public:
     // graphics
     void draw(sf::RenderWindow &window);
     void updateCell(int x, int y);
+    void resetPathDrawn(); // FIXME - can be optimized if it use the path vector instead of scrolling through the entire map
 
 private:
     int width, height; // size
@@ -86,10 +87,10 @@ private:
     // reconstruct
     std::vector<Cell> reconstructPath(const Cell& start, const Cell& goal, std::unordered_map<Cell, Cell>& came_from, std::unordered_map<Cell, double>& cost_so_far); // TODO check ugly path
     void printPath(const std::vector<Cell>& path, const Cell &start, const Cell &goal) const;
-    void printPosInfo(const Cell& cell) const;
+    void printPosition(const Cell& cell) const;
     void printInfo(const Cell& cell) const;
 
-    //graphics
+    // graphics
     void setThePath(const std::vector<Cell>& path);
 
     // extra

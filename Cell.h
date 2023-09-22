@@ -36,7 +36,7 @@ public:
     inline void resetTheStart() { start = false; }
     inline void resetTheGoal() { goal = false; }
     inline void resetAsFree() { obstacle = false; }
-    // TODO - reset path
+    inline void clean() { path = false; }
 
     // getter
     inline int getX() const { return x; }
@@ -63,8 +63,10 @@ private:
     bool start {false};
     bool goal {false};
     bool obstacle {false};
-    // TODO - add boolean attributes
     bool path {false};
+    // TODO - add boolean attributes
+        // visited
+        // evaluated
 
     // graphics
     void setColor();

@@ -42,6 +42,8 @@ void Cell::draw(sf::RenderWindow &window) {
 }
 
 void Cell::setColor() {
+    // FIXME - some attributes miss (visited, evaluated)
+    // TODO - chose RGB color (change some)
     if (obstacle)
         shape.setFillColor(sf::Color::Black);
     else if (start)
@@ -52,20 +54,4 @@ void Cell::setColor() {
         shape.setFillColor(sf::Color::Cyan);
     else
         shape.setFillColor(sf::Color{255,255,255}); // white
-
-    // TODO - chose RGB color
-    /*
-    if (obstacle)
-        shape.setFillColor(sf::Color{});
-    else if (start)
-        shape.setFillColor(sf::Color{});
-    else if (goal)
-        shape.setFillColor(sf::Color{});
-    else if (visited)
-        shape.setFillColor(sf::Color{});
-    else if (evaluated)
-        shape.setFillColor(sf::Color{});
-    else
-        shape.setFillColor(sf::Color{});
-        */
 }
