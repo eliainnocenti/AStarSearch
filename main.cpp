@@ -8,7 +8,7 @@ int main() {
 
     srand(static_cast<unsigned>(time(nullptr)));
 
-    Grid grid(30,30, true, true);
+    Grid grid(30,30, false, true);
 
     GraphicInterface interface(grid);
 
@@ -41,7 +41,7 @@ int main() {
         window.clear(sf::Color::White);
 
         // project update and draw
-        interface.handleEvent();
+        interface.handleEvent(window);
         interface.draw(window);
 
 

@@ -43,6 +43,7 @@ public:
     inline int getHeight() const { return height; }
     inline std::shared_ptr<Cell> getStartCell() const { return startCell; }
     inline std::shared_ptr<Cell> getGoalCell() const { return goalCell; }
+    inline Cell* getCell(int x, int y) { return &map[x][y]; }
 
     // extra
     void printAllTheObstacles() const;

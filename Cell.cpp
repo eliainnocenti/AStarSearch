@@ -42,7 +42,9 @@ void Cell::draw(sf::RenderWindow &window) {
 }
 
 void Cell::setColor() {
-    if (start)
+    if (obstacle)
+        shape.setFillColor(sf::Color::Black);
+    else if (start)
         shape.setFillColor(sf::Color::Green);
     else if (goal)
         shape.setFillColor(sf::Color::Red);

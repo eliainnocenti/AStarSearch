@@ -210,6 +210,9 @@ void Grid::makeRandomMap(int width, int height, unsigned int cellSide) {
         map.emplace_back();
         for (int j = 0; j < width; j++) {
             Cell cell(i, j, cellSide);
+            int randomNumber = rand() % 10;
+            if (randomNumber < 3)
+                cell.setAsObstacle();
             map[i].push_back(cell);
         }
     }

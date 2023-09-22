@@ -16,7 +16,7 @@ public:
 
     GraphicInterface(Grid& grid); // FIXME ?
 
-    void handleEvent(); // TODO
+    void handleEvent(sf::RenderWindow &window); // TODO
     void draw(sf::RenderWindow &window);
 
 private:

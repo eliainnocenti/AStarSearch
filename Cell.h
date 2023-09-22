@@ -41,6 +41,7 @@ public:
     // getter
     inline int getX() const { return x; }
     inline int getY() const { return y; }
+    inline sf::RectangleShape getShape() const { return shape; }
 
     // setter
     inline void setX(int x) { this->x = x; }
