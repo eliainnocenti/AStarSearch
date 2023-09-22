@@ -5,32 +5,41 @@
 #include "Grid.h"
 
 Grid::Grid(int width, int height, bool diagonal, bool random) : width(width), height(height), diagonalMovements(diagonal) {
+
+    cellSide = 800 / height;
+
     if (diagonal)
         // Nord, Nord-Est, Est, Sud-Est, Sud, Sud-Ovest, Ovest, Nord-Ovest
-        directions = std::unordered_set<Cell> { Cell{-1,0}, Cell{-1,1}, Cell{0,1}, Cell{1,1}, Cell{1,0}, Cell{1,-1}, Cell{0,-1}, Cell{-1,-1} };
+        directions = std::unordered_set<Cell> { Cell{-1,0, cellSide}, Cell{-1,1, cellSide}, Cell{0,1, cellSide}, Cell{1,1, cellSide}, Cell{1,0, cellSide}, Cell{1,-1, cellSide}, Cell{0,-1, cellSide}, Cell{-1,-1, cellSide} };
     else
         // Nord, Est, Sud, Ovest
-        directions = std::unordered_set<Cell> { Cell{0,1}, Cell{1,0}, Cell{0,-1}, Cell{-1,0} };
+        directions = std::unordered_set<Cell> { Cell{0,1, cellSide}, Cell{1,0, cellSide}, Cell{0,-1, cellSide}, Cell{-1,0, cellSide} };
 
     // a random map is generated
-    if (random)
-        makeRandomMap(width, height);
+    if (random) {
+        makeRandomMap(width, height, cellSide);
+        startCell = std::make_shared<Cell>(*setRandomStart());
+        goalCell = std::make_shared<Cell>(*setRandomGoal());
+    } else
+        makeMap(width, height, cellSide);
+
 }
 
-void Grid::findPath(const Cell &start, const Cell &goal) {
+void Grid::findPath() {
 
     // data structures for the algorithm
     std::unordered_map<Cell, Cell> came_from;
     std::unordered_map<Cell, double> cost_so_far;
 
     // A*Search
-    aStarSearch(start, goal, came_from, cost_so_far);
+    aStarSearch(*startCell, *goalCell, came_from, cost_so_far);
 
-    // Reconstruct the path
-    std::vector<Cell> path = reconstructPath(start, goal, came_from, cost_so_far);
+    // reconstruct the path
+    std::vector<Cell> path = reconstructPath(*startCell, *goalCell, came_from, cost_so_far);
 
-    // Print the path
-    printPath(path, start, goal);
+    // print the path
+    printPath(path, *startCell, *goalCell);
+    setThePath(path);
 }
 
 void Grid::findRandomPath() {
@@ -73,6 +82,8 @@ void Grid::aStarSearch(const Cell &start, const Cell &goal, std::unordered_map<C
             break;
         }
 
+        // FIXME - set the right cell attributes (for the graphics)
+
         std::vector<Cell> neighbors = this->neighbors(current);
 
         for (Cell next : neighbors) {
@@ -92,7 +103,7 @@ std::vector<Cell> Grid::neighbors(const Cell &cell) const {
     std::vector<Cell> results;
 
     for (Cell dir : directions) {
-        Cell next{cell.getX() + dir.getX(), cell.getY() + dir.getY()};
+        Cell next{cell.getX() + dir.getX(), cell.getY() + dir.getY(), cellSide};
         if (in_bounds(next) && passable(next)) {
             results.push_back(next);
         }
@@ -151,25 +162,54 @@ std::vector<Cell> Grid::reconstructPath(const Cell &start, const Cell &goal, std
     return path;
 }
 
+void Grid::setThePath(const std::vector<Cell> &path) {
+    for (auto it : path) {
+        if (!map[it.getX()][it.getY()].isTheStart() && !map[it.getX()][it.getY()].isTheGoal())
+            map[it.getX()][it.getY()].setAsPathElement();
+    }
+}
+
 void Grid::printPath(const std::vector<Cell> &path, const Cell &start, const Cell &goal) const {
     // TODO - put some comments, reorganize the code
     std::cout << "The path from: " << "{ x: " << start.getX() << ", y: " << start.getY() << " } " <<
               "to: " << "{ x: " << goal.getX() << ", y: " << goal.getY() << " } " << "is: " << std::endl;
     for (auto it : path)
-        printInfo(it);
+        printPosInfo(it);
 }
 
-void Grid::printInfo(const Cell &cell) const {
+void Grid::printPosInfo(const Cell &cell) const {
     // TODO - put some comments, reorganize the code
     std::cout << "{ x: " << cell.getX() << ", y: " << cell.getY() << " }" << std::endl;
 }
 
-void Grid::makeRandomMap(int width, int height) {
+void Grid::printInfo(const Cell &cell) const {
+    // TODO - put some comments, reorganize the code
+    if (cell.isTheStart())
+        std::cout << "{ x: " << cell.getX() << ", y: " << cell.getY() << " } " << "start" << std::endl;
+    else if (cell.isTheGoal())
+        std::cout << "{ x: " << cell.getX() << ", y: " << cell.getY() << " } " << "goal" << std::endl;
+    else if (cell.isAnObstacle())
+        std::cout << "{ x: " << cell.getX() << ", y: " << cell.getY() << " } " << "obstacle" << std::endl;
+    else if (cell.isAPathElement())
+        std::cout << "{ x: " << cell.getX() << ", y: " << cell.getY() << " } " << " path" << std::endl;
+}
+
+void Grid::makeMap(int width, int height, unsigned int cellSide) {
+    for (int i = 0; i < height; i ++) {
+        map.emplace_back();
+        for (int j = 0; j < width; j++) {
+            Cell cell(i * cellSide, j * cellSide, cellSide);
+            map[i].push_back(cell);
+        }
+    }
+}
+
+void Grid::makeRandomMap(int width, int height, unsigned int cellSide) {
     // TODO -> some cell has to be obstacles (randomly)
     for (int i = 0; i < height; i ++) {
         map.emplace_back();
         for (int j = 0; j < width; j++) {
-            Cell cell(i, j);
+            Cell cell(i, j, cellSide);
             map[i].push_back(cell);
         }
     }
@@ -186,7 +226,7 @@ Cell *Grid::setRandomStart() {
 
     map[randX][randY].setTheStart();
 
-    Cell* randStart = new Cell(randX, randY);
+    Cell* randStart = new Cell(randX, randY, cellSide);
 
     return randStart;
 }
@@ -202,25 +242,29 @@ Cell *Grid::setRandomGoal() {
 
     map[randX][randY].setTheGoal();
 
-    Cell* randGoal = new Cell(randX, randY);
+    Cell* randGoal = new Cell(randX, randY, cellSide);
 
     return randGoal;
 }
 
 void Grid::setTheStart(int x, int y) {
     map[x][y].setTheStart();
+    startCell = std::make_shared<Cell>(map[x][y]);
 }
 
 void Grid::setTheStart(const Cell &cell) {
     map[cell.getX()][cell.getY()].setTheStart();
+    startCell = std::make_shared<Cell>(map[cell.getX()][cell.getY()]);
 }
 
 void Grid::setTheGoal(int x, int y) {
     map[x][y].setTheGoal();
+    goalCell = std::make_shared<Cell>(map[x][y]);
 }
 
 void Grid::setTheGoal(const Cell &cell) {
     map[cell.getX()][cell.getY()].setTheGoal();
+    goalCell = std::make_shared<Cell>(map[cell.getX()][cell.getY()]);
 }
 
 void Grid::setAnObstacle(int x, int y) {
@@ -236,7 +280,7 @@ void Grid::printAllTheObstacles() const {
     std::vector<Cell> obstacles = findAllTheObstacles();
     std::cout << "The obstacles are in positions: " << std::endl;
     for (int i = 0; i < obstacles.size(); i++)
-        printInfo(obstacles[i]);
+        printPosInfo(obstacles[i]);
     std::cout << std::endl;
 }
 
@@ -250,4 +294,29 @@ std::vector<Cell> Grid::findAllTheObstacles() const {
         }
     }
     return obstacles;
+}
+
+void Grid::printAllTheGrid() const {
+    for (int i = 0; i < height; i ++) {
+        for (int j = 0; j < width; j++) {
+            printInfo(map[i][j]);
+        }
+    }
+}
+
+void Grid::draw(sf::RenderWindow &window) {
+    // TODO - put some comments
+    for (int i = 0; i < height; i ++) {
+        for (int j = 0; j < width; j++) {
+            map[i][j].draw(window);
+        }
+    }
+}
+
+void Grid::updateCell(int x, int y) {
+    // TODO - put some comments
+    if (map[x][y].isAnObstacle() && !map[x][y].isTheStart() && !map[x][y].isTheGoal())
+        map[x][y].resetAsFree();
+    else if (!map[x][y].isTheStart() && !map[x][y].isTheGoal())
+        map[x][y].setAsObstacle();
 }

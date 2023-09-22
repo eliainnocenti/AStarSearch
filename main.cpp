@@ -2,27 +2,52 @@
 
 #include "Grid.h"
 #include "Cell.h"
+#include "GraphicInterface.h"
 
 int main() {
 
     srand(static_cast<unsigned>(time(nullptr)));
 
-    Grid grid(30,30, true);
+    Grid grid(30,30, true, true);
 
-    Cell start(1,2);
-    Cell goal(6,7);
+    GraphicInterface interface(grid);
 
-    grid.setAnObstacle(3,1);
-    grid.setAnObstacle(3,2);
-    grid.setAnObstacle(3,3);
-    grid.setAnObstacle(3,4);
-    grid.setAnObstacle(3,5);
+    sf::Event event{};
 
-    //grid.printAllTheObstacles(); // for debugging
+    sf::VideoMode desktop = sf::VideoMode::getDesktopMode();
 
-    //grid.findPath(start, goal);
+    //
+    int windowWidth = 800;
+    int windowHeight = 800;
 
-    grid.findRandomPath();
+    //
+    sf::RenderWindow window(sf::VideoMode(windowWidth, windowHeight), "AStarSearch", sf::Style::Default);
+
+    window.setFramerateLimit(60);
+
+    while (window.isOpen()) {
+        while (window.pollEvent(event)) {
+            if (event.type == sf::Event::Closed)
+                window.close();
+            if (event.type == sf::Event::KeyPressed) {
+                if (event.key.code == sf::Keyboard::Escape)
+                    window.close();
+                if (event.key.code == sf::Keyboard::Space)
+                    grid.findPath();
+            }
+        }
+
+        // Clearing the old frame and preparing for drawing the new one
+        window.clear(sf::Color::White);
+
+        // project update and draw
+        interface.handleEvent();
+        interface.draw(window);
+
+
+        // Bring to screen and display the new frame just drawn
+        window.display();
+    }
 
     return 0;
 }

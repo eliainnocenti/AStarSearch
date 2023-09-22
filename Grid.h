@@ -23,7 +23,7 @@ public:
     explicit Grid(int width, int height, bool diagonal = false, bool random = true);
 
     // A*Search
-    void findPath(const Cell& start, const Cell& goal);
+    void findPath();
     void findRandomPath();
 
     // set the start
@@ -41,21 +41,36 @@ public:
     // getter
     inline int getWidth() const { return width; }
     inline int getHeight() const { return height; }
+    inline std::shared_ptr<Cell> getStartCell() const { return startCell; }
+    inline std::shared_ptr<Cell> getGoalCell() const { return goalCell; }
 
     // extra
     void printAllTheObstacles() const;
+    void printAllTheGrid() const;
+
+    // graphics
+    void draw(sf::RenderWindow &window);
+    void updateCell(int x, int y);
 
 private:
     int width, height; // size
 
     std::vector<std::vector<Cell>> map; // main data structure
 
+    // TODO - put some comments
+    std::shared_ptr<Cell> startCell {nullptr};
+    std::shared_ptr<Cell> goalCell {nullptr};
+
     // directions
     bool diagonalMovements;
     std::unordered_set<Cell> directions;
 
+    // graphics
+    unsigned int cellSide;
+
     // mapmaker
-    void makeRandomMap(int width, int height); // TODO
+    void makeMap(int width, int height, unsigned int cellSide);
+    void makeRandomMap(int width, int height, unsigned int cellSide); // TODO
     Cell* setRandomStart();
     Cell* setRandomGoal();
 
@@ -65,12 +80,16 @@ private:
     std::vector<Cell> neighbors(const Cell& cell) const;
     double heuristic(const Cell& from_node, const Cell& to_node) const;
     double cost(const Cell& from_node, const Cell& to_node) const; // TODO - possible GridWithWeights implementation
-    void aStarSearch(const Cell& start, const Cell& goal, std::unordered_map<Cell, Cell>& came_from, std::unordered_map<Cell, double>& cost_so_far);
+    void aStarSearch(const Cell& start, const Cell& goal, std::unordered_map<Cell, Cell>& came_from, std::unordered_map<Cell, double>& cost_so_far); // FIXME
 
     // reconstruct
     std::vector<Cell> reconstructPath(const Cell& start, const Cell& goal, std::unordered_map<Cell, Cell>& came_from, std::unordered_map<Cell, double>& cost_so_far); // TODO check ugly path
     void printPath(const std::vector<Cell>& path, const Cell &start, const Cell &goal) const;
+    void printPosInfo(const Cell& cell) const;
     void printInfo(const Cell& cell) const;
+
+    //graphics
+    void setThePath(const std::vector<Cell>& path);
 
     // extra
     std::vector<Cell> findAllTheObstacles() const;
