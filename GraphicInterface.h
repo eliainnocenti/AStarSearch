@@ -13,7 +13,6 @@
 
 class GraphicInterface {
 public:
-
     // constructor
     GraphicInterface(Grid& grid); // FIXME ?
 

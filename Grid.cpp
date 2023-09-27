@@ -4,7 +4,7 @@
 
 #include "Grid.h"
 
-Grid::Grid(int width, int height, bool diagonal, bool random) : width(width), height(height), diagonalMovements(diagonal) {
+Grid::Grid(int width, int height, bool diagonal, bool random, bool constCost) : width(width), height(height), diagonalMovements(diagonal) {
 
     cellSide = 800 / height;
 
@@ -22,8 +22,15 @@ Grid::Grid(int width, int height, bool diagonal, bool random) : width(width), he
     // a random map is generated
     if (random) {
         makeRandomMap(width, height, cellSide);
-        startCell = std::make_shared<Cell>(*setRandomStart());
-        goalCell = std::make_shared<Cell>(*setRandomGoal());
+        // pointers updated with random start and goal
+        if (!isThereAStart()) {
+            std::array<int, 2> randStart = setRandomStart();
+            startCell = std::make_shared<Cell>(map[randStart[0]][randStart[1]]);
+        }
+        if (!isThereAGoal()) {
+            std::array<int, 2> randGoal = setRandomGoal();
+            goalCell = std::make_shared<Cell>(map[randGoal[0]][randGoal[1]]);
+        }
     } else
         makeMap(width, height, cellSide);
 
@@ -42,31 +49,10 @@ void Grid::findPath() {
     std::vector<Cell> path = reconstructPath(*startCell, *goalCell, came_from, cost_so_far);
 
     // print the path
-    printPath(path, *startCell, *goalCell);
+    //printPath(path, *startCell, *goalCell);
+
+    // set the path
     setThePath(path);
-}
-
-void Grid::findRandomPath() {
-
-    // data structures for the algorithm
-    std::unordered_map<Cell, Cell> came_from;
-    std::unordered_map<Cell, double> cost_so_far;
-
-    // local variables
-    Cell* start = setRandomStart();
-    Cell* goal = setRandomGoal();
-
-    // A*Search
-    aStarSearch(*start, *goal, came_from, cost_so_far);
-
-    // Reconstruct the path
-    std::vector<Cell> path = reconstructPath(*start, *goal, came_from, cost_so_far);
-
-    // Print the path
-    printPath(path, *start, *goal);
-
-    delete start;
-    delete goal;
 }
 
 void Grid::aStarSearch(const Cell &start, const Cell &goal, std::unordered_map<Cell, Cell>& came_from, std::unordered_map<Cell, double>& cost_so_far) {
@@ -103,6 +89,8 @@ void Grid::aStarSearch(const Cell &start, const Cell &goal, std::unordered_map<C
 }
 
 std::vector<Cell> Grid::neighbors(const Cell &cell) const {
+
+    // FIXME - diagonal movement
 
     std::vector<Cell> results;
 
@@ -203,7 +191,7 @@ void Grid::makeMap(int width, int height, unsigned int cellSide) {
     for (int i = 0; i < height; i ++) {
         map.emplace_back();
         for (int j = 0; j < width; j++) {
-            Cell cell(i * cellSide, j * cellSide, cellSide);
+            Cell cell(i, j, cellSide);
             map[i].push_back(cell);
         }
     }
@@ -224,8 +212,10 @@ void Grid::makeRandomMap(int width, int height, unsigned int cellSide) {
     }
 }
 
-Cell *Grid::setRandomStart() {
+std::array<int, 2> Grid::setRandomStart() {
     // TODO - put some comments
+    std::array<int, 2> randStart;
+
     int randX = -1;
     int randY = -1;
 
@@ -236,13 +226,16 @@ Cell *Grid::setRandomStart() {
 
     map[randX][randY].setTheStart();
 
-    Cell* randStart = new Cell(randX, randY, cellSide);
+    randStart[0] = randX;
+    randStart[1] = randY;
 
     return randStart;
 }
 
-Cell *Grid::setRandomGoal() {
+std::array<int, 2> Grid::setRandomGoal() {
     // TODO - put some comments
+    std::array<int, 2> randGoal;
+
     int randX = -1;
     int randY = -1;
 
@@ -253,7 +246,8 @@ Cell *Grid::setRandomGoal() {
 
     map[randX][randY].setTheGoal();
 
-    Cell* randGoal = new Cell(randX, randY, cellSide);
+    randGoal[0] = randX;
+    randGoal[1] = randY;
 
     return randGoal;
 }
@@ -338,4 +332,16 @@ void Grid::resetPathDrawn() {
     for (int i = 0; i < height; i++)
         for (int j = 0; j < width; j++)
             map[i][j].clean();
+}
+
+bool Grid::isThereAStart() const {
+    if (startCell != nullptr)
+        return true;
+    return false;
+}
+
+bool Grid::isThereAGoal() const {
+    if (goalCell != nullptr)
+        return true;
+    return false;
 }

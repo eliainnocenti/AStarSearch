@@ -22,13 +22,13 @@ public:
     bool operator != (const Cell& other) const;
     bool operator < (const Cell& other) const;
 
-    // getter
+    // getters
     inline bool isTheStart() const { return start; }
     inline bool isTheGoal() const { return goal; }
     inline bool isAnObstacle() const { return obstacle; }
     inline bool isAPathElement() const { return path; }
 
-    // setter
+    // setters
     inline void setTheStart() { start = true; }
     inline void setTheGoal() { goal = true; }
     inline void setAsObstacle() { obstacle = true; }
@@ -38,12 +38,12 @@ public:
     inline void resetAsFree() { obstacle = false; }
     inline void clean() { path = false; }
 
-    // getter
+    // getters
     inline int getX() const { return x; }
     inline int getY() const { return y; }
     inline sf::RectangleShape getShape() const { return shape; }
 
-    // setter
+    // setters
     inline void setX(int x) { this->x = x; }
     inline void setY(int y) { this->y = y; }
 

@@ -10,17 +10,21 @@ int main() {
 
     Grid grid(30,30, false, true);
 
+    //grid.setTheStart(1,2);
+    //grid.setTheGoal(25,20);
+
     GraphicInterface interface(grid);
 
     sf::Event event{};
 
-    sf::VideoMode desktop = sf::VideoMode::getDesktopMode();
+    // FIXME - graphic settings (videomode and fullscreen)
 
-    //
+    //sf::VideoMode desktop = sf::VideoMode::getDesktopMode();
+
     int windowWidth = 800;
     int windowHeight = 800;
 
-    //
+    // TODO - put some comments
     sf::RenderWindow window(sf::VideoMode(windowWidth, windowHeight), "AStarSearch", sf::Style::Default);
 
     //window.setFramerateLimit(60);
@@ -44,10 +48,7 @@ int main() {
         interface.handleEvent(window);
         interface.draw(window);
 
-
         // Bring to screen and display the new frame just drawn
         window.display();
     }
-
-    return 0;
 }

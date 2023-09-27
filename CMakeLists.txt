@@ -16,3 +16,21 @@ include_directories(/usr/local/include)
 find_package(SFML 2.5 COMPONENTS system window graphics network audio REQUIRED) # do i need SFML 2.6?
 include_directories(${SFML_INCLUDE_DIRS})
 target_link_libraries(AStarSearch sfml-system sfml-window sfml-graphics sfml-network sfml-audio)
+
+#if (WIN32)
+#    set(BUILD_SHARED_LIBS OFF)
+#
+#    # set SFML library
+#    set(SFML_STATIC_LIBRARIES TRUE)
+#    set(SFML_DIR SFML/lib/cmake/SFML)
+#    find_package(SFML COMPONENTS system window graphics audio REQUIRED)
+#    include_directories(SFML/include)
+
+#    add_library(core Cell.cpp Cell.h Grid.cpp Grid.h UserInteraction.cpp UserInteraction.h)
+
+#    target_link_libraries(core PUBLIC sfml-system sfml-window sfml-graphics sfml-audio)
+#    set(CMAKE_EXE_LINKER_FLAGS "-static")
+
+#    add_executable(AStarSearch main.cpp Grid.cpp Grid.h Cell.cpp Cell.h UserInteraction.cpp UserInteraction.h)
+#    target_link_libraries(AStarSearch PUBLIC core)
+#endif()

@@ -8,6 +8,8 @@
 #include <utility>
 #include <queue>
 
+// TODO - put some comments
+
 template<typename T, typename priority_t>
 struct PriorityQueue {
 

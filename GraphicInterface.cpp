@@ -9,6 +9,7 @@ GraphicInterface::GraphicInterface(Grid &grid) {
 }
 
 void GraphicInterface::handleEvent(sf::RenderWindow &window) {
+    grid->findPath();
     // FIXME - to be optimized
     int x = grid->getWidth();
     int y = grid->getHeight();

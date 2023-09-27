@@ -20,11 +20,10 @@
 class Grid {
 public:
     // constructor
-    explicit Grid(int width, int height, bool diagonal = false, bool random = true);
+    explicit Grid(int width, int height, bool diagonal = false, bool random = true, bool constCost = true);
 
     // A*Search
     void findPath();
-    void findRandomPath();
 
     // set the start
     void setTheStart(int x, int y);
@@ -38,7 +37,7 @@ public:
     void setAnObstacle(int x, int y);
     void setAnObstacle(const Cell& cell);
 
-    // getter
+    // getters
     inline int getWidth() const { return width; }
     inline int getHeight() const { return height; }
     inline std::shared_ptr<Cell> getStartCell() const { return startCell; }
@@ -58,6 +57,7 @@ private:
     int width, height; // size
 
     std::vector<std::vector<Cell>> map; // main data structure
+    //std::unordered_map<std::pair<Cell, Cell>, double> weights; // TODO
 
     // TODO - put some comments
     std::shared_ptr<Cell> startCell {nullptr};
@@ -73,15 +73,20 @@ private:
     // mapmaker
     void makeMap(int width, int height, unsigned int cellSide);
     void makeRandomMap(int width, int height, unsigned int cellSide); // TODO
-    Cell* setRandomStart();
-    Cell* setRandomGoal();
+    std::array<int, 2> setRandomStart();
+    std::array<int, 2> setRandomGoal();
 
     // search
     bool in_bounds(const Cell& cell) const;
     bool passable(const Cell& cell) const;
-    std::vector<Cell> neighbors(const Cell& cell) const;
+    std::vector<Cell> neighbors(const Cell& cell) const; // FIXME - diagonal movement is not allowed through walls
     double heuristic(const Cell& from_node, const Cell& to_node) const;
     double cost(const Cell& from_node, const Cell& to_node) const; // TODO - possible GridWithWeights implementation
+                                                                   // si può utilizzare un dizionario che mette in relazione
+                                                                   // un arco e il relativo costo
+                                                                   // la funzione cost() ritornerebbe il costo dati
+                                                                   // i nodi e la struttura dati
+                                                                   // std::unordered_map<std::pair<Cell,Cell>,double> weights
     void aStarSearch(const Cell& start, const Cell& goal, std::unordered_map<Cell, Cell>& came_from, std::unordered_map<Cell, double>& cost_so_far); // FIXME
 
     // reconstruct
@@ -95,6 +100,8 @@ private:
 
     // extra
     std::vector<Cell> findAllTheObstacles() const;
+    bool isThereAStart() const;
+    bool isThereAGoal() const;
 
     // reset
     void reset(); // TODO
