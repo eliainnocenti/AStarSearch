@@ -20,7 +20,7 @@ public:
     void draw(sf::RenderWindow &window);
 
 private:
-    Grid* grid; // FIXME ? - do i need a shared_ptr/unique_ptr
+    std::unique_ptr<Grid> grid;
 };
 
 

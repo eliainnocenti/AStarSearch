@@ -6,6 +6,8 @@
 
 int main() {
 
+    // TODO - put some comments
+
     srand(static_cast<unsigned>(time(nullptr)));
 
     Grid grid(30,30, false, true);
@@ -24,7 +26,6 @@ int main() {
     int windowWidth = 800;
     int windowHeight = 800;
 
-    // TODO - put some comments
     sf::RenderWindow window(sf::VideoMode(windowWidth, windowHeight), "AStarSearch", sf::Style::Default);
 
     //window.setFramerateLimit(60);
@@ -41,14 +42,14 @@ int main() {
             }
         }
 
-        // Clearing the old frame and preparing for drawing the new one
+        // clearing the old frame and preparing for drawing the new one
         window.clear(sf::Color::White);
 
-        // project update and draw
+        // update project and draw
         interface.handleEvent(window);
         interface.draw(window);
 
-        // Bring to screen and display the new frame just drawn
+        // bring to screen and display the new frame just drawn
         window.display();
     }
 }

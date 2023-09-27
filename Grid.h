@@ -59,7 +59,7 @@ private:
     std::vector<std::vector<Cell>> map; // main data structure
     //std::unordered_map<std::pair<Cell, Cell>, double> weights; // TODO
 
-    // TODO - put some comments
+    // pointers to the Start and the Goal
     std::shared_ptr<Cell> startCell {nullptr};
     std::shared_ptr<Cell> goalCell {nullptr};
 
@@ -87,11 +87,12 @@ private:
                                                                    // la funzione cost() ritornerebbe il costo dati
                                                                    // i nodi e la struttura dati
                                                                    // std::unordered_map<std::pair<Cell,Cell>,double> weights
+                                                                   // le celle devono però essere adiacenti (deve esistere l'arco)
     void aStarSearch(const Cell& start, const Cell& goal, std::unordered_map<Cell, Cell>& came_from, std::unordered_map<Cell, double>& cost_so_far); // FIXME
 
     // reconstruct
     std::vector<Cell> reconstructPath(const Cell& start, const Cell& goal, std::unordered_map<Cell, Cell>& came_from, std::unordered_map<Cell, double>& cost_so_far); // TODO check ugly path
-    void printPath(const std::vector<Cell>& path, const Cell &start, const Cell &goal) const;
+    void printPath(const std::vector<Cell>& path, const Cell& start, const Cell& goal) const;
     void printPosition(const Cell& cell) const;
     void printInfo(const Cell& cell) const;
 

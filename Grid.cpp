@@ -6,22 +6,23 @@
 
 Grid::Grid(int width, int height, bool diagonal, bool random, bool constCost) : width(width), height(height), diagonalMovements(diagonal) {
 
-    cellSide = 800 / height;
+    cellSide = 800 / height; //FIXME
 
     if (diagonal)
         // Nord, Nord-Est, Est, Sud-Est, Sud, Sud-Ovest, Ovest, Nord-Ovest
         directions = std::unordered_set<Cell> { Cell{-1,0, cellSide}, Cell{-1,1, cellSide},
-                                                Cell{0,1, cellSide}, Cell{1,1, cellSide},
-                                                Cell{1,0, cellSide}, Cell{1,-1, cellSide},
+                                                Cell{0,1, cellSide},  Cell{1,1, cellSide},
+                                                Cell{1,0, cellSide},  Cell{1,-1, cellSide},
                                                 Cell{0,-1, cellSide}, Cell{-1,-1, cellSide} };
     else
         // Nord, Est, Sud, Ovest
-        directions = std::unordered_set<Cell> { Cell{0,1, cellSide}, Cell{1,0, cellSide},
+        directions = std::unordered_set<Cell> { Cell{0,1, cellSide},  Cell{1,0, cellSide},
                                                 Cell{0,-1, cellSide}, Cell{-1,0, cellSide} };
 
-    // a random map is generated
     if (random) {
+        // a random map is generated
         makeRandomMap(width, height, cellSide);
+
         // pointers updated with random start and goal
         if (!isThereAStart()) {
             std::array<int, 2> randStart = setRandomStart();
@@ -89,6 +90,7 @@ void Grid::aStarSearch(const Cell &start, const Cell &goal, std::unordered_map<C
 }
 
 std::vector<Cell> Grid::neighbors(const Cell &cell) const {
+    // TODO - put some comments
 
     // FIXME - diagonal movement
 
@@ -128,6 +130,7 @@ double Grid::cost(const Cell &from_node, const Cell &to_node) const {
 }
 
 double Grid::heuristic(const Cell &from_node, const Cell &to_node) const {
+    // TODO - put some comments
     if (diagonalMovements) {
         // euclidean distance
         double dx = from_node.getX() - to_node.getX();
@@ -139,6 +142,7 @@ double Grid::heuristic(const Cell &from_node, const Cell &to_node) const {
 }
 
 std::vector<Cell> Grid::reconstructPath(const Cell &start, const Cell &goal, std::unordered_map<Cell, Cell>& came_from, std::unordered_map<Cell, double>& cost_so_far) {
+    // TODO - put some comments
     std::vector<Cell> path;
     Cell current = goal;
     if (came_from.find(goal) == came_from.end()) {
@@ -155,6 +159,7 @@ std::vector<Cell> Grid::reconstructPath(const Cell &start, const Cell &goal, std
 }
 
 void Grid::setThePath(const std::vector<Cell> &path) {
+    // TODO - put some comments
     for (auto it : path) {
         if (!map[it.getX()][it.getY()].isTheStart() && !map[it.getX()][it.getY()].isTheGoal())
             map[it.getX()][it.getY()].setAsPathElement();
@@ -205,7 +210,7 @@ void Grid::makeRandomMap(int width, int height, unsigned int cellSide) {
         for (int j = 0; j < width; j++) {
             Cell cell(i, j, cellSide);
             int randomNumber = rand() % 10;
-            if (randomNumber < 3)
+            if (randomNumber < 2)
                 cell.setAsObstacle();
             map[i].push_back(cell);
         }
@@ -335,12 +340,14 @@ void Grid::resetPathDrawn() {
 }
 
 bool Grid::isThereAStart() const {
+    // TODO - put some comments
     if (startCell != nullptr)
         return true;
     return false;
 }
 
 bool Grid::isThereAGoal() const {
+    // TODO - put some comments
     if (goalCell != nullptr)
         return true;
     return false;
