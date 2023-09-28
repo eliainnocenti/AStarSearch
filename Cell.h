@@ -27,16 +27,18 @@ public:
     inline bool isTheGoal() const { return goal; }
     inline bool isAnObstacle() const { return obstacle; }
     inline bool isAPathElement() const { return path; }
+    inline bool isVisited() const { return visited; }
 
     // setters
     inline void setTheStart() { start = true; }
     inline void setTheGoal() { goal = true; }
     inline void setAsObstacle() { obstacle = true; }
     inline void setAsPathElement() { path = true; }
+    inline void setAsVisited() { visited = true; }
     inline void resetTheStart() { start = false; }
     inline void resetTheGoal() { goal = false; }
     inline void resetAsFree() { obstacle = false; }
-    inline void clean() { path = false; }
+    inline void clean() { path = false; visited = false; }
 
     // getters
     inline int getX() const { return x; }
@@ -51,7 +53,7 @@ public:
     void draw(sf::RenderWindow &window);
 
 private:
-    int x, y; //position
+    int x, y; // position
 
     // graphics attributes
     unsigned int side;
@@ -64,8 +66,8 @@ private:
     bool goal {false};
     bool obstacle {false};
     bool path {false};
+    bool visited {false};
     // TODO - add boolean attributes
-        // visited
         // evaluated
 
     // graphics

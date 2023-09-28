@@ -9,13 +9,14 @@ GraphicInterface::GraphicInterface(Grid &grid) {
 }
 
 void GraphicInterface::handleEvent(sf::RenderWindow &window) {
+    // TODO - put some comments
     grid->findPath();
-    // FIXME - to be optimized
-    int x = grid->getWidth();
-    int y = grid->getHeight();
+    // FIXME - to be optimized (mouse click especially)
+    unsigned int width = grid->getWidth();
+    unsigned int height = grid->getHeight();
     Cell* cell;
-    for (int i = 0; i < x; i++){
-        for (int j = 0; j < y; j++){
+    for (int i = 0; i < width; i++){
+        for (int j = 0; j < height; j++){
             cell = grid->getCell(i,j);
             if (cell->getShape().getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window)))){
                 if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
@@ -26,6 +27,10 @@ void GraphicInterface::handleEvent(sf::RenderWindow &window) {
             }
         }
     }
+
+    // FIXME - reset() function
+    //if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+        //grid.reset();
 }
 
 void GraphicInterface::draw(sf::RenderWindow &window) {

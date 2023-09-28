@@ -5,6 +5,8 @@
 #ifndef ASTARSEARCH_FRAMEOFREFERENCE_H
 #define ASTARSEARCH_FRAMEOFREFERENCE_H
 
+// TODO - delete this header and put all into the README file
+
 /*
 
       (0,0)                                                    y

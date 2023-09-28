@@ -51,7 +51,9 @@ void Cell::setColor() {
     else if (goal)
         shape.setFillColor(sf::Color::Red);
     else if (path)
+        shape.setFillColor(sf::Color::Blue);
+    else if (visited)
         shape.setFillColor(sf::Color::Cyan);
     else
-        shape.setFillColor(sf::Color{255,255,255}); // white
+        shape.setFillColor(sf::Color::White);
 }
