@@ -21,7 +21,7 @@ public:
     bool operator == (const Cell& other) const;
     bool operator != (const Cell& other) const;
     bool operator < (const Cell& other) const;
-    Cell& operator = (const Cell& other); // FIXME ?
+    Cell& operator = (const Cell& other);
 
     // getters
     inline bool isTheStart() const { return start; }

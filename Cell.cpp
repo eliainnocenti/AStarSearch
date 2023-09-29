@@ -35,7 +35,6 @@ bool Cell::operator < (const Cell &other) const {
 }
 
 Cell &Cell::operator = (const Cell &other) {
-    // TODO - put some comments
     if (this != &other) {
         x = other.x;
         y = other.y;
@@ -45,19 +44,21 @@ Cell &Cell::operator = (const Cell &other) {
         obstacle = other.obstacle;
         path = other.path;
         visited = other.visited;
-        //non copio la sprite
+        // the sprite is not copied, it is not needed
     }
     return *this;
 }
 
 void Cell::draw(sf::RenderWindow &window) {
-    // TODO - put some comments
+    // draw function
+
     setColor();
     window.draw(shape);
 }
 
 void Cell::setColor() {
-    // TODO - chose RGB color (change some?)
+    // sets the right color for each cell based on its quality
+
     if (obstacle)
         shape.setFillColor(sf::Color::Black);
     else if (start)

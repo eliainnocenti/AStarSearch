@@ -55,18 +55,19 @@ void Grid::findPath() {
     // A*Search
     aStarSearch(*startCell, *goalCell, came_from, cost_so_far);
 
-    // reconstruct the path
+    // reconstructs the path
     std::vector<Cell> path = reconstructPath(*startCell, *goalCell, came_from, cost_so_far);
 
-    // print the path
+    // prints the path
     //printPath(path, *startCell, *goalCell);
 
-    // set the path
+    // sets the path
     setThePath(path);
 }
 
 void Grid::aStarSearch(const Cell &start, const Cell &goal, std::unordered_map<Cell, Cell>& came_from, std::unordered_map<Cell, double>& cost_so_far) {
     // TODO - put some comments
+
     PriorityQueue<Cell, double> frontier;
     frontier.put(start, 0);
 
@@ -99,6 +100,7 @@ void Grid::aStarSearch(const Cell &start, const Cell &goal, std::unordered_map<C
 std::vector<Cell> Grid::neighbors(const Cell &cell) {
     // TODO - put some comments
 
+    //---------DEBUG----------------------------------------------------------------------------------------------------
     // FIXME - diagonal movement
 
     std::vector<Cell> results;
@@ -114,6 +116,8 @@ std::vector<Cell> Grid::neighbors(const Cell &cell) {
             }
         }
     }
+
+    //------------------------------------------------------------------------------------------------------------------
 
     // TODO check - ugly paths
     if ((cell.getX() + cell.getY()) % 2 == 0) {
@@ -134,6 +138,7 @@ bool Grid::in_bounds(const int x, const int y) const {
 }
 
 bool Grid::passable(const Cell &cell) const {
+    // returns true if the cell is not an obstacles, false otherwise
 
     //---------DEBUG----------------------------------------------------------------------------------------------------
     // FIXME
@@ -154,7 +159,8 @@ double Grid::cost(const Cell &from_node, const Cell &to_node) {
 }
 
 double Grid::heuristic(const Cell &from_node, const Cell &to_node) const {
-    // TODO - put some comments
+    // a heuristic function is a function that estimates the cost from a given node to the goal node in a graph or search space
+
     if (diagonalMovements) {
         // euclidean distance
         double dx = from_node.getX() - to_node.getX();
@@ -166,7 +172,8 @@ double Grid::heuristic(const Cell &from_node, const Cell &to_node) const {
 }
 
 std::vector<Cell> Grid::reconstructPath(const Cell &start, const Cell &goal, std::unordered_map<Cell, Cell>& came_from, std::unordered_map<Cell, double>& cost_so_far) {
-    // TODO - put some comments
+    // returns the cells that are part of the path
+
     std::vector<Cell> path;
     Cell current = goal;
     if (came_from.find(goal) == came_from.end()) {
@@ -176,6 +183,7 @@ std::vector<Cell> Grid::reconstructPath(const Cell &start, const Cell &goal, std
         path.push_back(current);
         current = came_from[current];
     }
+
     // optional
     path.push_back(start);
     std::reverse(path.begin(), path.end());
@@ -183,17 +191,21 @@ std::vector<Cell> Grid::reconstructPath(const Cell &start, const Cell &goal, std
 }
 
 void Grid::setThePath(const std::vector<Cell> &path) {
-    // TODO - put some comments
+    // highlights the path by marking the cells of the path itself
+
     for (const auto& it : path) {
-        if (!map[it.getX()][it.getY()].isTheStart() && !map[it.getX()][it.getY()].isTheGoal())
+        if (!map[it.getX()][it.getY()].isTheStart() && !map[it.getX()][it.getY()].isTheGoal()) {
             if (map[it.getX()][it.getY()].isVisited())
                 map[it.getX()][it.getY()].clean();
-            map[it.getX()][it.getY()].setAsPathElement();
+
+            map[it.getX()][it.getY()].setAsPathElement(); // mark the path cells
+        }
     }
 }
 
 void Grid::printPath(const std::vector<Cell> &path, const Cell &start, const Cell &goal) const {
-    // TODO - put some comments, reorganize the code
+    // service function that prints path elements
+
     std::cout << "The path from: " << "{ x: " << start.getX() << ", y: " << start.getY() << " } " <<
               "to: " << "{ x: " << goal.getX() << ", y: " << goal.getY() << " } " << "is: " << std::endl;
     for (const auto& it : path)
@@ -201,12 +213,13 @@ void Grid::printPath(const std::vector<Cell> &path, const Cell &start, const Cel
 }
 
 void Grid::printPosition(const Cell &cell) {
-    // TODO - put some comments
+    // service function that prints the position of a cell
     std::cout << "{ x: " << cell.getX() << ", y: " << cell.getY() << " }" << std::endl;
 }
 
 void Grid::printInfo(const Cell &cell) {
-    // TODO - put some comments, reorganize the code
+    // service function that prints the position of a cell and its quality
+
     if (cell.isTheStart())
         std::cout << "{ x: " << cell.getX() << ", y: " << cell.getY() << " } " << "start" << std::endl;
     else if (cell.isTheGoal())
@@ -218,7 +231,8 @@ void Grid::printInfo(const Cell &cell) {
 }
 
 void Grid::makeMap(unsigned int width, unsigned int height, unsigned int cellSide) {
-    // TODO - put some comments
+    // creates a map
+
     for (int i = 0; i < height; i ++) {
         map.emplace_back();
         for (int j = 0; j < width; j++) {
@@ -229,7 +243,8 @@ void Grid::makeMap(unsigned int width, unsigned int height, unsigned int cellSid
 }
 
 void Grid::makeRandomMap(unsigned int width, unsigned int height, unsigned int cellSide) {
-    // TODO - put some comments
+    // creates a map and sets the obstacles randomly
+
     for (int i = 0; i < height; i ++) {
         map.emplace_back();
         for (int j = 0; j < width; j++) {
@@ -243,7 +258,8 @@ void Grid::makeRandomMap(unsigned int width, unsigned int height, unsigned int c
 }
 
 std::array<int, 2> Grid::setRandomStart() {
-    // TODO - put some comments
+    // sets a random start. it returns the start position
+
     std::array<int, 2> randStart {};
 
     unsigned int randX;
@@ -254,7 +270,7 @@ std::array<int, 2> Grid::setRandomStart() {
         randY = rand() % width;
     } while (map[randX][randY].isAnObstacle() || map[randX][randY].isTheGoal());
 
-    map[randX][randY].setTheStart();
+    map[randX][randY].setTheStart(); // sets the right cell in the map as the Start
 
     randStart[0] = randX;
     randStart[1] = randY;
@@ -263,7 +279,8 @@ std::array<int, 2> Grid::setRandomStart() {
 }
 
 std::array<int, 2> Grid::setRandomGoal() {
-    // TODO - put some comments
+    // sets a random goal. it returns the goal position
+
     std::array<int, 2> randGoal {};
 
     unsigned int randX;
@@ -274,7 +291,7 @@ std::array<int, 2> Grid::setRandomGoal() {
         randY = rand() % width;
     } while (map[randX][randY].isAnObstacle() || map[randX][randY].isTheStart());
 
-    map[randX][randY].setTheGoal();
+    map[randX][randY].setTheGoal(); // sets the right cell in the map as the Goal
 
     randGoal[0] = randX;
     randGoal[1] = randY;
@@ -311,7 +328,8 @@ void Grid::setAnObstacle(const Cell &cell) {
 }
 
 void Grid::printAllTheObstacles() const {
-    // TODO - put some comments, reorganize the code
+    // service function that prints all the obstacles in the grid
+
     std::vector<Cell> obstacles = findAllTheObstacles();
     std::cout << "The obstacles are in positions: " << std::endl;
     for (const auto & obstacle : obstacles)
@@ -320,7 +338,8 @@ void Grid::printAllTheObstacles() const {
 }
 
 std::vector<Cell> Grid::findAllTheObstacles() const {
-    // TODO - put some comments
+    // service function that finds all the obstacles in the grid
+
     std::vector<Cell> obstacles;
     for (int i = 0; i < height; i ++) {
         for (int j = 0; j < width; j++) {
@@ -331,8 +350,16 @@ std::vector<Cell> Grid::findAllTheObstacles() const {
     return obstacles;
 }
 
+void Grid::resetAllTheObstacles(const std::vector<Cell> &obstacles) {
+    // sets all the obstacles as free cells
+
+    for (const auto& it : obstacles)
+        map[it.getX()][it.getY()].resetAsFree();
+}
+
 void Grid::printAllTheGrid() const {
-    // TODO - put some comments
+    // service function that prints the info of all the cells in the grid
+
     for (int i = 0; i < height; i ++) {
         for (int j = 0; j < width; j++) {
             printInfo(map[i][j]);
@@ -341,7 +368,8 @@ void Grid::printAllTheGrid() const {
 }
 
 void Grid::draw(sf::RenderWindow &window) {
-    // TODO - put some comments
+    // draws function. calls the draw function for each cell
+
     for (int i = 0; i < height; i ++) {
         for (int j = 0; j < width; j++) {
             map[i][j].draw(window);
@@ -350,7 +378,9 @@ void Grid::draw(sf::RenderWindow &window) {
 }
 
 void Grid::updateCell(int x, int y) {
-    // TODO - put some comments
+    // sets the cell as an obstacle if it is not already one and if it is neither the start nor the goal
+    // if it is an obstacle, it sets the cell as a free cell
+
     if (map[x][y].isAnObstacle() && !map[x][y].isTheStart() && !map[x][y].isTheGoal())
         map[x][y].resetAsFree();
     else if (!map[x][y].isTheStart() && !map[x][y].isTheGoal())
@@ -358,32 +388,28 @@ void Grid::updateCell(int x, int y) {
 }
 
 void Grid::resetPathDrawn() {
-    // TODO - put some comments
+    // sets all the grid cells as not path cells and as not visited cells
+
     for (int i = 0; i < height; i++)
         for (int j = 0; j < width; j++)
             map[i][j].clean();
 }
 
 bool Grid::isThereAStart() const {
-    // TODO - put some comments
-    if (startCell != nullptr)
-        return true;
-    return false;
+    if (startCell != nullptr) { return true; } return false;
 }
 
 bool Grid::isThereAGoal() const {
-    // TODO - put some comments
-    if (goalCell != nullptr)
-        return true;
-    return false;
+    if (goalCell != nullptr) { return true; } return false;
 }
 
 void Grid::reset() {
-    // TODO - put some comments
+    // restarts the program regenerating a new random map and a new start and goal
 
-    resetPathDrawn();
-    resetAllTheObstacles(findAllTheObstacles());
+    resetPathDrawn(); // cleans all the grid cells
+    resetAllTheObstacles(findAllTheObstacles()); // set all the obstacles as free cells
 
+    // re-creates obstacles randomly
     for (int i = 0; i < height; i ++) {
         for (int j = 0; j < width; j++) {
             float randomNumber = rand() % 10;
@@ -392,22 +418,19 @@ void Grid::reset() {
         }
     }
 
+    // re-sets a random start
     map[startCell->getX()][startCell->getY()].resetTheStart();
     std::array<int, 2> randStart = setRandomStart();
     startCell = std::make_shared<Cell>(map[randStart[0]][randStart[1]]);
 
+    // re-sets a random goal
     map[goalCell->getX()][goalCell->getY()].resetTheGoal();
     std::array<int, 2> randGoal = setRandomGoal();
     goalCell = std::make_shared<Cell>(map[randGoal[0]][randGoal[1]]);
 
+    // finds the path
     findPath();
 
-}
-
-void Grid::resetAllTheObstacles(const std::vector<Cell> &obstacles) {
-    // TODO - put some comments
-    for (const auto& it : obstacles)
-        map[it.getX()][it.getY()].resetAsFree();
 }
 
 Cell *Grid::getCell(unsigned int x, unsigned int y) {

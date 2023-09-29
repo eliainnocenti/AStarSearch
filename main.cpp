@@ -54,6 +54,7 @@ int main() {
             if (event.type == sf::Event::KeyPressed) {
                 if (event.key.code == sf::Keyboard::Escape)
                     window.close();
+                // TODO - do i have to put the reset() function here?
             }
         }
 

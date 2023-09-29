@@ -9,12 +9,14 @@ GraphicInterface::GraphicInterface(Grid &grid) {
 }
 
 void GraphicInterface::handleEvent(sf::RenderWindow &window) {
-    // TODO - put some comments
+
+    // finds the path
     grid->findPath();
 
     //---------DEBUG----------------------------------------------------------------------------------------------------
-
     // FIXME - to be optimized (mouse click)
+
+    // if a cell is clicked, it is set as an obstacle / free cell
     unsigned int width = grid->getWidth();
     unsigned int height = grid->getHeight();
     Cell* cell;
@@ -24,20 +26,25 @@ void GraphicInterface::handleEvent(sf::RenderWindow &window) {
             if (cell != nullptr) {
                 if (cell->getShape().getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window)))){
                     if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-                        grid->resetPathDrawn();
-                        grid->updateCell(i, j);
-                        grid->findPath();
+                        grid->resetPathDrawn(); // delete the old path
+                        grid->updateCell(i, j); // update the cell (obstacle <-> free cell)
+                        grid->findPath(); // re-find the path
                     }
                 }
             }
         }
     }
 
-    //------------------------------------------------------------------------------------------------------------------
-
+    //---------DEBUG----------------------------------------------------------------------------------------------------
     // FIXME - reset() function
-    //if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
-        //grid.reset();
+
+    // instead of re-run the program, it can be restarted by regenerating a new random map and a new start and goal
+    /*
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+        grid.reset();
+        */
+
+    //------------------------------------------------------------------------------------------------------------------
 }
 
 void GraphicInterface::draw(sf::RenderWindow &window) {
