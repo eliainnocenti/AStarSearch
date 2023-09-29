@@ -8,7 +8,7 @@ Cell::Cell(int x, int y, unsigned int side) : x(x), y(y), side(side) {
 
     // graphics
     shape.setSize({float(side), float(side)});
-    shape.setPosition(float(x*side), float(y*side));
+    shape.setPosition(float(y*side), float(x*side));
     shape.setOutlineThickness(0.5);
     shape.setOutlineColor(sf::Color::Black);
 
@@ -28,11 +28,26 @@ bool Cell::operator != (const Cell &other) const {
     return false;
 }
 
-
 bool Cell::operator < (const Cell &other) const {
     int other_x = other.getX();
     int other_y = other.getY();
     return std::tie(x, y) < std::tie(other_x, other_y);
+}
+
+Cell &Cell::operator = (const Cell &other) {
+    // TODO - put some comments
+    if (this != &other) {
+        x = other.x;
+        y = other.y;
+        side = other.side;
+        start = other.start;
+        goal = other.goal;
+        obstacle = other.obstacle;
+        path = other.path;
+        visited = other.visited;
+        //non copio la sprite
+    }
+    return *this;
 }
 
 void Cell::draw(sf::RenderWindow &window) {
@@ -42,8 +57,7 @@ void Cell::draw(sf::RenderWindow &window) {
 }
 
 void Cell::setColor() {
-    // FIXME - some attributes miss (visited, evaluated)
-    // TODO - chose RGB color (change some)
+    // TODO - chose RGB color (change some?)
     if (obstacle)
         shape.setFillColor(sf::Color::Black);
     else if (start)

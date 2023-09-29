@@ -16,6 +16,7 @@ public:
     // constructor
     explicit GraphicInterface(Grid& grid);
 
+    // graphics
     void handleEvent(sf::RenderWindow &window); // FIXME
     void draw(sf::RenderWindow &window);
 

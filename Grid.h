@@ -26,15 +26,15 @@ public:
     void findPath();
 
     // set the start
-    void setTheStart(unsigned int x, unsigned int y);
+    void setTheStart(int x, int y);
     void setTheStart(const Cell& cell);
 
     // set the goal
-    void setTheGoal(unsigned int x, unsigned int y);
+    void setTheGoal(int x, int y);
     void setTheGoal(const Cell& cell);
 
     // set an obstacle
-    void setAnObstacle(unsigned int x, unsigned int y);
+    void setAnObstacle(int x, int y);
     void setAnObstacle(const Cell& cell);
 
     // getters
@@ -42,7 +42,7 @@ public:
     inline unsigned int getHeight() const { return height; }
     inline std::shared_ptr<Cell> getStartCell() const { return startCell; }
     inline std::shared_ptr<Cell> getGoalCell() const { return goalCell; }
-    inline Cell* getCell(unsigned int x, unsigned int y) { return &map[x][y]; } // FIXME? - do i need a shared_ptr/unique_ptr?
+    Cell* getCell(unsigned int x, unsigned int y);
 
     // extra
     void printAllTheObstacles() const;
@@ -50,8 +50,8 @@ public:
 
     // graphics
     void draw(sf::RenderWindow &window);
-    void updateCell(unsigned int x, unsigned int y);
-    void resetPathDrawn(); // FIXME - can be optimized if it use the path vector instead of scrolling through the entire map
+    void updateCell(int x, int y);
+    void resetPathDrawn(); // TODO - can be optimized if it use the path vector instead of scrolling through the entire map
 
     // reset
     void reset(); // FIXME
@@ -76,13 +76,14 @@ private:
     // mapmaker
     void makeMap(unsigned int width, unsigned int height, unsigned int cellSide);
     void makeRandomMap(unsigned int width, unsigned int height, unsigned int cellSide);
-    std::array<unsigned int, 2> setRandomStart();
-    std::array<unsigned int, 2> setRandomGoal();
+    std::array<int, 2> setRandomStart();
+    std::array<int, 2> setRandomGoal();
     float density;
 
 
     // search
     bool in_bounds(const Cell& cell) const;
+    bool in_bounds(const int x, const int y) const;
     bool passable(const Cell& cell) const;
     std::vector<Cell> neighbors(const Cell& cell); // FIXME - diagonal movement is not allowed through walls
     double heuristic(const Cell& from_node, const Cell& to_node) const;

@@ -6,10 +6,16 @@
 
 Grid::Grid(unsigned int width, unsigned int height, bool diagonal, bool random, float density, bool constCost) : width(width), height(height), diagonalMovements(diagonal), density(density) {
 
+    cellSide = 750 / width; //cellSide = 800 / height
+
+    //---------DEBUG----------------------------------------------------------------------------------------------------
     // FIXME
+
     //cellSide = int(sf::VideoMode::getDesktopMode().width) / width;
-    cellSide = 800 / width; //cellSide = 800 / height
     //cellSide = 2560 / width; //cellSide = 1600 / height
+    //cellSide = 40;
+
+    //------------------------------------------------------------------------------------------------------------------
 
     if (diagonal)
         // Nord, Nord-Est, Est, Sud-Est, Sud, Sud-Ovest, Ovest, Nord-Ovest
@@ -28,11 +34,11 @@ Grid::Grid(unsigned int width, unsigned int height, bool diagonal, bool random, 
 
         // pointers updated with random start and goal
         if (!isThereAStart()) {
-            std::array<unsigned int, 2> randStart = setRandomStart();
+            std::array<int, 2> randStart = setRandomStart();
             startCell = std::make_shared<Cell>(map[randStart[0]][randStart[1]]);
         }
         if (!isThereAGoal()) {
-            std::array<unsigned int, 2> randGoal = setRandomGoal();
+            std::array<int, 2> randGoal = setRandomGoal();
             goalCell = std::make_shared<Cell>(map[randGoal[0]][randGoal[1]]);
         }
     } else
@@ -76,8 +82,6 @@ void Grid::aStarSearch(const Cell &start, const Cell &goal, std::unordered_map<C
             break;
         }
 
-        // FIXME - set the right cell attributes (for the graphics)
-
         std::vector<Cell> neighbors = this->neighbors(current);
 
         for (const Cell& next : neighbors) {
@@ -101,11 +105,13 @@ std::vector<Cell> Grid::neighbors(const Cell &cell) {
 
     for (const Cell& dir : directions) {
         Cell next{cell.getX() + dir.getX(), cell.getY() + dir.getY(), cellSide};
-        if (in_bounds(next) && passable(next)) {
-            results.push_back(next);
+        if (in_bounds(next)) {
+            if (passable(next)) {
+                results.push_back(next);
 
-            //
-            map[next.getX()][next.getY()].setAsVisited();
+                //
+                map[next.getX()][next.getY()].setAsVisited();
+            }
         }
     }
 
@@ -122,12 +128,24 @@ bool Grid::in_bounds(const Cell &cell) const {
     return 0 <= cell.getX() && cell.getX() < width && 0 <= cell.getY() && cell.getY() < height;
 }
 
+bool Grid::in_bounds(const int x, const int y) const {
+    // returns true if the cell is inside the map, false otherwise
+    return 0 <= x && x < width && 0 <= y && y < height;
+}
+
 bool Grid::passable(const Cell &cell) const {
+
+    //---------DEBUG----------------------------------------------------------------------------------------------------
+    // FIXME
+
     // return true if the cell is not an obstacle, false otherwise
     if (!map[cell.getX()][cell.getY()].isAnObstacle())
         return true;
     else
         return false;
+
+    //------------------------------------------------------------------------------------------------------------------
+
 }
 
 double Grid::cost(const Cell &from_node, const Cell &to_node) {
@@ -224,9 +242,9 @@ void Grid::makeRandomMap(unsigned int width, unsigned int height, unsigned int c
     }
 }
 
-std::array<unsigned int, 2> Grid::setRandomStart() {
+std::array<int, 2> Grid::setRandomStart() {
     // TODO - put some comments
-    std::array<unsigned int, 2> randStart {};
+    std::array<int, 2> randStart {};
 
     unsigned int randX;
     unsigned int randY;
@@ -244,9 +262,9 @@ std::array<unsigned int, 2> Grid::setRandomStart() {
     return randStart;
 }
 
-std::array<unsigned int, 2> Grid::setRandomGoal() {
+std::array<int, 2> Grid::setRandomGoal() {
     // TODO - put some comments
-    std::array<unsigned int, 2> randGoal {};
+    std::array<int, 2> randGoal {};
 
     unsigned int randX;
     unsigned int randY;
@@ -264,7 +282,7 @@ std::array<unsigned int, 2> Grid::setRandomGoal() {
     return randGoal;
 }
 
-void Grid::setTheStart(unsigned int x, unsigned int y) {
+void Grid::setTheStart(int x, int y) {
     map[x][y].setTheStart();
     startCell = std::make_shared<Cell>(map[x][y]);
 }
@@ -274,7 +292,7 @@ void Grid::setTheStart(const Cell &cell) {
     startCell = std::make_shared<Cell>(map[cell.getX()][cell.getY()]);
 }
 
-void Grid::setTheGoal(unsigned int x, unsigned int y) {
+void Grid::setTheGoal(int x, int y) {
     map[x][y].setTheGoal();
     goalCell = std::make_shared<Cell>(map[x][y]);
 }
@@ -284,7 +302,7 @@ void Grid::setTheGoal(const Cell &cell) {
     goalCell = std::make_shared<Cell>(map[cell.getX()][cell.getY()]);
 }
 
-void Grid::setAnObstacle(unsigned int x, unsigned int y) {
+void Grid::setAnObstacle(int x, int y) {
     map[x][y].setAsObstacle();
 }
 
@@ -331,7 +349,7 @@ void Grid::draw(sf::RenderWindow &window) {
     }
 }
 
-void Grid::updateCell(unsigned int x, unsigned int y) {
+void Grid::updateCell(int x, int y) {
     // TODO - put some comments
     if (map[x][y].isAnObstacle() && !map[x][y].isTheStart() && !map[x][y].isTheGoal())
         map[x][y].resetAsFree();
@@ -375,11 +393,11 @@ void Grid::reset() {
     }
 
     map[startCell->getX()][startCell->getY()].resetTheStart();
-    std::array<unsigned int, 2> randStart = setRandomStart();
+    std::array<int, 2> randStart = setRandomStart();
     startCell = std::make_shared<Cell>(map[randStart[0]][randStart[1]]);
 
     map[goalCell->getX()][goalCell->getY()].resetTheGoal();
-    std::array<unsigned int, 2> randGoal = setRandomGoal();
+    std::array<int, 2> randGoal = setRandomGoal();
     goalCell = std::make_shared<Cell>(map[randGoal[0]][randGoal[1]]);
 
     findPath();
@@ -390,4 +408,10 @@ void Grid::resetAllTheObstacles(const std::vector<Cell> &obstacles) {
     // TODO - put some comments
     for (const auto& it : obstacles)
         map[it.getX()][it.getY()].resetAsFree();
+}
+
+Cell *Grid::getCell(unsigned int x, unsigned int y) {
+    if (in_bounds(x,y))
+        return &map[x][y];
+    return nullptr;
 }

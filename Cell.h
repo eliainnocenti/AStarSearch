@@ -15,12 +15,13 @@ class Cell {
 public:
     // constructors
     Cell(int x, int y, unsigned int side);
-    Cell(); // the default constructor is needed for came_from (std::unordered_set<Cell, Cell>) // TODO check
+    Cell(); // the default constructor is needed for came_from (std::unordered_set<Cell, Cell>)
 
     // overloaded operators
     bool operator == (const Cell& other) const;
     bool operator != (const Cell& other) const;
     bool operator < (const Cell& other) const;
+    Cell& operator = (const Cell& other); // FIXME ?
 
     // getters
     inline bool isTheStart() const { return start; }
@@ -67,8 +68,6 @@ private:
     bool obstacle {false};
     bool path {false};
     bool visited {false};
-    // TODO - add boolean attributes
-        // evaluated
 
     // graphics
     void setColor();
