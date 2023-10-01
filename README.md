@@ -45,6 +45,8 @@ The A* algorithm is widely used in artificial intelligence, games, robotics, and
 
 <!-- esempio di una cella all'interno della grid (sistema di riferimento matriciale) -->
 
+### Directions
+
 ![](file2.png) <!-- TODO -->
 
 <!-- vicini di una cella + directions -->
