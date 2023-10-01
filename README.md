@@ -34,5 +34,23 @@ The A* algorithm is widely used in artificial intelligence, games, robotics, and
 
 ### Possible ideas for future implementations:
 
-- [Breadth first search: early exits](https://www.redblobgames.com/pathfinding/early-exit/) <!-- possible description -->
+- [Breadth First Search: early exits](https://www.redblobgames.com/pathfinding/early-exit/) <!-- possible description -->
 - [Breadth First Search: multiple start points](https://www.redblobgames.com/pathfinding/distance-to-any/) <!-- possible description -->
+
+## Implementation
+
+### Frame of reference
+
+![](file1.png) <!-- TODO -->
+
+<!-- esempio di una cella all'interno della grid (sistema di riferimento matriciale) -->
+
+![](file2.png) <!-- TODO -->
+
+<!-- vicini di una cella + directions -->
+
+## Versions
+
+- **Alpha 1.0** - Works correctly for square grids with movement in four directions in a square-sized window (no Fullscreen)
+- **Beta 1.0** _(not release yet)_ - Works correctly for grids with movement in four or eight directions (Fullscreen can be enabled)
+- **1.0** _(not release yet)_ - Works correctly for grids with movement in four or eight directions with no graphic bugs. It has been tested
