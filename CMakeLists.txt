@@ -35,4 +35,4 @@ include_directories(${SFML_INCLUDE_DIRS})
 # link the SFML libraries to the AStarSearch executable
 target_link_libraries(AStarSearch sfml-system sfml-window sfml-graphics sfml-network sfml-audio)
 
-# the libraries are located in the following path : /opt/homebrew/Cellar/sfml/2.6.0
+# the libraries are located in the following path: /opt/homebrew/Cellar/sfml/2.6.0
