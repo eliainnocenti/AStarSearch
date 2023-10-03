@@ -110,9 +110,6 @@ void Grid::aStarSearch(const Cell &start, const Cell &goal, std::unordered_map<C
 std::vector<Cell> Grid::neighbors(const Cell &cell) {
     // finds neighboring cells of the given 'cell' within the grid
 
-    //---------DEBUG----------------------------------------------------------------------------------------------------
-    // FIXME - diagonal movement
-
     // initialize an empty vector to store the neighboring cells
     std::vector<Cell> results;
 
@@ -120,17 +117,22 @@ std::vector<Cell> Grid::neighbors(const Cell &cell) {
     for (const Cell& dir : directions) {
         // calculate the coordinates of the potential neighboring cell
         Cell next{cell.getX() + dir.getX(), cell.getY() + dir.getY(), cellSide};
-        if (in_bounds(next)) {
-            if (passable(next)) {
-                results.push_back(next); // if it's passable and within the grid bounds, add it to the results vector
 
-                // mark the cell as visited
-                map[next.getX()][next.getY()].setAsVisited();
+        if (in_bounds(next)) { // if the cell is within the grid bounds
+            if (passable(next)) { // if the cell is not an obstacle
+                if (isThisADiagonalMovements(dir)) { // if the movement is diagonal
+                    if (isThisAValidDiagonalCell(cell, dir)) { // if the movements is not through the wall
+                        results.push_back(next); // add it to the results vector
+                        map[next.getX()][next.getY()].setAsVisited(); // mark the cell as visited
+                    } else continue;
+                } else {
+                    // if the movement is not diagonal and the cell is passable and within the grid bounds
+                    results.push_back(next); // add it to the results vector
+                    map[next.getX()][next.getY()].setAsVisited(); // mark the cell as visited
+                }
             }
         }
     }
-
-    //------------------------------------------------------------------------------------------------------------------
 
     // TODO check - ugly paths
     if ((cell.getX() + cell.getY()) % 2 == 0) {
@@ -151,23 +153,40 @@ bool Grid::in_bounds(const int x, const int y) const {
 }
 
 bool Grid::passable(const Cell &cell) const {
-    // returns true if the cell is not an obstacles, false otherwise
-
-    //---------DEBUG----------------------------------------------------------------------------------------------------
-    // FIXME
-
-    // TODO - diagonal movements (cannot pass trough the walls)
-    if (diagonalMovements)
-        return false;
-
     // return true if the cell is not an obstacle, false otherwise
     if (!map[cell.getX()][cell.getY()].isAnObstacle())
         return true;
     else
         return false;
+}
 
-    //------------------------------------------------------------------------------------------------------------------
+bool Grid::isThisADiagonalMovements(const Cell &cell) {
+    // returns true if it's NE, NW, SE or SW
 
+    if (cell.getX() != 0 && cell.getY() != 0)
+        return true;
+    return false;
+}
+
+bool Grid::isThisAValidDiagonalCell(const Cell &cell, const Cell &dir) const {
+
+    int x = cell.getX();
+    int y = cell.getY();
+
+    if (dir.getX() == 1 && dir.getY() == 1) { // if the movement is in SE direction
+        if (passable(map[x+1][y]) && passable(map[x][y+1])) // if S and E are not obstacles, it is valid
+            return true;
+    } else if (dir.getX() == 1 && dir.getY() == -1) { // if the movement is in SW direction
+        if (passable(map[x+1][y]) && passable(map[x][y-1])) // if S and W are not obstacles, it is valid
+            return true;
+    } else if (dir.getX() == -1 && dir.getY() == -1) { // if the movement is in NW direction
+        if (passable(map[x-1][y]) && passable(map[x][y-1])) // if N and W are not obstacles, it is valid
+            return true;
+    } else if (dir.getX() == -1 && dir.getY() == 1) { // if the movement is in NE direction
+        if (passable(map[x-1][y]) && passable(map[x][y+1])) // if N and E are not obstacles, it is valid
+            return true;
+    }
+    return false;
 }
 
 double Grid::cost(const Cell &from_node, const Cell &to_node) {

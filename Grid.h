@@ -85,7 +85,9 @@ private:
     bool in_bounds(const Cell& cell) const;
     bool in_bounds(const int x, const int y) const;
     bool passable(const Cell& cell) const;
-    std::vector<Cell> neighbors(const Cell& cell); // FIXME - diagonal movement is not allowed through walls
+    static bool isThisADiagonalMovements(const Cell& cell) ;
+    bool isThisAValidDiagonalCell(const Cell& cell, const Cell& dir) const;
+    std::vector<Cell> neighbors(const Cell& cell);
     double heuristic(const Cell& from_node, const Cell& to_node) const;
     static double cost(const Cell& from_node, const Cell& to_node) ; // TODO - possible GridWithWeights implementation
                                                                    // si può utilizzare un dizionario che mette in relazione
