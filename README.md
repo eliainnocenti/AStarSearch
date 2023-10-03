@@ -47,7 +47,7 @@ The A* algorithm is widely used in artificial intelligence, games, robotics, and
 
 ### Directions
 
-![](file2.png) <!-- TODO -->
+![](Images/Directions.PNG) <!-- TODO -->
 
 <!-- vicini di una cella + directions -->
 
