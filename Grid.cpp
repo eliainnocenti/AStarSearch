@@ -66,16 +66,19 @@ void Grid::findPath() {
 }
 
 void Grid::aStarSearch(const Cell &start, const Cell &goal, std::unordered_map<Cell, Cell>& came_from, std::unordered_map<Cell, double>& cost_so_far) {
-    // TODO - put some comments
 
+    // initialize the priority queue with the starting point and a priority of 0
     PriorityQueue<Cell, double> frontier;
     frontier.put(start, 0);
 
+    // initialize maps to keep track of the path and costs so far
     came_from[start] = start;
     cost_so_far[start] = 0;
 
+    // main loop of the A* algorithm
     while (!frontier.empty()) {
 
+        // extract the current point from the priority queue
         Cell current = frontier.get();
 
         // early exit
@@ -83,13 +86,20 @@ void Grid::aStarSearch(const Cell &start, const Cell &goal, std::unordered_map<C
             break;
         }
 
+        // find neighbors of the current point.
         std::vector<Cell> neighbors = this->neighbors(current);
 
+        // explore neighbors of the current point
         for (const Cell& next : neighbors) {
+            // calculate the new cost to reach the current neighbor
             double new_cost = cost_so_far[current] + cost(current, next);
+            // check if it's the first encounter with the neighbor or if the new cost is better than the previous cost
             if (cost_so_far.find(next) == cost_so_far.end() || new_cost < cost_so_far[next]) {
+                // update the cost so far and the neighbor's priority
                 cost_so_far[next] = new_cost;
                 double priority = new_cost + heuristic(next, goal);
+
+                // sdd the neighbor to the priority queue and record the path
                 frontier.put(next, priority);
                 came_from[next] = current;
             }
@@ -98,20 +108,23 @@ void Grid::aStarSearch(const Cell &start, const Cell &goal, std::unordered_map<C
 }
 
 std::vector<Cell> Grid::neighbors(const Cell &cell) {
-    // TODO - put some comments
+    // finds neighboring cells of the given 'cell' within the grid
 
     //---------DEBUG----------------------------------------------------------------------------------------------------
     // FIXME - diagonal movement
 
+    // initialize an empty vector to store the neighboring cells
     std::vector<Cell> results;
 
+    // iterate through the predefined directions to explore neighboring cells
     for (const Cell& dir : directions) {
+        // calculate the coordinates of the potential neighboring cell
         Cell next{cell.getX() + dir.getX(), cell.getY() + dir.getY(), cellSide};
         if (in_bounds(next)) {
             if (passable(next)) {
-                results.push_back(next);
+                results.push_back(next); // if it's passable and within the grid bounds, add it to the results vector
 
-                //
+                // mark the cell as visited
                 map[next.getX()][next.getY()].setAsVisited();
             }
         }
@@ -142,6 +155,10 @@ bool Grid::passable(const Cell &cell) const {
 
     //---------DEBUG----------------------------------------------------------------------------------------------------
     // FIXME
+
+    // TODO - diagonal movements (cannot pass trough the walls)
+    if (diagonalMovements)
+        return false;
 
     // return true if the cell is not an obstacle, false otherwise
     if (!map[cell.getX()][cell.getY()].isAnObstacle())
@@ -433,8 +450,4 @@ void Grid::reset() {
 
 }
 
-Cell *Grid::getCell(unsigned int x, unsigned int y) {
-    if (in_bounds(x,y))
-        return &map[x][y];
-    return nullptr;
-}
+Cell *Grid::getCell(int x, int y) { if (in_bounds(x,y)) { return &map[x][y]; } return nullptr; }

@@ -28,7 +28,7 @@ void GraphicInterface::handleEvent(sf::RenderWindow &window) {
     // loop through each cell in the grid
     for (int i = 0; i < width; i++){
         for (int j = 0; j < height; j++){
-            cell = grid->getCell(i,j); // get the cell at the current coordinates // FIXME in non square grid
+            cell = grid->getCell(i,j); // get the cell at the current coordinates // FIXME in non-square grid
             if (cell != nullptr) {
                 // check if the mouse cursor is within the bounds of the current cell
                 if (cell->getShape().getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window)))){

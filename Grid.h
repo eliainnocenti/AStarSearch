@@ -42,7 +42,7 @@ public:
     inline unsigned int getHeight() const { return height; }
     inline std::shared_ptr<Cell> getStartCell() const { return startCell; }
     inline std::shared_ptr<Cell> getGoalCell() const { return goalCell; }
-    Cell* getCell(unsigned int x, unsigned int y);
+    Cell* getCell(int x, int y);
 
     // extra
     void printAllTheObstacles() const;
