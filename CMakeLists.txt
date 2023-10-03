@@ -23,7 +23,7 @@ add_executable(AStarSearch ${HEADER_FILES} ${SOURCE_FILES})
 
 # SFML graphics
 
-# include header directories
+# include header directories for external libraries
 include_directories(/usr/local/include)
 
 # find and include the required SFML 2.5 libraries

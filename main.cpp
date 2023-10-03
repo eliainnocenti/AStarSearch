@@ -16,7 +16,7 @@ int main() {
     // create a grid
     Grid grid(30, 30, false, true, 3);
 
-    // TODO - gestire quando non ci sono partenza nè arrivo (no random)
+    // FIXME - solve when the findPath() function is called, but there is neither the start cell nor the goal cell (no random settings)
 
     // create a graphic user interface
     GraphicInterface interface(grid);

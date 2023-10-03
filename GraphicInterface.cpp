@@ -54,7 +54,7 @@ void GraphicInterface::handleEvent(sf::RenderWindow &window) {
     /*
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
         grid.reset();
-        */
+    */
 
     //------------------------------------------------------------------------------------------------------------------
 }
