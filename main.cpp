@@ -10,18 +10,20 @@
 
 int main() {
 
-    // TODO - put some comments
-
+    // seed the random number generator
     srand(static_cast<unsigned>(time(nullptr)));
 
-    Grid grid(30, 30, false, true, 2);
+    // create a grid
+    Grid grid(30, 30, false, true, 3);
 
+    // create a graphic user interface
     GraphicInterface interface(grid);
 
+    // create an event object to handle events
     sf::Event event {};
 
     //---------DEBUG----------------------------------------------------------------------------------------------------
-    // FIXME - graphic settings (videomode and fullscreen)
+    // FIXME - graphic settings (fullscreen)
 
     sf::VideoMode desktopMode = sf::VideoMode::getDesktopMode();
     unsigned int screenWidth = desktopMode.width;
@@ -36,32 +38,34 @@ int main() {
 
     //sf::RenderWindow window(sf::VideoMode(screenWidth, screenHeight), "AStarSearch", sf::Style::Fullscreen);
     //sf::RenderWindow window(sf::VideoMode(macbookWidth, macbookHeight), "AStarSearch", sf::Style::Fullscreen);
-    //sf::RenderWindow window(sf::VideoMode(width * 25, height * 25), "AStarSearch", sf::Style::Default);
-
-    //window.setFramerateLimit(60);
 
     //------------------------------------------------------------------------------------------------------------------
 
-    unsigned int windowWidth = 750;
-    unsigned int windowHeight = 750;
+    unsigned int windowWidth = 750; // set the width of the window
+    unsigned int windowHeight = 750; // set the height of the window
 
+    // create the SFML window
     sf::RenderWindow window(sf::VideoMode(windowWidth, windowHeight), "AStarSearch", sf::Style::Default);
 
+    // main application loop
     while (window.isOpen()) {
+        // poll and handle events
         while (window.pollEvent(event)) {
             if (event.type == sf::Event::Closed)
-                window.close();
+                window.close(); // close the window when the close button is clicked
             if (event.type == sf::Event::KeyPressed) {
                 if (event.key.code == sf::Keyboard::Escape)
-                    window.close();
+                    window.close(); // close the window when the Escape key is pressed
                 // TODO - do i have to put the reset() function here?
             }
         }
 
+        // main application logic
+
         // clearing the old frame and preparing for drawing the new one
         window.clear(sf::Color::White);
 
-        // update project and draw
+        // update and draw
         interface.handleEvent(window);
         interface.draw(window);
 
