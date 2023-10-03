@@ -4,7 +4,7 @@ Project for Programming Lab exam.
 
 ## A* Algorithm
 
-A (A-star):* The A* algorithm is an heuristic search algorithm used to find the optimal path between two points in a weighted graph, minimizing the total cost of the path. 
+The A* (A-Star) Algorithm is an heuristic search algorithm used to find the optimal path between two points in a weighted graph, minimizing the total cost of the path. 
 It employs a combination of local evaluations (the actual path cost) and a heuristic estimate (the estimated cost from the current point to the destination point) to select the next move. 
 The algorithm efficiently explores the graph, avoiding visiting nodes that would not lead to an optimal solution.
 
@@ -41,7 +41,7 @@ The A* algorithm is widely used in artificial intelligence, games, robotics, and
 
 ### Frame of reference
 
-![](file1.png) <!-- TODO -->
+![](Images/FrameOfReference.PNG) <!-- TODO -->
 
 <!-- esempio di una cella all'interno della grid (sistema di riferimento matriciale) -->
 

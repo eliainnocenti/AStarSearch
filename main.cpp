@@ -16,6 +16,8 @@ int main() {
     // create a grid
     Grid grid(30, 30, false, true, 3);
 
+    // TODO - gestire quando non ci sono partenza nè arrivo (no random)
+
     // create a graphic user interface
     GraphicInterface interface(grid);
 
