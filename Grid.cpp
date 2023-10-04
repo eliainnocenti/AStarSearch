@@ -6,16 +6,16 @@
 
 Grid::Grid(unsigned int width, unsigned int height, bool diagonal, bool random, float density, bool constCost) : width(width), height(height), diagonalMovements(diagonal), density(density) {
 
-    cellSide = 750 / width; //cellSide = 800 / height
-
     //---------DEBUG----------------------------------------------------------------------------------------------------
     // FIXME
 
-    //cellSide = int(sf::VideoMode::getDesktopMode().width) / width;
-    //cellSide = 2560 / width; //cellSide = 1600 / height
-    //cellSide = 40;
+    //cellSide = int(sf::VideoMode::getDesktopMode().width) / (width * 2);
+    //cellSide = 2560 / width;
+    //cellSide = 1600 / height;
 
     //------------------------------------------------------------------------------------------------------------------
+
+    cellSide = 20;
 
     if (diagonal)
         // Nord, Nord-Est, Est, Sud-Est, Sud, Sud-Ovest, Ovest, Nord-Ovest
@@ -144,12 +144,12 @@ std::vector<Cell> Grid::neighbors(const Cell &cell) {
 
 bool Grid::in_bounds(const Cell &cell) const {
     // returns true if the cell is inside the map, false otherwise
-    return 0 <= cell.getX() && cell.getX() < width && 0 <= cell.getY() && cell.getY() < height;
+    return 0 <= cell.getX() && cell.getX() < height && 0 <= cell.getY() && cell.getY() < width;
 }
 
 bool Grid::in_bounds(const int x, const int y) const {
     // returns true if the cell is inside the map, false otherwise
-    return 0 <= x && x < width && 0 <= y && y < height;
+    return 0 <= x && x < height && 0 <= y && y < width;
 }
 
 bool Grid::passable(const Cell &cell) const {
@@ -264,6 +264,8 @@ void Grid::printInfo(const Cell &cell) {
         std::cout << "{ x: " << cell.getX() << ", y: " << cell.getY() << " } " << "obstacle" << std::endl;
     else if (cell.isAPathElement())
         std::cout << "{ x: " << cell.getX() << ", y: " << cell.getY() << " } " << " path" << std::endl;
+    else
+        std::cout << "{ x: " << cell.getX() << ", y: " << cell.getY() << " } " << " free cell" << std::endl;
 }
 
 void Grid::makeMap(unsigned int width, unsigned int height, unsigned int cellSide) {

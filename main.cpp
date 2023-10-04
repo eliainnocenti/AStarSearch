@@ -14,7 +14,7 @@ int main() {
     srand(static_cast<unsigned>(time(nullptr)));
 
     // create a grid
-    Grid grid(30, 30, false, true, 3);
+    Grid grid(64, 40, false, true, 3);
 
     // FIXME - solve when the findPath() function is called, but there is neither the start cell nor the goal cell (no random settings)
 
@@ -39,12 +39,15 @@ int main() {
     unsigned int macbookHeight = 1600;
 
     //sf::RenderWindow window(sf::VideoMode(screenWidth, screenHeight), "AStarSearch", sf::Style::Fullscreen);
+    //sf::RenderWindow window(sf::VideoMode::getDesktopMode(), "AStarSearch", sf::Style::Fullscreen);
     //sf::RenderWindow window(sf::VideoMode(macbookWidth, macbookHeight), "AStarSearch", sf::Style::Fullscreen);
+
+    std::cout << grid.getCellSide();
 
     //------------------------------------------------------------------------------------------------------------------
 
-    unsigned int windowWidth = 750; // set the width of the window
-    unsigned int windowHeight = 750; // set the height of the window
+    unsigned int windowWidth = 20 * grid.getWidth(); // set the width of the window
+    unsigned int windowHeight = 20 * grid.getHeight(); // set the height of the window
 
     // create the SFML window
     sf::RenderWindow window(sf::VideoMode(windowWidth, windowHeight), "AStarSearch", sf::Style::Default);

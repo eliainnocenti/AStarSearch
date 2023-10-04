@@ -13,7 +13,6 @@ void GraphicInterface::handleEvent(sf::RenderWindow &window) {
     // finds the path
     grid->findPath();
 
-    //---------DEBUG----------------------------------------------------------------------------------------------------
 
     // if a cell is clicked, it is set as an obstacle / free cell
 
@@ -28,7 +27,7 @@ void GraphicInterface::handleEvent(sf::RenderWindow &window) {
     // loop through each cell in the grid
     for (int i = 0; i < width; i++){
         for (int j = 0; j < height; j++){
-            cell = grid->getCell(i,j); // get the cell at the current coordinates // FIXME in non-square grid
+            cell = grid->getCell(j,i); // get the cell at the current coordinates
             if (cell != nullptr) {
                 // check if the mouse cursor is within the bounds of the current cell
                 if (cell->getShape().getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window)))){
@@ -36,7 +35,7 @@ void GraphicInterface::handleEvent(sf::RenderWindow &window) {
                     if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && !isMouseClickProcessed) {
 
                         grid->resetPathDrawn(); // delete the old path
-                        grid->updateCell(i, j); // update the cell (obstacle <-> free cell)
+                        grid->updateCell(j, i); // update the cell (obstacle <-> free cell)
                         grid->findPath(); // re-find the path
 
                         isMouseClickProcessed = true; // set the flag to indicate that a mouse click has been processed
@@ -47,15 +46,14 @@ void GraphicInterface::handleEvent(sf::RenderWindow &window) {
         }
     }
 
-    //---------DEBUG----------------------------------------------------------------------------------------------------
-    // FIXME - reset() function
+    //------------------------------------------------------------------------------------------------------------------
+    // TODO - reset() function
 
     // instead of re-run the program, it can be restarted by regenerating a new random map and a new start and goal
     /*
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
         grid.reset();
     */
-
     //------------------------------------------------------------------------------------------------------------------
 }
 

@@ -17,7 +17,7 @@ public:
     explicit GraphicInterface(Grid& grid);
 
     // graphics
-    void handleEvent(sf::RenderWindow &window); // FIXME
+    void handleEvent(sf::RenderWindow &window);
     void draw(sf::RenderWindow &window);
 
 private:

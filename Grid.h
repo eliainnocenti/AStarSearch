@@ -40,6 +40,7 @@ public:
     // getters
     inline unsigned int getWidth() const { return width; }
     inline unsigned int getHeight() const { return height; }
+    inline unsigned int getCellSide() const { return cellSide; }
     inline std::shared_ptr<Cell> getStartCell() const { return startCell; }
     inline std::shared_ptr<Cell> getGoalCell() const { return goalCell; }
     Cell* getCell(int x, int y);
@@ -54,7 +55,7 @@ public:
     void resetPathDrawn(); // TODO - can be optimized if it use the path vector instead of scrolling through the entire map
 
     // reset
-    void reset(); // FIXME
+    void reset(); // TODO
 
 private:
     unsigned int width, height; // size
@@ -96,7 +97,7 @@ private:
                                                                    // i nodi e la struttura dati
                                                                    // std::unordered_map<std::pair<Cell,Cell>,double> weights
                                                                    // le celle devono però essere adiacenti (deve esistere l'arco)
-    void aStarSearch(const Cell& start, const Cell& goal, std::unordered_map<Cell, Cell>& came_from, std::unordered_map<Cell, double>& cost_so_far); // FIXME
+    void aStarSearch(const Cell& start, const Cell& goal, std::unordered_map<Cell, Cell>& came_from, std::unordered_map<Cell, double>& cost_so_far);
 
     // reconstruct
     static std::vector<Cell> reconstructPath(const Cell& start, const Cell& goal, std::unordered_map<Cell, Cell>& came_from, std::unordered_map<Cell, double>& cost_so_far); // TODO check ugly path
