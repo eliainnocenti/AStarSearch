@@ -14,9 +14,42 @@ int main() {
     srand(static_cast<unsigned>(time(nullptr)));
 
     // create a grid
-    Grid grid(64, 40, false, true, 3);
+    Grid grid(50, 30, false, true, 3);
 
-    // FIXME - solve when the findPath() function is called, but there is neither the start cell nor the goal cell (no random settings)
+    //grid.setTheStart(0,0);
+    //grid.setTheGoal(1,1);
+
+    // checks if a valid run can be performed on the grid
+    switch (grid.isThisAValidRun()) {
+
+       case 0:
+           // no error, proceed with execution
+           break;
+
+       case 1:
+           // error: The Goal Cell is missing
+           std::cerr << "The Goal Cell is missing." << std::endl;
+           return 1;
+
+       case 2:
+           // error: The Start Cell is missing
+           std::cerr << "The Start Cell is missing." << std::endl;
+           return 2;
+
+       case 3:
+           // error: Both the Start Cell and the Goal Cell are missing
+           std::cerr << "The Start Cell and the Goal Cell are missing." << std::endl;
+           return 3;
+
+       default:
+           // unidentified error
+           std::cerr << "Unidentified error." << std::endl;
+           return 4;
+
+    }
+
+
+    // graphics
 
     // create a graphic user interface
     GraphicInterface interface(grid);
@@ -24,33 +57,13 @@ int main() {
     // create an event object to handle events
     sf::Event event {};
 
-    //---------DEBUG----------------------------------------------------------------------------------------------------
-    // FIXME - graphic settings (fullscreen)
-
-    sf::VideoMode desktopMode = sf::VideoMode::getDesktopMode();
-    unsigned int screenWidth = desktopMode.width;
-    unsigned int screenHeight = desktopMode.height;
-
-    //std::cout << "screenWidth: " << screenWidth << std::endl;
-    //std::cout << "screenHeight: " << screenHeight << std::endl;
-
-    // Macbook 13,3 pollici (2560 × 1600) // rapporto schermo 16:10
-    unsigned int macbookWidth = 2560;
-    unsigned int macbookHeight = 1600;
-
-    //sf::RenderWindow window(sf::VideoMode(screenWidth, screenHeight), "AStarSearch", sf::Style::Fullscreen);
-    //sf::RenderWindow window(sf::VideoMode::getDesktopMode(), "AStarSearch", sf::Style::Fullscreen);
-    //sf::RenderWindow window(sf::VideoMode(macbookWidth, macbookHeight), "AStarSearch", sf::Style::Fullscreen);
-
-    std::cout << grid.getCellSide();
-
-    //------------------------------------------------------------------------------------------------------------------
-
-    unsigned int windowWidth = 20 * grid.getWidth(); // set the width of the window
-    unsigned int windowHeight = 20 * grid.getHeight(); // set the height of the window
+    unsigned int cellSide = 25;
+    unsigned int windowWidth = cellSide * grid.getWidth(); // set the width of the window
+    unsigned int windowHeight = cellSide * grid.getHeight(); // set the height of the window
 
     // create the SFML window
-    sf::RenderWindow window(sf::VideoMode(windowWidth, windowHeight), "AStarSearch", sf::Style::Default);
+    sf::RenderWindow window(sf::VideoMode(windowWidth, windowHeight), "AStarSearch", sf::Style::Default); // Default
+    //sf::RenderWindow window(sf::VideoMode::getDesktopMode(), "AStarSearch", sf::Style::Fullscreen); // Fullscreen // FIXME - Fullscreen
 
     // main application loop
     while (window.isOpen()) {

@@ -53,6 +53,6 @@ The A* algorithm is widely used in artificial intelligence, games, robotics, and
 
 ## Versions
 
-- **Alpha 1.0** - Works correctly for square-size grids with movement in four directions in a square-sized window (no Fullscreen)
-- **Beta 1.0** _(not released yet)_ - Works correctly for grids with movement in four or eight directions (no Fullscreen)
-- **1.0** _(not released yet)_ - Works correctly for grids with movement in four or eight directions with no graphic bugs. It has been tested
+- **Alpha 1.0** - Works correctly for square-size grids with movements in four directions in a square-sized window (no Fullscreen)
+- **Beta 1.0** - Works correctly for rectangular grids with movements in four or eight directions (Fullscreen can be enabled but it does not work well for grids that have a width to height ratio >= 1.6)
+- **1.0** _(not released yet)_ - Works correctly for rectangular grids with movements in four or eight directions with no graphic bugs. It has been tested

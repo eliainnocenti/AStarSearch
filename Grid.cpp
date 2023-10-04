@@ -6,16 +6,7 @@
 
 Grid::Grid(unsigned int width, unsigned int height, bool diagonal, bool random, float density, bool constCost) : width(width), height(height), diagonalMovements(diagonal), density(density) {
 
-    //---------DEBUG----------------------------------------------------------------------------------------------------
-    // FIXME
-
-    //cellSide = int(sf::VideoMode::getDesktopMode().width) / (width * 2);
-    //cellSide = 2560 / width;
-    //cellSide = 1600 / height;
-
-    //------------------------------------------------------------------------------------------------------------------
-
-    cellSide = 20;
+    cellSide = 25;
 
     if (diagonal)
         // Nord, Nord-Est, Est, Sud-Est, Sud, Sud-Ovest, Ovest, Nord-Ovest
@@ -472,3 +463,22 @@ void Grid::reset() {
 }
 
 Cell *Grid::getCell(int x, int y) { if (in_bounds(x,y)) { return &map[x][y]; } return nullptr; }
+
+int Grid::isThisAValidRun() {
+    // checks if there are any errors related to the start cell and the goal cell
+
+    bool start = isThereAStart();
+    bool goal = isThereAGoal();
+
+    if (start && goal)
+        return 0; // both start and goal cells are present, indicating a valid run
+
+    else if (start && !goal)
+        return 1; // start cell is present, but goal cell is missing
+
+    else if (!start && goal)
+        return 2; // goal cell is present, but start cell is missing
+
+    else // !start && !goal
+        return 3; // both start and goal cells are missing
+}

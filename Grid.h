@@ -48,6 +48,7 @@ public:
     // extra
     void printAllTheObstacles() const;
     void printAllTheGrid() const;
+    int isThisAValidRun();
 
     // graphics
     void draw(sf::RenderWindow &window);
@@ -91,12 +92,10 @@ private:
     std::vector<Cell> neighbors(const Cell& cell);
     double heuristic(const Cell& from_node, const Cell& to_node) const;
     static double cost(const Cell& from_node, const Cell& to_node) ; // TODO - possible GridWithWeights implementation
-                                                                   // si può utilizzare un dizionario che mette in relazione
-                                                                   // un arco e il relativo costo
-                                                                   // la funzione cost() ritornerebbe il costo dati
-                                                                   // i nodi e la struttura dati
-                                                                   // std::unordered_map<std::pair<Cell,Cell>,double> weights
-                                                                   // le celle devono però essere adiacenti (deve esistere l'arco)
+                                                                     // I can use a dictionary that relates an edge to its corresponding cost.
+                                                                     // The cost() function would return the cost given the nodes and the data structure
+                                                                     // std::unordered_map<std::pair<Cell, Cell>, double> weights.
+                                                                     // However, the cells must be adjacent (the edge must exist).
     void aStarSearch(const Cell& start, const Cell& goal, std::unordered_map<Cell, Cell>& came_from, std::unordered_map<Cell, double>& cost_so_far);
 
     // reconstruct

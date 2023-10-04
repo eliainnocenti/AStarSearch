@@ -9,12 +9,10 @@ GraphicInterface::GraphicInterface(Grid &grid) {
 }
 
 void GraphicInterface::handleEvent(sf::RenderWindow &window) {
+    // if a cell is clicked, it is set as an obstacle / free cell
 
     // finds the path
     grid->findPath();
-
-
-    // if a cell is clicked, it is set as an obstacle / free cell
 
     bool isMouseClickProcessed = false; // flag to track whether a mouse click has been processed
 
@@ -46,15 +44,9 @@ void GraphicInterface::handleEvent(sf::RenderWindow &window) {
         }
     }
 
-    //------------------------------------------------------------------------------------------------------------------
-    // TODO - reset() function
-
     // instead of re-run the program, it can be restarted by regenerating a new random map and a new start and goal
-    /*
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
-        grid.reset();
-    */
-    //------------------------------------------------------------------------------------------------------------------
+    // TODO - reset() function if the Space-Key is pressed
+
 }
 
 void GraphicInterface::draw(sf::RenderWindow &window) {
