@@ -7,6 +7,7 @@
 #include "Grid.h"
 #include "Cell.h"
 #include "GraphicInterface.h"
+#include "AStarSearch.h"
 
 int main() {
 
@@ -15,6 +16,7 @@ int main() {
 
     // create a grid
     Grid grid(50, 30, false, true, 3);
+    AStarSearch a_star_search(grid);
 
     //grid.setTheStart(0,0);
     //grid.setTheGoal(1,1);
@@ -53,6 +55,7 @@ int main() {
 
     // create a graphic user interface
     GraphicInterface interface(grid);
+    // create new statement // GraphicInterface interface(grid, a_star_search)
 
     // create an event object to handle events
     sf::Event event {};

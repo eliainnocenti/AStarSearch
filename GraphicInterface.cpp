@@ -6,6 +6,7 @@
 
 GraphicInterface::GraphicInterface(Grid &grid) {
     this->grid = std::make_shared<Grid>(grid);
+    this->a_star_search = std::make_shared<AStarSearch>(); // change signature
 }
 
 void GraphicInterface::handleEvent(sf::RenderWindow &window) {
@@ -13,6 +14,7 @@ void GraphicInterface::handleEvent(sf::RenderWindow &window) {
 
     // finds the path
     grid->findPath();
+    a_star_search->findPath();
 
     bool isMouseClickProcessed = false; // flag to track whether a mouse click has been processed
 
@@ -35,6 +37,7 @@ void GraphicInterface::handleEvent(sf::RenderWindow &window) {
                         grid->resetPathDrawn(); // delete the old path
                         grid->updateCell(j, i); // update the cell (obstacle <-> free cell)
                         grid->findPath(); // re-find the path
+                        a_star_search->findPath();
 
                         isMouseClickProcessed = true; // set the flag to indicate that a mouse click has been processed
                         sf::sleep(sf::milliseconds(100)); // add a brief pause to prevent rapid multiple clicks

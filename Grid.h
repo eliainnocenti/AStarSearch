@@ -84,7 +84,6 @@ private:
     std::array<int, 2> setRandomGoal();
     float density;
 
-
     // search
     bool in_bounds(const Cell& cell) const;
     bool in_bounds(const int x, const int y) const;

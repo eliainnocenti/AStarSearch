@@ -22,6 +22,7 @@ public:
 
 private:
     std::shared_ptr<Grid> grid;
+    std::shared_ptr<AStarSearch> a_star_search;
 };
 
 

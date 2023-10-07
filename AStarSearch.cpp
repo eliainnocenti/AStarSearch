@@ -29,7 +29,7 @@ void AStarSearch::findPath() {
 void AStarSearch::aStarSearch(const Cell &start, const Cell &goal, std::unordered_map<Cell, Cell> &came_from, std::unordered_map<Cell, double> &cost_so_far) {
 
     // initialize the priority queue with the starting point and a priority of 0
-    PriorityQueue<Cell, double> frontier;
+    PriorityQueue<Cell, double> frontier; // FIXME - use std::priority_queue and delete PriorityQueue.h
     frontier.put(start, 0);
 
     // initialize maps to keep track of the path and costs so far
