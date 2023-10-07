@@ -5,7 +5,7 @@
 #include "GraphicInterface.h"
 
 GraphicInterface::GraphicInterface(Grid &grid) {
-    this->grid = std::make_unique<Grid>(grid);
+    this->grid = std::make_shared<Grid>(grid);
 }
 
 void GraphicInterface::handleEvent(sf::RenderWindow &window) {

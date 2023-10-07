@@ -12,10 +12,10 @@ project(AStarSearch)
 set(CMAKE_CXX_STANDARD 17)
 
 # header files
-set(HEADER_FILES PriorityQueue.h Grid.h Cell.h GraphicInterface.h)
+set(HEADER_FILES PriorityQueue.h Grid.h Cell.h GraphicInterface.h AStarSearch.h)
 
 # source files
-set(SOURCE_FILES main.cpp Grid.cpp Cell.cpp GraphicInterface.cpp)
+set(SOURCE_FILES main.cpp Grid.cpp Cell.cpp GraphicInterface.cpp AStarSearch.cpp)
 
 # create the AStarSearch project executable using the defined header and source files
 add_executable(AStarSearch ${HEADER_FILES} ${SOURCE_FILES})

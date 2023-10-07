@@ -21,7 +21,7 @@ public:
     void draw(sf::RenderWindow &window);
 
 private:
-    std::unique_ptr<Grid> grid;
+    std::shared_ptr<Grid> grid;
 };
 
 

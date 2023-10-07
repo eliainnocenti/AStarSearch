@@ -13,6 +13,7 @@
 
 #include "Cell.h"
 #include "PriorityQueue.h"
+#include "AStarSearch.h"
 
 // graphics
 #include <SFML/Graphics.hpp>
@@ -41,6 +42,7 @@ public:
     inline unsigned int getWidth() const { return width; }
     inline unsigned int getHeight() const { return height; }
     inline unsigned int getCellSide() const { return cellSide; }
+    inline bool isDiagonalMovementAllowed() const { return diagonalMovements; }
     inline std::shared_ptr<Cell> getStartCell() const { return startCell; }
     inline std::shared_ptr<Cell> getGoalCell() const { return goalCell; }
     Cell* getCell(int x, int y);
