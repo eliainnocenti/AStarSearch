@@ -14,7 +14,7 @@ int main() {
     srand(static_cast<unsigned>(time(nullptr)));
 
     // create a grid
-    Grid grid(30, 20, false, true, 3);
+    Grid grid(10, 10, false, true, 3);
 
     //grid.setTheStart(0,0);
     //grid.setTheGoal(1,9);
@@ -22,9 +22,14 @@ int main() {
     //
     AStarSearch a_star_search(grid);
 
-    //a_star_search.findPath();
+    //----------DEBUB---------------------------------------------------------------------------------------------------
+    // the pathfinder works correctly. printAllTheGrid() function correctly shows the obstacles, the start, the goal, the visited cells, and the path.
 
-    //grid.printAllTheGrid();
+    a_star_search.findPath();
+
+    grid.printAllTheGrid();
+
+    //------------------------------------------------------------------------------------------------------------------
 
     // checks if a valid run can be performed on the grid
     switch (grid.isThisAValidRun()) {
@@ -54,6 +59,9 @@ int main() {
            return 4;
 
     }
+
+    //----------DEBUB---------------------------------------------------------------------------------------------------
+    // FIXME - the path is not displayed (maybe there some problems with pointers)
 
     // graphics
 
@@ -97,5 +105,6 @@ int main() {
         window.display();
     }
 
+    //------------------------------------------------------------------------------------------------------------------
 
 }
