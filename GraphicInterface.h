@@ -7,6 +7,7 @@
 
 #include "Grid.h"
 #include "Cell.h"
+#include "AStarSearch.h"
 
 // graphics
 #include <SFML/Graphics.hpp>
@@ -14,15 +15,15 @@
 class GraphicInterface {
 public:
     // constructor
-    explicit GraphicInterface(Grid& grid);
+    explicit GraphicInterface(Grid& grid, AStarSearch& a_star_search);
 
     // graphics
     void handleEvent(sf::RenderWindow &window);
     void draw(sf::RenderWindow &window);
 
 private:
-    std::shared_ptr<Grid> grid;
-    std::shared_ptr<AStarSearch> a_star_search;
+    std::shared_ptr<Grid> grid; //
+    AStarSearch* a_star_search; //
 };
 
 

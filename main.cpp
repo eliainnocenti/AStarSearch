@@ -5,7 +5,6 @@
 
 // classes
 #include "Grid.h"
-#include "Cell.h"
 #include "GraphicInterface.h"
 #include "AStarSearch.h"
 
@@ -15,11 +14,17 @@ int main() {
     srand(static_cast<unsigned>(time(nullptr)));
 
     // create a grid
-    Grid grid(50, 30, false, true, 3);
-    AStarSearch a_star_search(grid);
+    Grid grid(30, 20, false, true, 3);
 
     //grid.setTheStart(0,0);
-    //grid.setTheGoal(1,1);
+    //grid.setTheGoal(1,9);
+
+    //
+    AStarSearch a_star_search(grid);
+
+    //a_star_search.findPath();
+
+    //grid.printAllTheGrid();
 
     // checks if a valid run can be performed on the grid
     switch (grid.isThisAValidRun()) {
@@ -50,12 +55,10 @@ int main() {
 
     }
 
-
     // graphics
 
     // create a graphic user interface
-    GraphicInterface interface(grid);
-    // create new statement // GraphicInterface interface(grid, a_star_search)
+    GraphicInterface interface(grid, a_star_search);
 
     // create an event object to handle events
     sf::Event event {};
@@ -93,4 +96,6 @@ int main() {
         // bring to screen and display the new frame just drawn
         window.display();
     }
+
+
 }

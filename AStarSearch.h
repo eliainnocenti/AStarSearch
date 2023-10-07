@@ -5,10 +5,9 @@
 #ifndef ASTARSEARCH_ASTARSEARCH_H
 #define ASTARSEARCH_ASTARSEARCH_H
 
-#include "Grid.h"
 #include "Cell.h"
-#include "GraphicInterface.h"
 #include "PriorityQueue.h"
+#include "Grid.h"
 
 #include <utility>
 #include <queue>
@@ -22,7 +21,8 @@ public:
 
 private:
 
-    std::shared_ptr<Grid> grid;
+    Grid* grid;
+    std::unordered_set<Cell> directions;
 
     void aStarSearch(const Cell& start, const Cell& goal, std::unordered_map<Cell, Cell>& came_from, std::unordered_map<Cell, double>& cost_so_far);
     bool in_bounds(const Cell& cell) const; // can be a Grid method

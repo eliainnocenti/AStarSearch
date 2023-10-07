@@ -37,6 +37,7 @@ Grid::Grid(unsigned int width, unsigned int height, bool diagonal, bool random, 
 
 }
 
+/*
 void Grid::findPath() {
 
     // data structures for the algorithm
@@ -55,7 +56,9 @@ void Grid::findPath() {
     // sets the path
     setThePath(path);
 }
+*/
 
+/*
 void Grid::aStarSearch(const Cell &start, const Cell &goal, std::unordered_map<Cell, Cell>& came_from, std::unordered_map<Cell, double>& cost_so_far) {
 
     // initialize the priority queue with the starting point and a priority of 0
@@ -97,7 +100,9 @@ void Grid::aStarSearch(const Cell &start, const Cell &goal, std::unordered_map<C
         }
     }
 }
+*/
 
+/*
 std::vector<Cell> Grid::neighbors(const Cell &cell) {
     // finds neighboring cells of the given 'cell' within the grid
 
@@ -132,6 +137,7 @@ std::vector<Cell> Grid::neighbors(const Cell &cell) {
 
     return results;
 }
+*/
 
 bool Grid::in_bounds(const Cell &cell) const {
     // returns true if the cell is inside the map, false otherwise
@@ -151,6 +157,7 @@ bool Grid::passable(const Cell &cell) const {
         return false;
 }
 
+/*
 bool Grid::isThisADiagonalMovements(const Cell &cell) {
     // returns true if it's NE, NW, SE or SW
 
@@ -158,7 +165,9 @@ bool Grid::isThisADiagonalMovements(const Cell &cell) {
         return true;
     return false;
 }
+*/
 
+/*
 bool Grid::isThisAValidDiagonalCell(const Cell &cell, const Cell &dir) const {
 
     int x = cell.getX();
@@ -179,12 +188,16 @@ bool Grid::isThisAValidDiagonalCell(const Cell &cell, const Cell &dir) const {
     }
     return false;
 }
+*/
 
+/*
 double Grid::cost(const Cell &from_node, const Cell &to_node) {
     // let's assume the cost is 1
     return 1;
 }
+*/
 
+/*
 double Grid::heuristic(const Cell &from_node, const Cell &to_node) const {
     // a heuristic function is a function that estimates the cost from a given node to the goal node in a graph or search space
 
@@ -197,7 +210,9 @@ double Grid::heuristic(const Cell &from_node, const Cell &to_node) const {
         // manhattan distance
         return std::abs(from_node.getX() - to_node.getX()) + std::abs(from_node.getY() - to_node.getY());
 }
+*/
 
+/*
 std::vector<Cell> Grid::reconstructPath(const Cell &start, const Cell &goal, std::unordered_map<Cell, Cell>& came_from, std::unordered_map<Cell, double>& cost_so_far) {
     // returns the cells that are part of the path
 
@@ -216,9 +231,14 @@ std::vector<Cell> Grid::reconstructPath(const Cell &start, const Cell &goal, std
     std::reverse(path.begin(), path.end());
     return path;
 }
+*/
 
 void Grid::setThePath(const std::vector<Cell> &path) {
     // highlights the path by marking the cells of the path itself
+
+    //std::cout << "*set the path*" << std::endl;
+    //printPath(path);
+    //std::cout << "**************" << std::endl;
 
     for (const auto& it : path) {
         if (!map[it.getX()][it.getY()].isTheStart() && !map[it.getX()][it.getY()].isTheGoal()) {
@@ -228,13 +248,16 @@ void Grid::setThePath(const std::vector<Cell> &path) {
             map[it.getX()][it.getY()].setAsPathElement(); // mark the path cells
         }
     }
+    //std::cout << "-grid-" << std::endl;
+    //printAllTheGrid();
+    //std::cout << "---------" << std::endl;
 }
 
-void Grid::printPath(const std::vector<Cell> &path, const Cell &start, const Cell &goal) const {
+void Grid::printPath(const std::vector<Cell> &path) const {
     // service function that prints path elements
 
-    std::cout << "The path from: " << "{ x: " << start.getX() << ", y: " << start.getY() << " } " <<
-              "to: " << "{ x: " << goal.getX() << ", y: " << goal.getY() << " } " << "is: " << std::endl;
+    std::cout << "The path from: " << "{ x: " << startCell->getX() << ", y: " << startCell->getY() << " } " <<
+              "to: " << "{ x: " << goalCell->getX() << ", y: " << goalCell->getY() << " } " << "is: " << std::endl;
     for (const auto& it : path)
         printPosition(it);
 }
@@ -255,6 +278,8 @@ void Grid::printInfo(const Cell &cell) {
         std::cout << "{ x: " << cell.getX() << ", y: " << cell.getY() << " } " << "obstacle" << std::endl;
     else if (cell.isAPathElement())
         std::cout << "{ x: " << cell.getX() << ", y: " << cell.getY() << " } " << " path" << std::endl;
+    else if (cell.isVisited())
+        std::cout << "{ x: " << cell.getX() << ", y: " << cell.getY() << " } " << " visited" << std::endl;
     else
         std::cout << "{ x: " << cell.getX() << ", y: " << cell.getY() << " } " << " free cell" << std::endl;
 }
@@ -356,6 +381,14 @@ void Grid::setAnObstacle(const Cell &cell) {
     map[cell.getX()][cell.getY()].setAsObstacle();
 }
 
+void Grid::setAsVisited(int x, int y) {
+    map[x][y].setAsVisited();
+}
+
+void Grid::setAsVisited(const Cell &cell) {
+    map[cell.getX()][cell.getY()].setAsVisited();
+}
+
 void Grid::printAllTheObstacles() const {
     // service function that prints all the obstacles in the grid
 
@@ -414,6 +447,7 @@ void Grid::updateCell(int x, int y) {
         map[x][y].resetAsFree();
     else if (!map[x][y].isTheStart() && !map[x][y].isTheGoal())
         map[x][y].setAsObstacle();
+
 }
 
 void Grid::resetPathDrawn() {
@@ -432,6 +466,7 @@ bool Grid::isThereAGoal() const {
     if (goalCell != nullptr) { return true; } return false;
 }
 
+/*
 void Grid::reset() {
     // restarts the program regenerating a new random map and a new start and goal
 
@@ -461,6 +496,7 @@ void Grid::reset() {
     findPath();
 
 }
+ */
 
 Cell *Grid::getCell(int x, int y) { if (in_bounds(x,y)) { return &map[x][y]; } return nullptr; }
 

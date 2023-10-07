@@ -13,7 +13,6 @@
 
 #include "Cell.h"
 #include "PriorityQueue.h"
-#include "AStarSearch.h"
 
 // graphics
 #include <SFML/Graphics.hpp>
@@ -24,7 +23,7 @@ public:
     explicit Grid(unsigned int width, unsigned int height, bool diagonal = false, bool random = true, float density = 2.5, bool constCost = true);
 
     // A*Search
-    void findPath();
+    //void findPath();
 
     // set the start
     void setTheStart(int x, int y);
@@ -38,6 +37,10 @@ public:
     void setAnObstacle(int x, int y);
     void setAnObstacle(const Cell& cell);
 
+    // set as visited
+    void setAsVisited(int x, int y);
+    void setAsVisited(const Cell& cell);
+
     // getters
     inline unsigned int getWidth() const { return width; }
     inline unsigned int getHeight() const { return height; }
@@ -45,20 +48,23 @@ public:
     inline bool isDiagonalMovementAllowed() const { return diagonalMovements; }
     inline std::shared_ptr<Cell> getStartCell() const { return startCell; }
     inline std::shared_ptr<Cell> getGoalCell() const { return goalCell; }
+    inline std::unordered_set<Cell> getDirections() const { return directions; }
     Cell* getCell(int x, int y);
 
     // extra
     void printAllTheObstacles() const;
     void printAllTheGrid() const;
+    void printPath(const std::vector<Cell>& path) const;
     int isThisAValidRun();
 
     // graphics
     void draw(sf::RenderWindow &window);
     void updateCell(int x, int y);
+    void setThePath(const std::vector<Cell>& path);
     void resetPathDrawn(); // TODO - can be optimized if it use the path vector instead of scrolling through the entire map
 
     // reset
-    void reset(); // TODO
+    //void reset(); // TODO
 
 private:
     unsigned int width, height; // size
@@ -84,10 +90,13 @@ private:
     std::array<int, 2> setRandomGoal();
     float density;
 
+
     // search
     bool in_bounds(const Cell& cell) const;
     bool in_bounds(const int x, const int y) const;
     bool passable(const Cell& cell) const;
+
+    /*
     static bool isThisADiagonalMovements(const Cell& cell) ;
     bool isThisAValidDiagonalCell(const Cell& cell, const Cell& dir) const;
     std::vector<Cell> neighbors(const Cell& cell);
@@ -98,15 +107,12 @@ private:
                                                                      // std::unordered_map<std::pair<Cell, Cell>, double> weights.
                                                                      // However, the cells must be adjacent (the edge must exist).
     void aStarSearch(const Cell& start, const Cell& goal, std::unordered_map<Cell, Cell>& came_from, std::unordered_map<Cell, double>& cost_so_far);
+    */
 
     // reconstruct
-    static std::vector<Cell> reconstructPath(const Cell& start, const Cell& goal, std::unordered_map<Cell, Cell>& came_from, std::unordered_map<Cell, double>& cost_so_far); // TODO check ugly path
-    void printPath(const std::vector<Cell>& path, const Cell& start, const Cell& goal) const;
+    //static std::vector<Cell> reconstructPath(const Cell& start, const Cell& goal, std::unordered_map<Cell, Cell>& came_from, std::unordered_map<Cell, double>& cost_so_far); // TODO check ugly path
     static void printPosition(const Cell& cell) ;
     static void printInfo(const Cell& cell) ;
-
-    // graphics
-    void setThePath(const std::vector<Cell>& path);
 
     // extra
     std::vector<Cell> findAllTheObstacles() const;

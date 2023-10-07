@@ -5,7 +5,13 @@
 #include "AStarSearch.h"
 
 AStarSearch::AStarSearch(Grid& grid) {
-    this->grid = std::make_shared<Grid>(grid);
+
+    //
+    //this->grid = std::make_unique<Grid>(grid);
+    this->grid = &grid;
+
+    //
+    directions = grid.getDirections();
 }
 
 void AStarSearch::findPath() {
@@ -20,10 +26,10 @@ void AStarSearch::findPath() {
     std::vector<Cell> path = reconstructPath(*(grid->getStartCell()), *(grid->getGoalCell()), came_from, cost_so_far);
 
     // prints the path
-    //printPath(path, *startCell, *goalCell); // grid->printPath(path, *(grid->getStartCell()), *(grid->getGoalCell())); // printPath() has to be public
+    //grid->printPath(path);
 
     // sets the path
-    setThePath(path); // grid->setThePath(path); // setThePath() has to be public
+    grid->setThePath(path);
 }
 
 void AStarSearch::aStarSearch(const Cell &start, const Cell &goal, std::unordered_map<Cell, Cell> &came_from, std::unordered_map<Cell, double> &cost_so_far) {
@@ -116,7 +122,40 @@ bool AStarSearch::isThisAValidDiagonalCell(const Cell &cell, const Cell &dir) co
 }
 
 std::vector<Cell> AStarSearch::neighbors(const Cell &cell) {
+    // finds neighboring cells of the given 'cell' within the grid
 
+    // initialize an empty vector to store the neighboring cells
+    std::vector<Cell> results;
+
+    // iterate through the predefined directions to explore neighboring cells
+    for (const Cell& dir : directions) {
+        // calculate the coordinates of the potential neighboring cell
+        Cell next{cell.getX() + dir.getX(), cell.getY() + dir.getY(), grid->getCellSide()};
+
+        if (in_bounds(next)) { // if the cell is within the grid bounds
+            if (passable(next)) { // if the cell is not an obstacle
+                if (isThisADiagonalMovements(dir)) { // if the movement is diagonal
+                    if (isThisAValidDiagonalCell(cell, dir)) { // if the movements is not through the wall
+                        results.push_back(next); // add it to the results vector
+                        //map[next.getX()][next.getY()].setAsVisited(); // mark the cell as visited
+                        grid->setAsVisited(next);
+                    } else continue;
+                } else {
+                    // if the movement is not diagonal and the cell is passable and within the grid bounds
+                    results.push_back(next); // add it to the results vector
+                    //map[next.getX()][next.getY()].setAsVisited(); // mark the cell as visited
+                    grid->setAsVisited(next);
+                }
+            }
+        }
+    }
+
+    // TODO check - ugly paths
+    if ((cell.getX() + cell.getY()) % 2 == 0) {
+        std::reverse(results.begin(), results.end());
+    }
+
+    return results;
 }
 
 double AStarSearch::heuristic(const Cell &from_node, const Cell &to_node) const {

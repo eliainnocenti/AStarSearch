@@ -14,7 +14,7 @@ Cell::Cell(int x, int y, unsigned int side) : x(x), y(y), side(side) {
 
 }
 
-Cell::Cell() : Cell(x, y, side) {}
+Cell::Cell() : Cell(x, y, side) {} // FIXME - put real values example (0,0,25)
 
 bool Cell::operator == (const Cell &other) const {
     if (other.getX() == x && other.getY() == y)
