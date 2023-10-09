@@ -12,7 +12,7 @@ project(AStarSearch)
 set(CMAKE_CXX_STANDARD 17)
 
 # header files
-set(HEADER_FILES PriorityQueue.h Grid.h Cell.h GraphicInterface.h AStarSearch.h)
+set(HEADER_FILES Grid.h Cell.h GraphicInterface.h AStarSearch.h)
 
 # source files
 set(SOURCE_FILES main.cpp Grid.cpp Cell.cpp GraphicInterface.cpp AStarSearch.cpp)

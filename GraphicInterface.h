@@ -27,9 +27,9 @@ public:
     void draw(sf::RenderWindow &window);
 
 private:
-    Grid* grid; // ... // TODO - put some comments
-    AStarSearch* a_star_search; // ... // TODO - put some comments
-    // FIXME ? - do i have to use smart_ptrs?
+    Grid* grid; // pointer to the grid
+    AStarSearch* a_star_search; // pointer to the searcher (AStarSearch instance)
+
 };
 
 

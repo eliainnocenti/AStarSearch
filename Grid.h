@@ -5,7 +5,6 @@
 #ifndef ASTARSEARCH_GRID_H
 #define ASTARSEARCH_GRID_H
 
-
 // libraries
 #include <vector>
 #include <array>
@@ -15,7 +14,6 @@
 
 // classes
 #include "Cell.h"
-#include "PriorityQueue.h"
 
 // graphics
 #include <SFML/Graphics.hpp>

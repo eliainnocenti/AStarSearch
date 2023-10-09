@@ -5,17 +5,14 @@
 #include "GraphicInterface.h"
 
 GraphicInterface::GraphicInterface(AStarSearch& a_star_search) {
-    // TODO - put some comments
+    // allocates memory
 
-    // ...
     this->grid = a_star_search.getGridPointer();
-
-    // ...
     this->a_star_search = &a_star_search;
 }
 
 GraphicInterface::~GraphicInterface() {
-    // TODO - put some comments
+    // deallocates memory
 
     delete grid;
     delete a_star_search;

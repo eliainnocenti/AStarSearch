@@ -15,7 +15,7 @@ int main() {
     srand(static_cast<unsigned>(time(nullptr))); // FIXME
 
     // create a grid
-    Grid grid(50, 40, false, true, 3);
+    Grid grid(50, 30, false, true, 3);
 
     //grid.setTheStart(0,0);
     //grid.setTheGoal(1,9);
