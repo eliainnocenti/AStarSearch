@@ -32,5 +32,4 @@ private:
 
 };
 
-
 #endif //ASTARSEARCH_GRAPHICINTERFACE_H

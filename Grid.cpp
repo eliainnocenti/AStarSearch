@@ -37,108 +37,6 @@ Grid::Grid(unsigned int width, unsigned int height, bool diagonal, bool random, 
 
 }
 
-/*
-void Grid::findPath() {
-
-    // data structures for the algorithm
-    std::unordered_map<Cell, Cell> came_from;
-    std::unordered_map<Cell, double> cost_so_far;
-
-    // A*Search
-    aStarSearch(*startCell, *goalCell, came_from, cost_so_far);
-
-    // reconstructs the path
-    std::vector<Cell> path = reconstructPath(*startCell, *goalCell, came_from, cost_so_far);
-
-    // prints the path
-    //printPath(path, *startCell, *goalCell);
-
-    // sets the path
-    setThePath(path);
-}
-*/
-
-/*
-void Grid::aStarSearch(const Cell &start, const Cell &goal, std::unordered_map<Cell, Cell>& came_from, std::unordered_map<Cell, double>& cost_so_far) {
-
-    // initialize the priority queue with the starting point and a priority of 0
-    PriorityQueue<Cell, double> frontier;
-    frontier.put(start, 0);
-
-    // initialize maps to keep track of the path and costs so far
-    came_from[start] = start;
-    cost_so_far[start] = 0;
-
-    // main loop of the A* algorithm
-    while (!frontier.empty()) {
-
-        // extract the current point from the priority queue
-        Cell current = frontier.get();
-
-        // early exit
-        if (current == goal) {
-            break;
-        }
-
-        // find neighbors of the current point.
-        std::vector<Cell> neighbors = this->neighbors(current);
-
-        // explore neighbors of the current point
-        for (const Cell& next : neighbors) {
-            // calculate the new cost to reach the current neighbor
-            double new_cost = cost_so_far[current] + cost(current, next);
-            // check if it's the first encounter with the neighbor or if the new cost is better than the previous cost
-            if (cost_so_far.find(next) == cost_so_far.end() || new_cost < cost_so_far[next]) {
-                // update the cost so far and the neighbor's priority
-                cost_so_far[next] = new_cost;
-                double priority = new_cost + heuristic(next, goal);
-
-                // sdd the neighbor to the priority queue and record the path
-                frontier.put(next, priority);
-                came_from[next] = current;
-            }
-        }
-    }
-}
-*/
-
-/*
-std::vector<Cell> Grid::neighbors(const Cell &cell) {
-    // finds neighboring cells of the given 'cell' within the grid
-
-    // initialize an empty vector to store the neighboring cells
-    std::vector<Cell> results;
-
-    // iterate through the predefined directions to explore neighboring cells
-    for (const Cell& dir : directions) {
-        // calculate the coordinates of the potential neighboring cell
-        Cell next{cell.getX() + dir.getX(), cell.getY() + dir.getY(), cellSide};
-
-        if (in_bounds(next)) { // if the cell is within the grid bounds
-            if (passable(next)) { // if the cell is not an obstacle
-                if (isThisADiagonalMovements(dir)) { // if the movement is diagonal
-                    if (isThisAValidDiagonalCell(cell, dir)) { // if the movements is not through the wall
-                        results.push_back(next); // add it to the results vector
-                        map[next.getX()][next.getY()].setAsVisited(); // mark the cell as visited
-                    } else continue;
-                } else {
-                    // if the movement is not diagonal and the cell is passable and within the grid bounds
-                    results.push_back(next); // add it to the results vector
-                    map[next.getX()][next.getY()].setAsVisited(); // mark the cell as visited
-                }
-            }
-        }
-    }
-
-    // TODO check - ugly paths
-    if ((cell.getX() + cell.getY()) % 2 == 0) {
-        std::reverse(results.begin(), results.end());
-    }
-
-    return results;
-}
-*/
-
 bool Grid::in_bounds(const Cell &cell) const {
     // returns true if the cell is inside the map, false otherwise
     return 0 <= cell.getX() && cell.getX() < height && 0 <= cell.getY() && cell.getY() < width;
@@ -157,17 +55,14 @@ bool Grid::passable(const Cell &cell) const {
         return false;
 }
 
-/*
-bool Grid::isThisADiagonalMovements(const Cell &cell) {
+bool Grid::isThisADiagonalMovements(const Cell &cell) const {
     // returns true if it's NE, NW, SE or SW
 
     if (cell.getX() != 0 && cell.getY() != 0)
         return true;
     return false;
 }
-*/
 
-/*
 bool Grid::isThisAValidDiagonalCell(const Cell &cell, const Cell &dir) const {
 
     int x = cell.getX();
@@ -188,57 +83,14 @@ bool Grid::isThisAValidDiagonalCell(const Cell &cell, const Cell &dir) const {
     }
     return false;
 }
-*/
 
-/*
-double Grid::cost(const Cell &from_node, const Cell &to_node) {
+double Grid::getCost(const Cell &from_node, const Cell &to_node) const {
     // let's assume the cost is 1
     return 1;
 }
-*/
-
-/*
-double Grid::heuristic(const Cell &from_node, const Cell &to_node) const {
-    // a heuristic function is a function that estimates the cost from a given node to the goal node in a graph or search space
-
-    if (diagonalMovements) {
-        // euclidean distance
-        double dx = from_node.getX() - to_node.getX();
-        double dy = from_node.getY() - to_node.getY();
-        return std::sqrt(dx * dx + dy * dy);
-    } else
-        // manhattan distance
-        return std::abs(from_node.getX() - to_node.getX()) + std::abs(from_node.getY() - to_node.getY());
-}
-*/
-
-/*
-std::vector<Cell> Grid::reconstructPath(const Cell &start, const Cell &goal, std::unordered_map<Cell, Cell>& came_from, std::unordered_map<Cell, double>& cost_so_far) {
-    // returns the cells that are part of the path
-
-    std::vector<Cell> path;
-    Cell current = goal;
-    if (came_from.find(goal) == came_from.end()) {
-        return path; // no path can be found
-    }
-    while (current != start) {
-        path.push_back(current);
-        current = came_from[current];
-    }
-
-    // optional
-    path.push_back(start);
-    std::reverse(path.begin(), path.end());
-    return path;
-}
-*/
 
 void Grid::setThePath(const std::vector<Cell> &path) {
     // highlights the path by marking the cells of the path itself
-
-    //std::cout << "*set the path*" << std::endl;
-    //printPath(path);
-    //std::cout << "**************" << std::endl;
 
     for (const auto& it : path) {
         if (!map[it.getX()][it.getY()].isTheStart() && !map[it.getX()][it.getY()].isTheGoal()) {
@@ -248,9 +100,6 @@ void Grid::setThePath(const std::vector<Cell> &path) {
             map[it.getX()][it.getY()].setAsPathElement(); // mark the path cells
         }
     }
-    //std::cout << "-grid-" << std::endl;
-    //printAllTheGrid();
-    //std::cout << "---------" << std::endl;
 }
 
 void Grid::printPath(const std::vector<Cell> &path) const {
@@ -466,8 +315,7 @@ bool Grid::isThereAGoal() const {
     if (goalCell != nullptr) { return true; } return false;
 }
 
-/*
-void Grid::reset() {
+void Grid::reset() { // FIXME
     // restarts the program regenerating a new random map and a new start and goal
 
     resetPathDrawn(); // cleans all the grid cells
@@ -493,10 +341,10 @@ void Grid::reset() {
     goalCell = std::make_shared<Cell>(map[randGoal[0]][randGoal[1]]);
 
     // finds the path
-    findPath();
+    // this statement has to be executed where the reset() function is called (in the main.cpp or in GraphicInterface.cpp (handleEvent() function)
 
 }
- */
+
 
 Cell *Grid::getCell(int x, int y) { if (in_bounds(x,y)) { return &map[x][y]; } return nullptr; }
 

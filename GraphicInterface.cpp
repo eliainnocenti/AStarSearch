@@ -55,7 +55,7 @@ void GraphicInterface::handleEvent(sf::RenderWindow &window) {
     }
 
     // instead of re-run the program, it can be restarted by regenerating a new random map and a new start and goal
-    // TODO - reset() function if the Space-Key is pressed
+    // TODO - reset() function if the Space-Key is pressed - do i have to put the reset() function here?
 
 }
 

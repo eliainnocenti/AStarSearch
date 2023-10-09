@@ -17,10 +17,7 @@ int main() {
     // create a grid
     Grid grid(50, 30, false, true, 3);
 
-    //grid.setTheStart(0,0);
-    //grid.setTheGoal(1,9);
-
-    // ...
+    // create a searcher (AStarSearch instance)
     AStarSearch a_star_search(grid);
 
     // checks if a valid run can be performed on the grid

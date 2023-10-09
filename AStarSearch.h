@@ -19,6 +19,10 @@ public:
     // constructor
     explicit AStarSearch(Grid& grid);
 
+    // destructor
+    ~AStarSearch();
+
+    // getter
     Grid* getGridPointer() const;
 
     // find the path
@@ -29,19 +33,13 @@ private:
     Grid* grid; // pointer to the grid
     std::unordered_set<Cell> directions; // directions
 
-
-    // TODO - check if some methods of this class have to be Grid methods // TODO - put some comments
-
+    // search
     void aStarSearch(const Cell& start, const Cell& goal, std::unordered_map<Cell, Cell>& came_from, std::unordered_map<Cell, double>& cost_so_far);
-    bool in_bounds(const Cell& cell) const; // can be a Grid method
-    bool in_bounds(const int x, const int y) const; // can be a Grid method
-    bool passable(const Cell& cell) const; // can be a Grid method
-    static bool isThisADiagonalMovements(const Cell& dir); // can be a Grid method ?
-    bool isThisAValidDiagonalCell(const Cell& cell, const Cell& dir) const; // can be a Grid method ?
     std::vector<Cell> neighbors(const Cell& cell);
     double heuristic(const Cell& from_node, const Cell& to_node) const;
-    static double cost(const Cell& from_node, const Cell& to_node); // can be a Grid method ?
+    double cost(const Cell& from_node, const Cell& to_node) const;
 
+    // reconstruct
     static std::vector<Cell> reconstructPath(const Cell& start, const Cell& goal, std::unordered_map<Cell, Cell>& came_from, std::unordered_map<Cell, double>& cost_so_far); // TODO check ugly path
 
 };
@@ -52,7 +50,7 @@ struct PriorityQueue {
 
     // creates a priority queue using a vector as the underlying container,
     // and uses std::greater to ensure the highest priority (lowest value) is at the top
-    std::priority_queue< PQelement , std::vector<PQelement>, std::greater<PQelement> > frontier;
+    std::priority_queue< PQelement, std::vector<PQelement>, std::greater<> > frontier;
 
     // checks if the priority queue is empty
     inline bool empty() const {

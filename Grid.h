@@ -48,12 +48,21 @@ public:
     inline std::shared_ptr<Cell> getGoalCell() const { return goalCell; }
     inline std::unordered_set<Cell> getDirections() const { return directions; }
     Cell* getCell(int x, int y);
+    double getCost(const Cell& from_node, const Cell& to_node) const; // TODO - possible GridWithWeights implementation
+
 
     // extra
     void printAllTheObstacles() const;
     void printAllTheGrid() const;
     void printPath(const std::vector<Cell>& path) const;
     int isThisAValidRun();
+
+    // search
+    bool in_bounds(const Cell& cell) const;
+    bool in_bounds(const int x, const int y) const;
+    bool passable(const Cell& cell) const;
+    bool isThisADiagonalMovements(const Cell& cell) const;
+    bool isThisAValidDiagonalCell(const Cell& cell, const Cell& dir) const;
 
     // graphics
     void draw(sf::RenderWindow &window);
@@ -62,13 +71,17 @@ public:
     void resetPathDrawn(); // TODO - can be optimized if it use the path vector instead of scrolling through the entire map
 
     // reset
-    //void reset(); // TODO
+    void reset(); // FIXME
 
 private:
     unsigned int width, height; // size
 
     std::vector<std::vector<Cell>> map; // main data structure
-    //std::unordered_map<std::pair<Cell, Cell>, double> weights; // TODO
+    //std::unordered_map<std::pair<Cell, Cell>, double> weights; // TODO - possible GridWithWeights implementation
+                                                                 // I can use a dictionary that relates an edge to its corresponding cost.
+                                                                 // The cost() function would return the cost given the nodes and the data structure
+                                                                 // std::unordered_map<std::pair<Cell, Cell>, double> weights.
+                                                                 // However, the cells must be adjacent (the edge must exist).
 
     // pointers to the Start and the Goal
     std::shared_ptr<Cell> startCell {nullptr};
@@ -87,22 +100,6 @@ private:
     std::array<int, 2> setRandomStart();
     std::array<int, 2> setRandomGoal();
     float density;
-
-
-    // search
-    bool in_bounds(const Cell& cell) const;
-    bool in_bounds(const int x, const int y) const;
-    bool passable(const Cell& cell) const;
-
-    /*
-    static bool isThisADiagonalMovements(const Cell& cell) ;
-    bool isThisAValidDiagonalCell(const Cell& cell, const Cell& dir) const;
-    static double cost(const Cell& from_node, const Cell& to_node) ; // TODO - possible GridWithWeights implementation
-                                                                     // I can use a dictionary that relates an edge to its corresponding cost.
-                                                                     // The cost() function would return the cost given the nodes and the data structure
-                                                                     // std::unordered_map<std::pair<Cell, Cell>, double> weights.
-                                                                     // However, the cells must be adjacent (the edge must exist).
-    */
 
     // reconstruct
     static void printPosition(const Cell& cell) ;
