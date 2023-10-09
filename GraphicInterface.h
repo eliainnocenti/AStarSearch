@@ -5,6 +5,8 @@
 #ifndef ASTARSEARCH_GRAPHICINTERFACE_H
 #define ASTARSEARCH_GRAPHICINTERFACE_H
 
+
+// classes
 #include "Grid.h"
 #include "Cell.h"
 #include "AStarSearch.h"
@@ -15,15 +17,19 @@
 class GraphicInterface {
 public:
     // constructor
-    explicit GraphicInterface(Grid& grid, AStarSearch& a_star_search);
+    explicit GraphicInterface(AStarSearch& a_star_search);
+
+    // destructor
+    ~GraphicInterface();
 
     // graphics
     void handleEvent(sf::RenderWindow &window);
     void draw(sf::RenderWindow &window);
 
 private:
-    std::shared_ptr<Grid> grid; //
-    AStarSearch* a_star_search; //
+    Grid* grid; // ... // TODO - put some comments
+    AStarSearch* a_star_search; // ... // TODO - put some comments
+    // FIXME ? - do i have to use smart_ptrs?
 };
 
 

@@ -1,3 +1,4 @@
+// libraries
 #include <iostream>
 
 // graphics
@@ -11,25 +12,16 @@
 int main() {
 
     // seed the random number generator
-    srand(static_cast<unsigned>(time(nullptr)));
+    srand(static_cast<unsigned>(time(nullptr))); // FIXME
 
     // create a grid
-    Grid grid(10, 10, false, true, 3);
+    Grid grid(50, 40, false, true, 3);
 
     //grid.setTheStart(0,0);
     //grid.setTheGoal(1,9);
 
-    //
+    // ...
     AStarSearch a_star_search(grid);
-
-    //----------DEBUB---------------------------------------------------------------------------------------------------
-    // the pathfinder works correctly. printAllTheGrid() function correctly shows the obstacles, the start, the goal, the visited cells, and the path.
-
-    a_star_search.findPath();
-
-    grid.printAllTheGrid();
-
-    //------------------------------------------------------------------------------------------------------------------
 
     // checks if a valid run can be performed on the grid
     switch (grid.isThisAValidRun()) {
@@ -60,13 +52,10 @@ int main() {
 
     }
 
-    //----------DEBUB---------------------------------------------------------------------------------------------------
-    // FIXME - the path is not displayed (maybe there some problems with pointers)
-
     // graphics
 
     // create a graphic user interface
-    GraphicInterface interface(grid, a_star_search);
+    GraphicInterface interface(a_star_search);
 
     // create an event object to handle events
     sf::Event event {};
@@ -104,7 +93,5 @@ int main() {
         // bring to screen and display the new frame just drawn
         window.display();
     }
-
-    //------------------------------------------------------------------------------------------------------------------
 
 }

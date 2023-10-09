@@ -5,13 +5,18 @@
 #include "AStarSearch.h"
 
 AStarSearch::AStarSearch(Grid& grid) {
+    // TODO - put some comments
 
-    //
+    // ...
     //this->grid = std::make_unique<Grid>(grid);
     this->grid = &grid;
 
-    //
+    // ...
     directions = grid.getDirections();
+}
+
+Grid *AStarSearch::getGridPointer() const {
+    return grid;
 }
 
 void AStarSearch::findPath() {
@@ -102,6 +107,7 @@ bool AStarSearch::isThisADiagonalMovements(const Cell &dir) {
 }
 
 bool AStarSearch::isThisAValidDiagonalCell(const Cell &cell, const Cell &dir) const {
+    // TODO - put some comments
     int x = cell.getX();
     int y = cell.getY();
 

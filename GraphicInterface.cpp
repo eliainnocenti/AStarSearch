@@ -4,14 +4,21 @@
 
 #include "GraphicInterface.h"
 
-GraphicInterface::GraphicInterface(Grid &grid, AStarSearch& a_star_search) {
+GraphicInterface::GraphicInterface(AStarSearch& a_star_search) {
+    // TODO - put some comments
 
-    //
-    this->grid = std::make_shared<Grid>(grid);
+    // ...
+    this->grid = a_star_search.getGridPointer();
 
-    //
-    //this->a_star_search = std::make_shared<AStarSearch>(a_star_search);
+    // ...
     this->a_star_search = &a_star_search;
+}
+
+GraphicInterface::~GraphicInterface() {
+    // TODO - put some comments
+
+    delete grid;
+    delete a_star_search;
 }
 
 void GraphicInterface::handleEvent(sf::RenderWindow &window) {
@@ -19,7 +26,6 @@ void GraphicInterface::handleEvent(sf::RenderWindow &window) {
 
     // finds the path
     a_star_search->findPath();
-    //grid->findPath();
 
     bool isMouseClickProcessed = false; // flag to track whether a mouse click has been processed
 
@@ -41,7 +47,6 @@ void GraphicInterface::handleEvent(sf::RenderWindow &window) {
 
                         grid->resetPathDrawn(); // delete the old path
                         grid->updateCell(j, i); // update the cell (obstacle <-> free cell)
-                        //grid->findPath();
                         a_star_search->findPath(); // re-find the path
 
                         isMouseClickProcessed = true; // set the flag to indicate that a mouse click has been processed
