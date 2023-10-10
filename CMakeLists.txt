@@ -40,4 +40,5 @@ target_link_libraries(AStarSearch sfml-system sfml-window sfml-graphics sfml-net
 
 # TEST
 
+# include the test directory for unit testing with google test
 add_subdirectory(test)
