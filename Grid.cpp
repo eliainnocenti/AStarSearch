@@ -57,6 +57,14 @@ bool Grid::passable(const Cell &cell) const {
         return false;
 }
 
+bool Grid::passable(const int x, const int y) const {
+    // return true if the cell is not an obstacle, false otherwise
+    if (!map[x][y].isAnObstacle())
+        return true;
+    else
+        return false;
+}
+
 bool Grid::isThisADiagonalMovements(const Cell &cell) const {
     // returns true if it's NE, NW, SE or SW
 
@@ -372,4 +380,14 @@ int Grid::isThisAValidRun() {
 
     else // !start && !goal
         return 3; // both start and goal cells are missing
+}
+
+void Grid::deepClean() {
+    for (int i = 0; i < height; i++)
+        for (int j = 0; j < width; j++) {
+            map[i][j].clean();
+            map[i][j].resetAsFree();
+            map[i][j].resetTheStart();
+            map[i][j].resetTheGoal();
+        }
 }

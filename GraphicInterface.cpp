@@ -14,8 +14,8 @@ GraphicInterface::GraphicInterface(AStarSearch& a_star_search) {
 GraphicInterface::~GraphicInterface() {
     // deallocates memory
 
-    delete grid;
-    delete a_star_search;
+    //delete grid; // FIXME
+    //delete a_star_search; // FIXME
 }
 
 void GraphicInterface::handleEvent(sf::RenderWindow &window) {

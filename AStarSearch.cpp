@@ -21,7 +21,7 @@ AStarSearch::AStarSearch() {
 AStarSearch::~AStarSearch() {
     // deallocates memory
 
-    delete grid;
+    //delete grid; // FIXME
 }
 
 Grid *AStarSearch::getGridPointer() const {

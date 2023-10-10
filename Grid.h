@@ -60,11 +60,13 @@ public:
     void printAllTheGrid() const;
     void printPath(const std::vector<Cell>& path) const;
     int isThisAValidRun();
+    void deepClean();
 
     // search
     bool in_bounds(const Cell& cell) const;
     bool in_bounds(const int x, const int y) const;
     bool passable(const Cell& cell) const;
+    bool passable(const int x, const int y) const;
     bool isThisADiagonalMovements(const Cell& cell) const;
     bool isThisAValidDiagonalCell(const Cell& cell, const Cell& dir) const;
 
