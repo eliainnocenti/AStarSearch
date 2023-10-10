@@ -22,6 +22,7 @@ class Grid {
 public:
     // constructor
     explicit Grid(unsigned int width, unsigned int height, bool diagonal = false, bool random = true, float density = 2.5, bool constCost = true);
+    Grid();
 
     // set the start
     void setTheStart(int x, int y);
@@ -43,7 +44,10 @@ public:
     inline unsigned int getWidth() const { return width; }
     inline unsigned int getHeight() const { return height; }
     inline unsigned int getCellSide() const { return cellSide; }
+    inline float getDensity() const { return density; }
     inline bool isDiagonalMovementAllowed() const { return diagonalMovements; }
+    inline bool isThisARandomRun() const { return random; }
+    inline bool isTheCostConst() const { return constCost; }
     inline std::shared_ptr<Cell> getStartCell() const { return startCell; }
     inline std::shared_ptr<Cell> getGoalCell() const { return goalCell; }
     inline std::unordered_set<Cell> getDirections() const { return directions; }
@@ -77,6 +81,9 @@ private:
     unsigned int width, height; // size
 
     std::vector<std::vector<Cell>> map; // main data structure
+
+    // weights
+    bool constCost;
     //std::unordered_map<std::pair<Cell, Cell>, double> weights; // TODO - possible GridWithWeights implementation
                                                                  // I can use a dictionary that relates an edge to its corresponding cost.
                                                                  // The cost() function would return the cost given the nodes and the data structure
@@ -90,6 +97,9 @@ private:
     // directions
     bool diagonalMovements;
     std::unordered_set<Cell> directions;
+
+    // random
+    bool random;
 
     // graphics
     unsigned int cellSide;

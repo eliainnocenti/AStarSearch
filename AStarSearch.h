@@ -18,12 +18,14 @@ public:
 
     // constructor
     explicit AStarSearch(Grid& grid);
+    AStarSearch();
 
     // destructor
     ~AStarSearch();
 
     // getter
     Grid* getGridPointer() const;
+    std::unordered_set<Cell> getDirections() const;
 
     // find the path
     void findPath();

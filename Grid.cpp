@@ -4,7 +4,7 @@
 
 #include "Grid.h"
 
-Grid::Grid(unsigned int width, unsigned int height, bool diagonal, bool random, float density, bool constCost) : width(width), height(height), diagonalMovements(diagonal), density(density) {
+Grid::Grid(unsigned int width, unsigned int height, bool diagonal, bool random, float density, bool constCost) : width(width), height(height), diagonalMovements(diagonal), random(random), density(density), constCost(constCost) {
 
     cellSide = 25;
 
@@ -36,6 +36,8 @@ Grid::Grid(unsigned int width, unsigned int height, bool diagonal, bool random, 
         makeMap(width, height, cellSide);
 
 }
+
+Grid::Grid() : Grid(10, 10) {} // diagonal = false, random = true, density = 2.5, constCost = true
 
 bool Grid::in_bounds(const Cell &cell) const {
     // returns true if the cell is inside the map, false otherwise
@@ -85,8 +87,13 @@ bool Grid::isThisAValidDiagonalCell(const Cell &cell, const Cell &dir) const {
 }
 
 double Grid::getCost(const Cell &from_node, const Cell &to_node) const {
-    // let's assume the cost is 1
-    return 1;
+
+    // let's assume the cost is 1 for now
+    if (constCost)
+        return 1;
+
+    else
+        return 1; // TODO - implement
 }
 
 void Grid::setThePath(const std::vector<Cell> &path) {

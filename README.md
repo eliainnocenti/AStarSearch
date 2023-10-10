@@ -41,13 +41,13 @@ The A* algorithm is widely used in artificial intelligence, games, robotics, and
 
 ### Frame of reference
 
-![](Images/FrameOfReference.PNG) <!-- TODO -->
+![](resources/images/FrameOfReference.PNG) <!-- TODO -->
 
 <!-- esempio di una cella all'interno della grid (sistema di riferimento matriciale) -->
 
 ### Directions
 
-![](Images/Directions.PNG) <!-- TODO -->
+![](resources/images/Directions.PNG) <!-- TODO -->
 
 <!-- vicini di una cella + directions -->
 

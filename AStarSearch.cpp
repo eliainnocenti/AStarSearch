@@ -11,6 +11,13 @@ AStarSearch::AStarSearch(Grid& grid) {
     directions = grid.getDirections();
 }
 
+AStarSearch::AStarSearch() {
+    // default values
+
+    this->grid = nullptr;
+    directions = std::unordered_set<Cell> { Cell{0,1},  Cell{1,0}, Cell{0,-1}, Cell{-1,0} };
+}
+
 AStarSearch::~AStarSearch() {
     // deallocates memory
 
@@ -19,6 +26,10 @@ AStarSearch::~AStarSearch() {
 
 Grid *AStarSearch::getGridPointer() const {
     return grid;
+}
+
+std::unordered_set<Cell> AStarSearch::getDirections() const {
+    return directions;
 }
 
 void AStarSearch::findPath() {
