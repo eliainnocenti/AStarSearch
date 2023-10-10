@@ -1,3 +1,4 @@
+
 // libraries
 #include <iostream>
 
@@ -17,7 +18,7 @@ int main() {
     // create a grid
     Grid grid(50, 30, false, true, 3);
 
-    // create a searcher (AStarSearch instance)
+    // create a searcher (AStarSearch instance) // TODO - change "searcher" into something else
     AStarSearch a_star_search(grid);
 
     // checks if a valid run can be performed on the grid

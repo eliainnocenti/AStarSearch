@@ -5,7 +5,6 @@
 #ifndef ASTARSEARCH_GRAPHICINTERFACE_H
 #define ASTARSEARCH_GRAPHICINTERFACE_H
 
-
 // classes
 #include "Grid.h"
 #include "Cell.h"
@@ -28,7 +27,7 @@ public:
 
 private:
     Grid* grid; // pointer to the grid
-    AStarSearch* a_star_search; // pointer to the searcher (AStarSearch instance)
+    AStarSearch* a_star_search; // pointer to the searcher (AStarSearch instance) // TODO - change "searcher" into something else
 
 };
 
