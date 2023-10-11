@@ -21,6 +21,7 @@ TEST (Cell, DefaultConstructor) {
     ASSERT_FALSE(c.isAPathElement());
     ASSERT_FALSE(c.isVisited());
 
+    // graphics
     sf::RenderWindow window;
     c.draw(window);
 
@@ -33,29 +34,24 @@ TEST (Cell, FreeCell) {
     Cell free;
     free.resetAsFree(); // setter
 
-    sf::RenderWindow window;
-    free.draw(window);
-
-    // the color must be white
-    ASSERT_EQ(sf::Color::White, free.getShape().getFillColor());
-
     // all the boolean values must be false
     ASSERT_FALSE(free.isTheStart());
     ASSERT_FALSE(free.isTheGoal());
     ASSERT_FALSE(free.isAnObstacle());
     ASSERT_FALSE(free.isAPathElement());
     ASSERT_FALSE(free.isVisited());
+
+    // graphics
+    sf::RenderWindow window;
+    free.draw(window);
+
+    // the color must be white
+    ASSERT_EQ(sf::Color::White, free.getShape().getFillColor());
 }
 
 TEST (Cell, StartCell) {
     Cell start;
     start.setTheStart(); // setter
-
-    sf::RenderWindow window;
-    start.draw(window);
-
-    // the color must be green
-    ASSERT_EQ(sf::Color::Green, start.getShape().getFillColor());
 
     // the start boolean value must be true and false all the others
     ASSERT_TRUE(start.isTheStart());
@@ -63,17 +59,18 @@ TEST (Cell, StartCell) {
     ASSERT_FALSE(start.isAnObstacle());
     ASSERT_FALSE(start.isAPathElement());
     ASSERT_FALSE(start.isVisited());
+
+    // graphics
+    sf::RenderWindow window;
+    start.draw(window);
+
+    // the color must be green
+    ASSERT_EQ(sf::Color::Green, start.getShape().getFillColor());
 }
 
 TEST (Cell, GoalCell) {
     Cell goal;
     goal.setTheGoal(); // setter
-
-    sf::RenderWindow window;
-    goal.draw(window);
-
-    // the color must be red
-    ASSERT_EQ(sf::Color::Red, goal.getShape().getFillColor());
 
     // the goal boolean value must be true and false all the others
     ASSERT_FALSE(goal.isTheStart());
@@ -81,17 +78,18 @@ TEST (Cell, GoalCell) {
     ASSERT_FALSE(goal.isAnObstacle());
     ASSERT_FALSE(goal.isAPathElement());
     ASSERT_FALSE(goal.isVisited());
+
+    // graphics
+    sf::RenderWindow window;
+    goal.draw(window);
+
+    // the color must be red
+    ASSERT_EQ(sf::Color::Red, goal.getShape().getFillColor());
 }
 
 TEST (Cell, ObstacleCell) {
     Cell obstacle;
     obstacle.setAsObstacle(); // setter
-
-    sf::RenderWindow window;
-    obstacle.draw(window);
-
-    // the color must be black
-    ASSERT_EQ(sf::Color::Black, obstacle.getShape().getFillColor());
 
     // the obstacle boolean value must be true and false all the others
     ASSERT_FALSE(obstacle.isTheStart());
@@ -99,17 +97,18 @@ TEST (Cell, ObstacleCell) {
     ASSERT_TRUE(obstacle.isAnObstacle());
     ASSERT_FALSE(obstacle.isAPathElement());
     ASSERT_FALSE(obstacle.isVisited());
+
+    // graphics
+    sf::RenderWindow window;
+    obstacle.draw(window);
+
+    // the color must be black
+    ASSERT_EQ(sf::Color::Black, obstacle.getShape().getFillColor());
 }
 
 TEST (Cell, PathCell) {
     Cell path;
     path.setAsPathElement(); // setter
-
-    sf::RenderWindow window;
-    path.draw(window);
-
-    // the color must be blue
-    ASSERT_EQ(sf::Color::Blue, path.getShape().getFillColor());
 
     // the path boolean value must be true and false all the others
     ASSERT_FALSE(path.isTheStart());
@@ -117,17 +116,18 @@ TEST (Cell, PathCell) {
     ASSERT_FALSE(path.isAnObstacle());
     ASSERT_TRUE(path.isAPathElement());
     ASSERT_FALSE(path.isVisited());
+
+    // graphics
+    sf::RenderWindow window;
+    path.draw(window);
+
+    // the color must be blue
+    ASSERT_EQ(sf::Color::Blue, path.getShape().getFillColor());
 }
 
 TEST (Cell, VisitedCell) {
     Cell visited;
     visited.setAsVisited(); // setter
-
-    sf::RenderWindow window;
-    visited.draw(window);
-
-    // the color must be cyan
-    ASSERT_EQ(sf::Color::Cyan, visited.getShape().getFillColor());
 
     // the visited boolean value must be true and false all the others
     ASSERT_FALSE(visited.isTheStart());
@@ -135,4 +135,11 @@ TEST (Cell, VisitedCell) {
     ASSERT_FALSE(visited.isAnObstacle());
     ASSERT_FALSE(visited.isAPathElement());
     ASSERT_TRUE(visited.isVisited());
+
+    // graphics
+    sf::RenderWindow window;
+    visited.draw(window);
+
+    // the color must be cyan
+    ASSERT_EQ(sf::Color::Cyan, visited.getShape().getFillColor());
 }

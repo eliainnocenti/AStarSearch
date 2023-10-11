@@ -13,12 +13,13 @@
 int main() {
 
     // seed the random number generator
-    srand(static_cast<unsigned>(time(nullptr))); // FIXME
+    srand(static_cast<unsigned>(time(nullptr)));
 
     // create a grid
-    Grid grid(50, 30, false, true, 3);
+    Grid grid(57, 36, false, true, 3); // Fullscreen
+    //Grid grid(50, 30, false, true, 3); // Default
 
-    // create a searcher (AStarSearch instance) // TODO - change "searcher" into something else
+    // create a seeker (AStarSearch instance)
     AStarSearch a_star_search(grid);
 
     // checks if a valid run can be performed on the grid
@@ -63,8 +64,8 @@ int main() {
     unsigned int windowHeight = cellSide * grid.getHeight(); // set the height of the window
 
     // create the SFML window
-    sf::RenderWindow window(sf::VideoMode(windowWidth, windowHeight), "AStarSearch", sf::Style::Default); // Default
-    //sf::RenderWindow window(sf::VideoMode::getDesktopMode(), "AStarSearch", sf::Style::Fullscreen); // Fullscreen // FIXME - Fullscreen
+    //sf::RenderWindow window(sf::VideoMode(windowWidth, windowHeight), "AStarSearch", sf::Style::Default); // Default
+    sf::RenderWindow window(sf::VideoMode::getDesktopMode(), "AStarSearch", sf::Style::Fullscreen); // Fullscreen
 
     // main application loop
     while (window.isOpen()) {

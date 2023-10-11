@@ -18,16 +18,13 @@ public:
     // constructor
     explicit GraphicInterface(AStarSearch& a_star_search);
 
-    // destructor
-    ~GraphicInterface();
-
     // graphics
     void handleEvent(sf::RenderWindow &window);
     void draw(sf::RenderWindow &window);
 
 private:
     Grid* grid; // pointer to the grid
-    AStarSearch* a_star_search; // pointer to the searcher (AStarSearch instance) // TODO - change "searcher" into something else
+    AStarSearch* a_star_search; // pointer to the seeker (AStarSearch instance)
 
 };
 

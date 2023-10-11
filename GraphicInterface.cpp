@@ -11,13 +11,6 @@ GraphicInterface::GraphicInterface(AStarSearch& a_star_search) {
     this->a_star_search = &a_star_search;
 }
 
-GraphicInterface::~GraphicInterface() {
-    // deallocates memory
-
-    //delete grid; // FIXME
-    //delete a_star_search; // FIXME
-}
-
 void GraphicInterface::handleEvent(sf::RenderWindow &window) {
     // if a cell is clicked, it is set as an obstacle / free cell
 

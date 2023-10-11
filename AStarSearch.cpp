@@ -18,12 +18,6 @@ AStarSearch::AStarSearch() {
     directions = std::unordered_set<Cell> { Cell{0,1},  Cell{1,0}, Cell{0,-1}, Cell{-1,0} };
 }
 
-AStarSearch::~AStarSearch() {
-    // deallocates memory
-
-    //delete grid; // FIXME
-}
-
 Grid *AStarSearch::getGridPointer() const {
     return grid;
 }
@@ -72,7 +66,7 @@ void AStarSearch::aStarSearch(const Cell &start, const Cell &goal, std::unordere
         }
 
         // find neighbors of the current point.
-        std::vector<Cell> neighbors = this->neighbors(current); // FIXME - diagonal movement
+        std::vector<Cell> neighbors = this->neighbors(current);
 
         // explore neighbors of the current point
         for (const Cell& next : neighbors) {

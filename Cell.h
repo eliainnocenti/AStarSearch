@@ -16,7 +16,7 @@ class Cell {
 public:
     // constructors
     Cell(int x, int y, unsigned int side = 25);
-    Cell(); // the default constructor is needed for came_from (std::unordered_set<Cell, Cell>) // FIXME
+    Cell(); // the default constructor is needed for came_from (std::unordered_set<Cell, Cell>)
 
     // overloaded operators
     bool operator == (const Cell& other) const;
