@@ -20,17 +20,21 @@ public:
     explicit AStarSearch(Grid& grid);
     AStarSearch();
 
-    // getter
+    // getters
     Grid* getGridPointer() const;
     std::unordered_set<Cell> getDirections() const;
 
-    // find the path
+    // setters
+    void setGridPointer(Grid& grid);
+    void setDirections(std::unordered_set<Cell>& directions);
+
+    // search
     void findPath();
 
 private:
 
-    Grid* grid; // pointer to the grid
-    std::unordered_set<Cell> directions; // directions
+    Grid* grid;
+    std::unordered_set<Cell> directions;
 
     // search
     void aStarSearch(const Cell& start, const Cell& goal, std::unordered_map<Cell, Cell>& came_from, std::unordered_map<Cell, double>& cost_so_far);

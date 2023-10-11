@@ -54,13 +54,13 @@ public:
     Cell* getCell(int x, int y);
     double getCost(const Cell& from_node, const Cell& to_node) const; // TODO - possible GridWithWeights implementation
 
-
     // extra
     void printAllTheObstacles() const;
     void printAllTheGrid() const;
     void printPath(const std::vector<Cell>& path) const;
     int isThisAValidRun();
     void deepClean();
+    std::vector<Cell> findAllTheObstacles() const;
 
     // search
     bool in_bounds(const Cell& cell) const;
@@ -77,7 +77,7 @@ public:
     void resetPathDrawn(); // TODO - can be optimized if it use the path vector instead of scrolling through the entire map
 
     // reset
-    void reset(); // FIXME
+    void reset();
 
 private:
     unsigned int width, height; // size
@@ -118,7 +118,6 @@ private:
     static void printInfo(const Cell& cell) ;
 
     // extra
-    std::vector<Cell> findAllTheObstacles() const;
     void resetAllTheObstacles(const std::vector<Cell>& obstacles);
     bool isThereAStart() const;
     bool isThereAGoal() const;

@@ -258,4 +258,21 @@ TEST (Grid, ResetPathDrawn) {
         }
 }
 
-// reset() // TODO
+// reset function
+TEST (Grid, ResetRun) {
+    Grid grid(10,10, false,true);
+
+    Cell old_start = *(grid.getStartCell());
+    Cell old_goal = *(grid.getGoalCell());
+    std::vector<Cell> old_obstacles = grid.findAllTheObstacles();
+
+    grid.reset();
+
+    Cell new_start = *(grid.getStartCell());
+    Cell new_goal = *(grid.getGoalCell());
+    std::vector<Cell> new_obstacles = grid.findAllTheObstacles();
+
+    ASSERT_FALSE(old_start == new_start);
+    ASSERT_FALSE(old_goal == new_goal);
+    ASSERT_FALSE(old_obstacles == new_obstacles);
+}

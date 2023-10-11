@@ -330,7 +330,7 @@ bool Grid::isThereAGoal() const {
     if (goalCell != nullptr) { return true; } return false;
 }
 
-void Grid::reset() { // FIXME
+void Grid::reset() {
     // restarts the program regenerating a new random map and a new start and goal
 
     resetPathDrawn(); // cleans all the grid cells
@@ -354,10 +354,6 @@ void Grid::reset() { // FIXME
     map[goalCell->getX()][goalCell->getY()].resetTheGoal();
     std::array<int, 2> randGoal = setRandomGoal();
     goalCell = std::make_shared<Cell>(map[randGoal[0]][randGoal[1]]);
-
-    // finds the path
-    // this statement has to be executed where the reset() function is called (in the main.cpp or in GraphicInterface.cpp (handleEvent() function)
-
 }
 
 

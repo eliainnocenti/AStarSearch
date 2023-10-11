@@ -19,7 +19,7 @@ int main() {
     Grid grid(57, 36, false, true, 3); // Fullscreen
     //Grid grid(50, 30, false, true, 3); // Default
 
-    // create a seeker (AStarSearch instance)
+    // create a solver (AStarSearch instance)
     AStarSearch a_star_search(grid);
 
     // checks if a valid run can be performed on the grid
@@ -76,7 +76,6 @@ int main() {
             if (event.type == sf::Event::KeyPressed) {
                 if (event.key.code == sf::Keyboard::Escape)
                     window.close(); // close the window when the Escape key is pressed
-                // TODO - do i have to put the reset() function here?
             }
         }
 

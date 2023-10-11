@@ -26,6 +26,34 @@ std::unordered_set<Cell> AStarSearch::getDirections() const {
     return directions;
 }
 
+void AStarSearch::setGridPointer(Grid &grid) {
+    if (this->grid != nullptr)
+        this->grid->deepClean();
+    this->grid = &grid;
+}
+
+void AStarSearch::setDirections(std::unordered_set<Cell> &directions) {
+
+    // it doesn't allow setting directions other than: NW, N, NE, E, SE, S, SW, W
+    bool valid;
+    for (const auto& it : directions) {
+        if ((it.getX() == -1 && it.getY() == -1) || // NW
+            (it.getX() == -1 && it.getY() ==  0) || // N
+            (it.getX() == -1 && it.getY() ==  1) || // NE
+            (it.getX() ==  0 && it.getY() ==  1) || // E
+            (it.getX() ==  1 && it.getY() ==  1) || // SE
+            (it.getX() ==  1 && it.getY() ==  0) || // S
+            (it.getX() ==  1 && it.getY() == -1) || // SW
+            (it.getX() ==  0 && it.getY() == -1))   // W
+            valid = true;
+        else
+            valid = false;
+    }
+
+    if (valid)
+        this->directions = directions;
+}
+
 void AStarSearch::findPath() {
     // data structures for the algorithm
     std::unordered_map<Cell, Cell> came_from;

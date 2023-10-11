@@ -18,6 +18,59 @@ TEST (AStarSearch, DefaultConstructor) {
     ASSERT_EQ(default_directions, a_star_search.getDirections());
 }
 
+// set grid pointer test
+TEST (AStarSearch, SetGridPointer) {
+    Grid g1(10,10,false, false);
+    Grid g2(10,10,false, false);
+    AStarSearch a_star_search;
+
+    // setters
+    g1.setTheStart(0,0);
+    g1.setTheGoal(0,2);
+    g2.setTheStart(1,0);
+    g2.setTheGoal(1,2);
+
+    a_star_search.setGridPointer(g1);
+    a_star_search.findPath();
+
+    ASSERT_TRUE(g1.getCell(0,1)->isAPathElement());
+
+    a_star_search.setGridPointer(g2);
+    a_star_search.findPath();
+
+    ASSERT_TRUE(g2.getCell(1,1)->isAPathElement());
+    ASSERT_FALSE(g1.getCell(0,1)->isAPathElement());
+}
+
+// set direction test
+TEST (AStarSearch, SetDirections) {
+    AStarSearch a_star_search;
+
+    std::unordered_set<Cell> default_directions { Cell{0,1},  Cell{1,0}, Cell{0,-1}, Cell{-1,0} };
+    ASSERT_TRUE(a_star_search.getDirections() == default_directions);
+
+    // directions
+    Cell NE(-1,1);
+    Cell NW(-1,-1);
+    Cell SE(1,1);
+    Cell SW(1,-1);
+    Cell N(-1,0);
+    Cell E(0,1);
+    Cell S(1,0);
+    Cell W(0,-1);
+
+    std::unordered_set<Cell> directions { NE, NW, SE, SW, N, E, S, W };
+    a_star_search.setDirections(directions);
+
+    ASSERT_TRUE(a_star_search.getDirections() == directions);
+
+    std::unordered_set<Cell> wrong_directions { Cell{-2,0}, Cell{0,4}, Cell{0,0} };
+    a_star_search.setDirections(wrong_directions);
+
+    ASSERT_FALSE(a_star_search.getDirections() == wrong_directions);
+    ASSERT_TRUE(a_star_search.getDirections() == directions);
+}
+
 // no path run test
 TEST (AstarSearch, NoPath) {
     Grid grid(10,10,false,false);
@@ -31,7 +84,7 @@ TEST (AstarSearch, NoPath) {
     for (int i = 0; i < grid.getHeight(); i++)
         grid.setAnObstacle(i,4);
 
-    a_star_search.findPath(); // find the path
+    a_star_search.findPath();
 
     // there must not be a path
     for (int i = 0; i < grid.getHeight(); i++)
@@ -82,7 +135,7 @@ TEST (AStarSearch, PathNoDiagonalMovement) {
     grid.setAnObstacle(9,4);
     grid.setAnObstacle(9,8);
 
-    a_star_search.findPath(); // find the path
+    a_star_search.findPath();
 
     std::vector<Cell> path { Cell{6,2}, Cell{6,3}, Cell{7,3}, Cell{7,4}, Cell{7,5},
                              Cell{6,5}, Cell{5,5}, Cell{4,5}, Cell{4,6}, Cell{4,7},
@@ -134,7 +187,7 @@ TEST (AStarSearch, PathDiagonalMovement) {
     grid.setAnObstacle(8,4);
     grid.setAnObstacle(8,7);
 
-    a_star_search.findPath(); // find the path
+    a_star_search.findPath();
 
     std::vector<Cell> path { Cell{2,7}, Cell{2,6}, Cell{2,5}, Cell{1,4}, Cell{1,3},
                              Cell{1,2}, Cell{2,1}, Cell{3,0}, Cell{4,0}, Cell{5,0},

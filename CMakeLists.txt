@@ -15,16 +15,10 @@ set(CMAKE_CXX_STANDARD 17)
 set(HEADER_FILES Grid.h Cell.h GraphicInterface.h AStarSearch.h)
 
 # source files
-set(SOURCE_FILES Grid.cpp Cell.cpp GraphicInterface.cpp AStarSearch.cpp)
+set(SOURCE_FILES main.cpp Grid.cpp Cell.cpp GraphicInterface.cpp AStarSearch.cpp)
 
-# creates a library with header files and source files
-add_library(core ${HEADER_FILES} ${SOURCE_FILES})
-
-# creates the AStarSearch project executable
-add_executable(AStarSearch main.cpp)
-
-# links the executable with the header files and source files
-target_link_libraries(AStarSearch core)
+# creates the AStarSearch project executable with header files and source files
+add_executable(AStarSearch ${HEADER_FILES} ${SOURCE_FILES})
 
 
 # SFML graphics

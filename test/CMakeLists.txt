@@ -24,7 +24,7 @@ set(SOURCE_FILES ../AStarSearch.h ../AStarSearch.cpp ../Grid.h ../Grid.cpp ../Ce
 add_library(test ${SOURCE_FILES})
 
 # links the 'core' target with the required SFML libraries
-target_link_libraries(core sfml-system sfml-window sfml-graphics sfml-network sfml-audio)
+target_link_libraries(test sfml-system sfml-window sfml-graphics sfml-network sfml-audio)
 
 # creates the test executable and specifies the source files to use
 add_executable(runAllTest ${SOURCE_TEST_FILES})
