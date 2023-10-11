@@ -1,6 +1,6 @@
 # CMAKE
 
-# cmake instructions for macos operating system
+# cmake instructions
 
 # cmake version
 cmake_minimum_required(VERSION 3.26)
