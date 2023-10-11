@@ -1,6 +1,6 @@
 # CMAKE
 
-# cmake instructions for macos operating system
+# cmake instructions
 
 # cmake version
 cmake_minimum_required(VERSION 3.26)
@@ -15,28 +15,34 @@ set(CMAKE_CXX_STANDARD 17)
 set(HEADER_FILES Grid.h Cell.h GraphicInterface.h AStarSearch.h)
 
 # source files
-set(SOURCE_FILES main.cpp Grid.cpp Cell.cpp GraphicInterface.cpp AStarSearch.cpp)
+set(SOURCE_FILES Grid.cpp Cell.cpp GraphicInterface.cpp AStarSearch.cpp)
 
-# create the AStarSearch project executable using the defined header and source files
-add_executable(AStarSearch ${HEADER_FILES} ${SOURCE_FILES})
+# creates a library with header files and source files
+add_library(core ${HEADER_FILES} ${SOURCE_FILES})
+
+# creates the AStarSearch project executable
+add_executable(AStarSearch main.cpp)
+
+# links the executable with the header files and source files
+target_link_libraries(AStarSearch core)
 
 
 # SFML graphics
 
-# include header directories for external libraries
-include_directories(./graphic)
+# includes header directories for external libraries
+include_directories(./graphics/lib/SFML-2.6.0)
 
-# find and include the required SFML 2.5 libraries
+# finds and include the required SFML 2.5 libraries
 find_package(SFML 2.5 COMPONENTS system window graphics network audio REQUIRED) # do i need SFML 2.6?
 
-# include SFML library directories
+# includes SFML library directories
 include_directories(${SFML_INCLUDE_DIRS})
 
-# link the SFML libraries to the AStarSearch executable
+# links the SFML libraries to the AStarSearch executable
 target_link_libraries(AStarSearch sfml-system sfml-window sfml-graphics sfml-network sfml-audio)
 
 
 # TEST
 
-# include the test directory for unit testing with google test
+# includes the test directory for unit testing with google test
 add_subdirectory(test)

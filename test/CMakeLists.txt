@@ -21,7 +21,7 @@ set(SOURCE_TEST_FILES runAllTest.cpp GridTest.cpp CellTest.cpp AStarSearchTest.c
 set(SOURCE_FILES ../AStarSearch.h ../AStarSearch.cpp ../Grid.h ../Grid.cpp ../Cell.h ../Cell.cpp ../GraphicInterface.h ../GraphicInterface.cpp)
 
 # creates a library named 'core' using the specified source files
-add_library(core ${SOURCE_FILES})
+add_library(test ${SOURCE_FILES})
 
 # links the 'core' target with the required SFML libraries
 target_link_libraries(core sfml-system sfml-window sfml-graphics sfml-network sfml-audio)
@@ -30,4 +30,4 @@ target_link_libraries(core sfml-system sfml-window sfml-graphics sfml-network sf
 add_executable(runAllTest ${SOURCE_TEST_FILES})
 
 # links the test executable to the Google Test libraries (gtest and gtest_main) and project classes
-target_link_libraries(runAllTest gtest gtest_main core)
+target_link_libraries(runAllTest gtest gtest_main test)
