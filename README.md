@@ -1,6 +1,6 @@
 # AStarSearch project
 
-Project for Programming Lab exam.
+Project for Programming Laboratory @ Unifi - A* Algorithm in a grid (SFML graphics).
 
 ## A* Algorithm
 
