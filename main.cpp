@@ -16,8 +16,8 @@ int main() {
     srand(static_cast<unsigned>(time(nullptr)));
 
     // create a grid
-    Grid grid(57, 36, false, true, 3); // Fullscreen
     //Grid grid(50, 30, false, true, 3); // Default
+    Grid grid(57, 36, false, true, 3); // Fullscreen
 
     // create a solver (AStarSearch instance)
     AStarSearch a_star_search(grid);
@@ -60,6 +60,8 @@ int main() {
     sf::Event event {};
 
     unsigned int cellSide = 25;
+
+    // Default
     unsigned int windowWidth = cellSide * grid.getWidth(); // set the width of the window
     unsigned int windowHeight = cellSide * grid.getHeight(); // set the height of the window
 

@@ -30,6 +30,7 @@ TEST (Cell, DefaultConstructor) {
 }
 
 // cell color and boolean value test
+
 TEST (Cell, FreeCell) {
     Cell free;
     free.resetAsFree(); // setter
