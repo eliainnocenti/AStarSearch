@@ -2,3 +2,12 @@
 /cmake-build-debug/
 /cmake-build-release/
 /.idea/
+
+# Mac OS Files
+.DS_Store
+/graphics/.DS_Store
+/graphics/lib/.DS_Store
+/resources/.DS_Store
+/resources/images/.DS_Store
+/test/.DS_Store
+/test/lib/.DS_Store

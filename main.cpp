@@ -4,6 +4,7 @@
 
 // graphics
 #include <SFML/Graphics.hpp>
+/*#include "graphics/lib/SFML-2.6.0/include/SFML/Graphics.hpp"*/
 
 // classes
 #include "Grid.h"

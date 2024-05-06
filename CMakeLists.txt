@@ -23,14 +23,21 @@ add_executable(AStarSearch ${HEADER_FILES} ${SOURCE_FILES})
 
 # SFML graphics
 
-# includes header directories for external libraries
-include_directories(./graphics/lib/SFML-2.6.0)
+# FIXME: this is not working, the system accesses the SFML files from /opt/homebrew/include/SFML
 
-# finds and include the required SFML 2.5 libraries
-find_package(SFML 2.5 COMPONENTS system window graphics network audio REQUIRED) # do i need SFML 2.6?
+# includes header directories for external libraries
+#include_directories(./graphics/lib/SFML-2.6.0/include)
+#include_directories(./graphics/lib/SFML-2.6.0)
+#set(SFML_DIR ./graphics/lib/SFML-2.6.0/include)
+set(SFML_INCLUDE_DIRS "/AStarSearch/graphics/lib/SFML-2.6.0/include")
 
 # includes SFML library directories
 include_directories(${SFML_INCLUDE_DIRS})
+
+find_path(SFML_INCLUDE_DIRS "SFML/Graphics.hpp" PATHS "/AStarSearch/graphics/lib/SFML-2.6.0/include")
+
+# finds and include the required SFML 2.6 libraries
+find_package(SFML 2.6 COMPONENTS system window graphics network audio REQUIRED)
 
 # links the SFML libraries to the AStarSearch executable
 target_link_libraries(AStarSearch sfml-system sfml-window sfml-graphics sfml-network sfml-audio)

@@ -21,7 +21,7 @@
 class Grid {
 public:
     // constructor
-    explicit Grid(unsigned int width, unsigned int height, bool diagonal = false, bool random = true, float density = 2.5, bool constCost = true);
+    Grid(unsigned int width, unsigned int height, bool diagonal = false, bool random = true, float density = 2.5, bool constCost = true);
     Grid();
 
     // set the start
@@ -114,8 +114,8 @@ private:
     float density;
 
     // reconstruct
-    static void printPosition(const Cell& cell) ;
-    static void printInfo(const Cell& cell) ;
+    static void printPosition(const Cell& cell);
+    static void printInfo(const Cell& cell);
 
     // extra
     void resetAllTheObstacles(const std::vector<Cell>& obstacles);
